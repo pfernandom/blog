@@ -1,26 +1,23 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
+import React from 'react';
+import { Link, graphql } from 'gatsby';
 
-import Bio from "../components/bio"
-import Layout from "../components/layout"
-import SEO from "../components/seo"
-import { rhythm } from "../utils/typography"
+import Bio from '../components/bio';
+import Layout from '../components/layout';
+import SEO from '../components/seo';
+import { rhythm } from '../utils/typography';
 
-class BlogIndex extends React.Component {
-  render() {
-    const { data } = this.props
-    const siteTitle = data.site.siteMetadata.title
-    const posts = data.allMarkdownRemark.edges
+function blogIndex({ data, location }) {
+  const siteTitle = data.site.siteMetadata.title;
+  const posts = data.allMarkdownRemark.edges;
 
-    return (
-      <Layout location={this.props.location} title={siteTitle}>
-        <SEO
-          title="All posts"
-          keywords={[`blog`, `gatsby`, `javascript`, `react`]}
-        />
-        <Bio />
-        {posts.map(({ node }) => {
-          const title = node.frontmatter.title || node.fields.slug
+  return (
+    <Layout location={location} title={siteTitle}>
+      <SEO title="All posts" keywords={[`blog`, `gatsby`, `javascript`, `react`]} />
+      <Bio />
+      {posts
+        .filter(({ node }) => node.frontmatter.published)
+        .map(({ node }) => {
+          const title = node.frontmatter.title || node.fields.slug;
           return (
             <div key={node.fields.slug}>
               <h3
@@ -39,14 +36,13 @@ class BlogIndex extends React.Component {
                 }}
               />
             </div>
-          )
+          );
         })}
-      </Layout>
-    )
-  }
+    </Layout>
+  );
 }
 
-export default BlogIndex
+export default blogIndex;
 
 export const pageQuery = graphql`
   query {
@@ -66,9 +62,10 @@ export const pageQuery = graphql`
             date(formatString: "MMMM DD, YYYY")
             title
             description
+            published
           }
         }
       }
     }
   }
-`
+`;

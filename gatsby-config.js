@@ -31,6 +31,13 @@ module.exports = {
             resolve: `gatsby-remark-images`,
             options: {
               maxWidth: 590,
+              wrapperStyle: fluidResult => `flex:${_.round(fluidResult.aspectRatio, 2)};`,
+            },
+          },
+          {
+            resolve: `gatsby-remark-image-decorator`,
+            options: {
+              previewMode: false,
             },
           },
           {
@@ -39,7 +46,25 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.0725rem`,
             },
           },
-          `gatsby-remark-prismjs`,
+          `gatsby-remark-gist-gen`,
+          {
+            resolve: "gatsby-remark-embed-gist",
+            options: {
+              // the github handler whose gists are to be accessed
+              username: "pfernandom",
+            }
+          },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              classPrefix: "language-",
+              prompt: {
+                user: "root",
+                host: "localhost",
+                global: false,
+              },
+            }
+          },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],

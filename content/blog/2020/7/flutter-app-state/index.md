@@ -121,13 +121,13 @@ class NotificationIcon extends StatelessWidget {
 }
 ```
 
-How can we notify the `NotificationIcon` widget that `MyStatefulWidget` has fetched a new list of notiications?
+How can we notify the `NotificationIcon` widget that `MyStatefulWidget` has fetched a new list of notifications?
 
 ## Some options...
 
 We could re-render our component to include `NotificationIcon` in `MyStatefulWidget`. The problem with this approach is that we may need to also include other, unrelated widgets.
 
-Another approach is to use [Inherited Widgets](https://api.flutter.dev/flutter/widgets/InheritedWidget-class.html). However, this approch may require us to modify other widgets than these two, which is not always possible.
+Another approach is to use [Inherited Widgets](https://api.flutter.dev/flutter/widgets/InheritedWidget-class.html). However, this approach may require us to modify other widgets than these two, which is not always possible.
 
 How can we notify to independent widgets of state changes? 
 
@@ -143,7 +143,7 @@ A popular implementation of streams for Flutter apps is [rxdart](https://pub.dev
 
 We can add them to our project with the following command:
 
-```
+```shell
 flutter pub add rxdart
 ```
 

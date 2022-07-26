@@ -48,31 +48,32 @@ module.exports = {
           },
           `gatsby-remark-gist-gen`,
           {
-            resolve: "gatsby-remark-embed-gist",
+            resolve: 'gatsby-remark-embed-gist',
             options: {
               // the github handler whose gists are to be accessed
-              username: "pfernandom",
-            }
+              username: 'pfernandom',
+            },
           },
           {
             resolve: `gatsby-remark-prismjs`,
             options: {
-              classPrefix: "language-",
+              classPrefix: 'language-',
               prompt: {
-                user: "root",
-                host: "localhost",
+                user: 'root',
+                host: 'localhost',
                 global: false,
               },
-            }
+            },
           },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],
       },
     },
+
+    'gatsby-plugin-image',
+    'gatsby-plugin-sharp',
     `gatsby-transformer-sharp`,
-    "gatsby-plugin-image",
-    "gatsby-plugin-sharp",
     {
       resolve: `gatsby-plugin-google-gtag`,
       options: {
@@ -122,39 +123,54 @@ module.exports = {
           {
             serialize: ({ query: { site, allMarkdownRemark } }) => {
               return allMarkdownRemark.edges.map(edge => {
+                const hero_image =
+                  edge.node.frontmatter.hero_image?.childImageSharp.gatsbyImageData.images.fallback;
+
                 return Object.assign({}, edge.node.frontmatter, {
                   description: edge.node.excerpt,
                   date: edge.node.frontmatter.date,
                   url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                   guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-                  custom_elements: [{ "content:encoded": edge.node.html }],
-                })
-              })
+                  enclosure: {
+                    url: hero_image?.src,
+                    size: hero_image?.sizes,
+                  },
+                });
+              });
             },
             query: `
-              {
-                allMarkdownRemark(
-                  sort: { order: DESC, fields: [frontmatter___date] },
-                ) {
-                  edges {
-                    node {
-                      excerpt
-                      html
-                      fields { slug }
-                      frontmatter {
-                        title
-                        date
+            {
+              allMarkdownRemark(
+                sort: {order: DESC, fields: [frontmatter___date]}
+                filter: {frontmatter: {date: {}, published: {eq: true}}}
+              ) {
+                edges {
+                  node {
+                    excerpt
+                    fields {
+                      slug
+                    }
+                    frontmatter {
+                      title
+                      date
+                      published
+                      hero_image_alt
+                      hero_image {
+                        childImageSharp {
+                          gatsbyImageData(layout: FIXED)
+                        }
                       }
                     }
                   }
                 }
               }
+            }
             `,
-            output: "/rss.xml",
-            title: "Your Site's RSS Feed",
+            output: '/rss.xml',
+            title: "Pedro's Blog",
           },
         ],
       },
     },
   ],
-}
+};

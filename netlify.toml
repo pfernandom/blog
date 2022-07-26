@@ -8,4 +8,9 @@
 [[headers]]
     for = "/*"
     [headers.values]
-        Access-Control-Allow-Origin= "pedromarquez.dev"
+        Access-Control-Allow-Origin= "pedromarquez.dev, pfernandom.github.io"
+
+[[headers]]
+    for = "/rss.xml"
+    [headers.values]
+        Access-Control-Allow-Origin= "*"

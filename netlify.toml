@@ -1,0 +1,11 @@
+[build]
+    publish = "public/"
+    command = "npm run build"
+
+[context.production]
+  environment = { NODE_VERSION = "16.13.0" }
+
+[[headers]]
+    for = "/*"
+    [headers.values]
+        Access-Control-Allow-Origin= "pedromarquez.dev"

@@ -8,6 +8,8 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import Image from "gatsby-image"
+import { SocialIcon } from 'react-social-icons';
+
 
 import { rhythm } from "../utils/typography"
 
@@ -20,31 +22,38 @@ function Bio() {
         return (
           <div
             style={{
-              display: `flex`,
               marginBottom: rhythm(2.5),
             }}
           >
-            <Image
-              fixed={data.avatar.childImageSharp.fixed}
-              alt={author}
+            <div
               style={{
-                marginRight: rhythm(1 / 2),
-                marginBottom: 0,
-                minWidth: 50,
-                borderRadius: `100%`,
+                display: `flex`,
               }}
-              imgStyle={{
-                borderRadius: `50%`,
-              }}
-            />
-            <p>
-              Written by <strong>{author}</strong> who lives and works in the Bay Area, doing all things front-end (and some back-end too).
-              {` `}
-              <a href={`https://twitter.com/${social.twitter}`}>
-                You should follow him on Twitter
-              </a>
-            </p>
-          </div>
+            >
+              <Image
+                fixed={data.avatar.childImageSharp.fixed}
+                alt={author}
+                style={{
+                  marginRight: rhythm(1 / 2),
+                  marginBottom: 0,
+                  minWidth: 50,
+                  borderRadius: `100%`,
+                }}
+                imgStyle={{
+                  borderRadius: `50%`,
+                }}
+              />
+              <p>
+                Written by <strong>{author}</strong> who lives and works in Austin, Texas, doing all things front-end (and some back-end too).
+              </p>
+            </div>
+            <div style={{ position: 'fixed', top: '1em', right: '1em', display: 'flex', flexDirection: 'column' }}>
+              <SocialIcon url="https://www.instagram.com/pedro.marquez.soto/" style={{ marginBottom: '10px' }} />
+              <SocialIcon url="https://www.linkedin.com/in/pedro-fernando-m%C3%A1rquez-soto-1218a345/" style={{ marginBottom: '10px' }} />
+              <SocialIcon url="https://medium.com/@pfernandom" />
+
+            </div>
+          </div >
         )
       }}
     />

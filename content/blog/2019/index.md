@@ -2,7 +2,7 @@
 title: What happens when you click on the browser's "back" button?
 date: "2019-08-16T12:00:03.284Z"
 description: "What exactly happens to your web application when a user clicks on their browser's back button?"
-published: true
+published: false
 ---
 
 The "back" button in a browser is one of those things that seem so simple no one really puts a lot of thought on it. After all, the concept behind it it's really simple: You navigate to the previous page you were before. If there is no previous page, the button can't be clicked. Simple, right?

@@ -20,6 +20,7 @@ exports.createPages = ({ graphql, actions }) => {
               }
               frontmatter {
                 title
+                published
               }
             }
           }
@@ -34,9 +35,40 @@ exports.createPages = ({ graphql, actions }) => {
     // Create blog posts pages.
     const posts = result.data.allMarkdownRemark.edges
 
+    function getPrevious(index) {
+      let previous = {
+        published: false
+      };
+
+      let i = index + 1;
+      while (previous && !previous.frontmatter?.published) {
+        previous = i >= posts.length ? null : posts[i].node
+        i += 1;
+      }
+
+      return previous
+    }
+
+    function getNext(index) {
+      let next = {
+        frontmatter: {
+          published: false
+        }
+
+      };
+
+      let i = index - 1;
+      while (next && !next.frontmatter?.published) {
+        next = i < 0 ? null : posts[i].node
+        i -= 1;
+      }
+      return next;
+    }
+
+
     posts.forEach((post, index) => {
-      const previous = index === posts.length - 1 ? null : posts[index + 1].node
-      const next = index === 0 ? null : posts[index - 1].node
+      const previous = getPrevious(index)
+      const next = getNext(index)
 
       createPage({
         path: post.node.fields.slug,

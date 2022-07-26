@@ -3,6 +3,8 @@ title: Streaming HTML responses
 date: "2019-06-21T22:12:03.284Z"
 description: "How does HTML chunking work when streaming HTML files to the browser?"
 published: true
+hero_image: "./hero.png"
+hero_image_alt: "Hero image for the streaming html responses post"
 ---
 
 An Express server showcasing how HTML Chunking behaves, including blocking resources for Critical Rendering Path

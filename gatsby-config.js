@@ -71,14 +71,18 @@ module.exports = {
       },
     },
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    "gatsby-plugin-image",
+    "gatsby-plugin-sharp",
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: `gatsby-plugin-google-gtag`,
       options: {
-        //trackingId: `ADD YOUR TRACKING ID HERE`,
+        trackingIds: [
+          process.env.GA, // Google Analytics / GA
+          //"AW-CONVERSION_ID", // Google Ads / Adwords / AW
+          //"DC-FLOODIGHT_ID", // Marketing Platform advertising products (Display & Video 360, Search Ads 360, and Campaign Manager)
+        ],
       },
     },
-    `gatsby-plugin-feed`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

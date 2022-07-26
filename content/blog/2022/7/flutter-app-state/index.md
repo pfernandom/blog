@@ -1,7 +1,9 @@
 ---
-title: Managing state in Flutter apps with streaming (Rxdart and get_it)
+title: Managing state in Flutter apps with data streaming
 date: "2022-07-18T22:12:03.284Z"
-description: "How does HTML chunking work when streaming HTML files to the browser?"
+description: "Managing state in a Flutter app using data streams and a service locator"
+hero_image: "./hero.png"
+hero_image_alt: "A hero image for this post about state management"
 published: true
 ---
 
@@ -10,7 +12,7 @@ Web developers are familiar with tools like Redux or MobX. These tools follow ve
 
 These same tools exist in the Flutter world, but recently I've been exploring an alternative that may seem consistently easier. We can manage app state with rxdart and get_it.
 
-# Some background
+## Some background
 At any given moment, an application will have *state*. If we think of an app like Instagram, the state can be
 the list of posts and stories the application renders. State can also be your app preferences, the contents of the 
 story you're about to post, the list of notifications and the number of un-read messages.
@@ -133,7 +135,7 @@ How can we notify to independent widgets of state changes?
 
 Enter state management.
 
-# State management through streams
+## State management through streams
 
 Data streams are analog to queues: One part of the application will publish data to a stream and other parts of the application can subscribe that stream and consume the data it produces.
 
@@ -310,7 +312,7 @@ Now, when the user clicks in the button, the new updates will be sent to the str
 
 We could take this example even further and make `MyStatefulWidgetState` a stateless widget, getting its state directly from the same stream. Feel free to take this extra step and practice this state management approach.
 
-# Pros and cons
+## Pros and cons
 
 Some of the advantages of this state management approach are:
 
@@ -324,7 +326,7 @@ On the other side, the disadvantages are:
 - It may be *too* flexible. This approach opens the door to a lack of structure in the project. More structure is better for large teams and large code bases.
 - If not used responsibly, `get_it` can lead to a bunch of global state. Developers can abuse the magic of this service locator and add state that doesn't need to be stored.
 
-# Conclusion
+## Conclusion
 
 State management is hard. Because of these, developers have created many tools to store state and communicate state changes. Some of those tools will fit better to your specific project needs.
 

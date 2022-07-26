@@ -3,6 +3,8 @@ title: Weird behavior for matrix created with Array.fill()
 date: "2019-07-04T12:00:03.284Z"
 description: "I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??"
 published: true
+hero_image: "./hero.png"
+hero_image_alt: "Hero image for the post"
 ---
 I was using JavaScript for completing some Leetcode challenges and I got some pretty weird behavior.
 

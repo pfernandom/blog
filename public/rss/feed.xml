@@ -4,7 +4,7 @@
         <title>Pedro's Tech Blog</title>
         <link>https://localhost:8000</link>
         <description>A blog about many things, all tech and software related.</description>
-        <lastBuildDate>Fri, 29 Jul 2022 01:50:49 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 29 Jul 2022 02:49:20 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -21,6 +21,7 @@
             <description><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></description>
             <content:encoded><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
+            <enclosure length="0" type="image/webp" url="https://localhost:8000//opt_images/blog/2019/6/html-chunking/hero.webp"/>
         </item>
         <item>
             <title><![CDATA[Weird behavior for matrix created with Array.fill()]]></title>
@@ -30,6 +31,7 @@
             <description><![CDATA[I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??]]></description>
             <content:encoded><![CDATA[I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
+            <enclosure length="0" type="image/webp" url="https://localhost:8000//opt_images/blog/2019/7/array-fill/hero.webp"/>
         </item>
         <item>
             <title><![CDATA[What happens when you click on the browser's "back" button?]]></title>
@@ -39,6 +41,7 @@
             <description><![CDATA[What exactly happens to your web application when a user clicks on their browser's back button?]]></description>
             <content:encoded><![CDATA[What exactly happens to your web application when a user clicks on their browser's back button?]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
+            <enclosure length="0" type="image//" url="https://localhost:8000/"/>
         </item>
         <item>
             <title><![CDATA[The wonderful world of component-based development]]></title>
@@ -48,6 +51,7 @@
             <description><![CDATA[Modern front-end development is based in components. Let us explore the wonders of this paradigm.]]></description>
             <content:encoded><![CDATA[Modern front-end development is based in components. Let us explore the wonders of this paradigm.]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
+            <enclosure length="0" type="image//" url="https://localhost:8000/"/>
         </item>
         <item>
             <title><![CDATA[Managing state in Flutter apps with data streaming]]></title>
@@ -57,6 +61,7 @@
             <description><![CDATA[Managing state in a Flutter app using data streams and a service locator]]></description>
             <content:encoded><![CDATA[Managing state in a Flutter app using data streams and a service locator]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
+            <enclosure length="0" type="image/webp" url="https://localhost:8000//opt_images/blog/2022/7/flutter-app-state/hero.webp"/>
         </item>
     </channel>
 </rss>

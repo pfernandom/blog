@@ -1,6 +1,19 @@
 :root {
   ---heading-color: #007acc;
+  ---background-color: white;
   ---color-highlight: #f2f5ff;
+  ---text-color: black;
+  ---subtitle-color: hsl(51, 100%, 17%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    ---heading-color: hsl(204, 100%, 81%);
+    ---background-color: hsl(204, 19%, 16%);
+    ---color-highlight: hsl(204, 19%, 19%);
+    ---text-color: #f2f5ff;
+    ---subtitle-color: rgb(255, 245, 190);
+  }
 }
 
 img {
@@ -34,7 +47,7 @@ a.social-icon:hover,
 
 @keyframes onHover {
   from {
-    background-color: white;
+    background-color: var(---background-color);
   }
   to {
     background-color: var(---color-highlight);
@@ -46,7 +59,7 @@ a.social-icon:hover,
     background-color: var(---color-highlight);
   }
   to {
-    background-color: white;
+    background-color: var(---background-color);
   }
 }
 
@@ -54,6 +67,7 @@ a.social-icon:hover,
   padding: 1em;
   box-shadow: 1px 1px 2px 1px rgb(0 0 0 / 20%);
   border-radius: 0.2em;
+  background-color: var(---background-color);
   cursor: pointer;
   animation-name: endHover;
   animation-duration: 0.5s;
@@ -73,28 +87,42 @@ a.social-icon:hover,
   align-items: center;
 }
 
-h1 {
-  color: var(---heading-color);
-  filter: brightness(0.6);
-}
-
-h3 {
-  color: var(---heading-color);
-  filter: brightness(0.8);
+.link-content {
+  color: var(---text-color);
 }
 
 .news {
   background-color: gold;
-  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
   padding-left: 8em;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
-@media screen and (max-width: 500px) {
+@media (prefers-color-scheme: dark) {
+  .news {
+    color: black;
+    filter: invert();
+  }
+  .news a {
+    color: var(---heading-color);
+    filter: brightness(1.2);
+    filter: invert();
+  }
+
+  .news a :hover {
+    filter: brightness(1.2);
+  }
+}
+
+@media screen and (max-width: 700px) {
   .news {
     padding: 0.2em 1em;
+  }
+
+  .news a {
+    text-decoration: underline;
   }
 
   .link-post-a {
@@ -102,15 +130,18 @@ h3 {
   }
 }
 
-a {
-  color: var(---heading-color);
-}
-
-a:hover {
-  filter: brightness(0.8);
-  text-decoration: underline;
-}
-
 .post-image {
   box-shadow: 1px 1px 2px 1px rgb(0 0 0 / 20%);
+}
+
+.blog-post-date {
+  color: var(---subtitle-color);
+  padding-bottom: 2em;
+  padding-left: 0em;
+}
+
+.blog-post-date-text {
+  padding-bottom: 2em;
+  padding-left: 0.5em;
+  font-style: italic;
 }

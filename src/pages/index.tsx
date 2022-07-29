@@ -71,7 +71,7 @@ const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
                     />
                   </div>
                 )}
-                <div>
+                <div className="link-content">
                   <h3
                     className="link-post"
                     style={{

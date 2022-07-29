@@ -32,7 +32,6 @@ function MyApp({
               theme={value}
               title={pageProps?.metadata?.title ?? "Blog entry"}
             >
-              <News></News>
               <Component {...pageProps} />
             </Layout>
             {/* </HelmetProvider> */}

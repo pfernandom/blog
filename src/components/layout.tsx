@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { ThemeContext } from "src/pages/_document";
 import SocialPane from "./social";
 import { PostInfo } from "src/models/interfaces";
+import News from "./news";
 
 function Layout({
   location,
@@ -41,40 +42,43 @@ function Layout({
         <div style={{ marginBottom: "1em" }}>
           <Link href="/"> &larr; Back to all posts</Link>
         </div>
-        <h3
+        <h1
           style={{
             fontFamily: `Montserrat, sans-serif`,
             marginTop: 0,
           }}
         >
           {title}
-        </h3>
+        </h1>
       </>
     );
   }
   return (
-    <div
-      style={{
-        marginLeft: `auto`,
-        marginRight: `auto`,
-        maxWidth: rhythm(24),
-        padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-      }}
-    >
-      <header>{header}</header>
-      <SocialPane />
-      <main>{children}</main>
+    <>
+      <News></News>
+      <div
+        style={{
+          marginLeft: `auto`,
+          marginRight: `auto`,
+          maxWidth: rhythm(24),
+          padding: `${rhythm(1)} ${rhythm(3 / 4)}`,
+        }}
+      >
+        <header>{header}</header>
+        <SocialPane />
+        <main>{children}</main>
 
-      <footer>
-        <a
-          href="https://pfernandom.github.io"
-          style={{ textDecoration: "underline" }}
-        >
-          Pedro Marquez-Soto
-        </a>{" "}
-        © {new Date().getFullYear()}
-      </footer>
-    </div>
+        <footer>
+          <a
+            href="https://pfernandom.github.io"
+            style={{ textDecoration: "underline" }}
+          >
+            Pedro Marquez-Soto
+          </a>{" "}
+          © {new Date().getFullYear()}
+        </footer>
+      </div>
+    </>
   );
 }
 

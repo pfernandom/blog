@@ -51,6 +51,11 @@ const BlogPlaceholder: NextPage<ErrorParams> = ({ blog, post, posts }) => {
 
   return (
     <>
+      <div className="blog-post-date">
+        &#x1F4C6;{" "}
+        <span className="blog-post-date-text">{post.frontmatter.date}</span>
+      </div>
+
       <DynamicSlot chunk={chunk} />
 
       <ul

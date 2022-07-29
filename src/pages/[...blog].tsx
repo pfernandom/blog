@@ -42,15 +42,12 @@ function DynamicSlot({ chunk }: { chunk: string }) {
 const BlogPlaceholder: NextPage<ErrorParams> = ({ blog, post, posts }) => {
   const router = useRouter();
 
-  console.log({ route: router.query.blog });
   const path: string[] = router.query.blog as string[];
 
   const chunk = path.join("/");
 
   const prevAndNext = getNextAndPrev(posts, post);
   const { prev, next } = prevAndNext;
-
-  console.log({ prev: prev?.slug, next: next?.slug });
 
   return (
     <>

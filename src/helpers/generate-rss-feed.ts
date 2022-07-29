@@ -43,7 +43,7 @@ const generateRssFeed = async () => {
       contributor: [author],
       date: new Date(post.frontmatter.date),
       enclosure: {
-        url: `${siteURL}/${post.frontmatter.hero_image}`,
+        url: `${siteURL}${post.frontmatter.hero_image}`,
       },
     });
   });

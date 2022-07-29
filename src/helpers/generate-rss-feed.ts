@@ -31,22 +31,24 @@ const generateRssFeed = async () => {
     },
     author,
   });
-  posts.forEach((post) => {
-    const url = `${siteURL}/${post.slug}`;
-    feed.addItem({
-      title: post.frontmatter.title,
-      id: url,
-      link: url,
-      description: post.frontmatter.description.join(". "),
-      content: post.frontmatter.description.join(". "),
-      author: [author],
-      contributor: [author],
-      date: new Date(post.frontmatter.date),
-      enclosure: {
-        url: `${siteURL}${post.frontmatter.hero_image}`,
-      },
+  posts
+    .filter((post) => post.frontmatter.published)
+    .forEach((post) => {
+      const url = `${siteURL}/${post.slug}`;
+      feed.addItem({
+        title: post.frontmatter.title,
+        id: url,
+        link: url,
+        description: post.frontmatter.description.join(". "),
+        content: post.frontmatter.description.join(". "),
+        author: [author],
+        contributor: [author],
+        date: new Date(post.frontmatter.date),
+        enclosure: {
+          url: `${siteURL}${post.frontmatter.hero_image}`,
+        },
+      });
     });
-  });
 
   fs.mkdirSync("./public/rss", { recursive: true });
   fs.writeFileSync("./public/rss/feed.xml", feed.rss2());

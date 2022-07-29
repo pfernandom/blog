@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://localhost:8000</id>
+    <title>Pedro's Tech Blog</title>
+    <updated>2022-07-28T23:24:07.196Z</updated>
+    <generator>Feed for Node.js</generator>
+    <author>
+        <name>Pedro Marquez</name>
+        <email>pfernandom@gmail.com</email>
+        <uri>https://twitter.com/pfernandom</uri>
+    </author>
+    <link rel="alternate" href="https://localhost:8000"/>
+    <link rel="self" href="https://localhost:8000/rss/atom.xml"/>
+    <subtitle>A blog about many things, all tech and software related.</subtitle>
+    <logo>https://localhost:8000/logo.svg</logo>
+    <icon>https://localhost:8000/favicon.png</icon>
+    <rights>All rights reserved 2022</rights>
+    <entry>
+        <title type="html"><![CDATA[Streaming HTML responses]]></title>
+        <id>https://localhost:8000/blog/2019/6/html-chunking</id>
+        <link href="https://localhost:8000/blog/2019/6/html-chunking"/>
+        <updated>2019-06-21T05:00:00.000Z</updated>
+        <summary type="html"><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></summary>
+        <content type="html"><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></content>
+        <author>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </author>
+        <contributor>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </contributor>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Weird behavior for matrix created with Array.fill()]]></title>
+        <id>https://localhost:8000/blog/2019/7/array-fill</id>
+        <link href="https://localhost:8000/blog/2019/7/array-fill"/>
+        <updated>2019-07-04T05:00:00.000Z</updated>
+        <summary type="html"><![CDATA[I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??]]></summary>
+        <content type="html"><![CDATA[I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??]]></content>
+        <author>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </author>
+        <contributor>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </contributor>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[What happens when you click on the browser's "back" button?]]></title>
+        <id>https://localhost:8000/blog/2019</id>
+        <link href="https://localhost:8000/blog/2019"/>
+        <updated>2019-08-16T05:00:00.000Z</updated>
+        <summary type="html"><![CDATA[What exactly happens to your web application when a user clicks on their browser's back button?]]></summary>
+        <content type="html"><![CDATA[What exactly happens to your web application when a user clicks on their browser's back button?]]></content>
+        <author>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </author>
+        <contributor>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </contributor>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[The wonderful world of component-based development]]></title>
+        <id>https://localhost:8000/blog/2022/7/component-wonder</id>
+        <link href="https://localhost:8000/blog/2022/7/component-wonder"/>
+        <updated>2022-07-18T05:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Modern front-end development is based in components. Let us explore the wonders of this paradigm.]]></summary>
+        <content type="html"><![CDATA[Modern front-end development is based in components. Let us explore the wonders of this paradigm.]]></content>
+        <author>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </author>
+        <contributor>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </contributor>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Managing state in Flutter apps with data streaming]]></title>
+        <id>https://localhost:8000/blog/2022/7/flutter-app-state</id>
+        <link href="https://localhost:8000/blog/2022/7/flutter-app-state"/>
+        <updated>2022-07-18T05:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Managing state in a Flutter app using data streams and a service locator]]></summary>
+        <content type="html"><![CDATA[Managing state in a Flutter app using data streams and a service locator]]></content>
+        <author>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </author>
+        <contributor>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </contributor>
+    </entry>
+</feed>

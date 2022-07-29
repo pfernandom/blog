@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>Pedro's Tech Blog</title>
+        <link>https://localhost:8000</link>
+        <description>A blog about many things, all tech and software related.</description>
+        <lastBuildDate>Thu, 28 Jul 2022 23:24:07 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>Feed for Node.js</generator>
+        <image>
+            <title>Pedro's Tech Blog</title>
+            <url>https://localhost:8000/logo.svg</url>
+            <link>https://localhost:8000</link>
+        </image>
+        <copyright>All rights reserved 2022</copyright>
+        <item>
+            <title><![CDATA[Streaming HTML responses]]></title>
+            <link>https://localhost:8000/blog/2019/6/html-chunking</link>
+            <guid>https://localhost:8000/blog/2019/6/html-chunking</guid>
+            <pubDate>Fri, 21 Jun 2019 05:00:00 GMT</pubDate>
+            <description><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></description>
+            <content:encoded><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></content:encoded>
+            <author>pfernandom@gmail.com (Pedro Marquez)</author>
+        </item>
+        <item>
+            <title><![CDATA[Weird behavior for matrix created with Array.fill()]]></title>
+            <link>https://localhost:8000/blog/2019/7/array-fill</link>
+            <guid>https://localhost:8000/blog/2019/7/array-fill</guid>
+            <pubDate>Thu, 04 Jul 2019 05:00:00 GMT</pubDate>
+            <description><![CDATA[I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??]]></description>
+            <content:encoded><![CDATA[I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??]]></content:encoded>
+            <author>pfernandom@gmail.com (Pedro Marquez)</author>
+        </item>
+        <item>
+            <title><![CDATA[What happens when you click on the browser's "back" button?]]></title>
+            <link>https://localhost:8000/blog/2019</link>
+            <guid>https://localhost:8000/blog/2019</guid>
+            <pubDate>Fri, 16 Aug 2019 05:00:00 GMT</pubDate>
+            <description><![CDATA[What exactly happens to your web application when a user clicks on their browser's back button?]]></description>
+            <content:encoded><![CDATA[What exactly happens to your web application when a user clicks on their browser's back button?]]></content:encoded>
+            <author>pfernandom@gmail.com (Pedro Marquez)</author>
+        </item>
+        <item>
+            <title><![CDATA[The wonderful world of component-based development]]></title>
+            <link>https://localhost:8000/blog/2022/7/component-wonder</link>
+            <guid>https://localhost:8000/blog/2022/7/component-wonder</guid>
+            <pubDate>Mon, 18 Jul 2022 05:00:00 GMT</pubDate>
+            <description><![CDATA[Modern front-end development is based in components. Let us explore the wonders of this paradigm.]]></description>
+            <content:encoded><![CDATA[Modern front-end development is based in components. Let us explore the wonders of this paradigm.]]></content:encoded>
+            <author>pfernandom@gmail.com (Pedro Marquez)</author>
+        </item>
+        <item>
+            <title><![CDATA[Managing state in Flutter apps with data streaming]]></title>
+            <link>https://localhost:8000/blog/2022/7/flutter-app-state</link>
+            <guid>https://localhost:8000/blog/2022/7/flutter-app-state</guid>
+            <pubDate>Mon, 18 Jul 2022 05:00:00 GMT</pubDate>
+            <description><![CDATA[Managing state in a Flutter app using data streams and a service locator]]></description>
+            <content:encoded><![CDATA[Managing state in a Flutter app using data streams and a service locator]]></content:encoded>
+            <author>pfernandom@gmail.com (Pedro Marquez)</author>
+        </item>
+    </channel>
+</rss>

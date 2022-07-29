@@ -1,0 +1,116 @@
+:root {
+  ---heading-color: #007acc;
+  ---color-highlight: #f2f5ff;
+}
+
+img {
+  padding: 10px;
+  background-color: #ecebeb;
+}
+
+a.social-icon {
+  box-shadow: none;
+}
+
+a.social-icon:hover,
+.circle-image {
+  padding: 0.2em;
+
+  object-fit: cover;
+  border-radius: 50%;
+  opacity: 1;
+}
+
+.circle-image-container {
+  border-radius: 50%;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  overflow: hidden;
+}
+
+.link-post {
+  color: var(---heading-color);
+}
+
+@keyframes onHover {
+  from {
+    background-color: white;
+  }
+  to {
+    background-color: var(---color-highlight);
+  }
+}
+
+@keyframes endHover {
+  from {
+    background-color: var(---color-highlight);
+  }
+  to {
+    background-color: white;
+  }
+}
+
+.link-post-a {
+  padding: 1em;
+  box-shadow: 1px 1px 2px 1px rgb(0 0 0 / 20%);
+  border-radius: 0.2em;
+  cursor: pointer;
+  animation-name: endHover;
+  animation-duration: 0.5s;
+}
+
+.link-post-a:hover {
+  background-color: var(---color-highlight);
+  animation-name: onHover;
+  animation-duration: 0.5s;
+}
+
+.link-post-container {
+  display: grid;
+  grid-template-columns: 100px auto;
+  grid-template-rows: auto;
+  margin-bottom: 2em;
+  align-items: center;
+}
+
+h1 {
+  color: var(---heading-color);
+  filter: brightness(0.6);
+}
+
+h3 {
+  color: var(---heading-color);
+  filter: brightness(0.8);
+}
+
+.news {
+  background-color: gold;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  padding-left: 8em;
+}
+
+@media screen and (max-width: 500px) {
+  .news {
+    padding: 0.2em 1em;
+  }
+
+  .link-post-a {
+    margin-bottom: 0.5em;
+  }
+}
+
+a {
+  color: var(---heading-color);
+}
+
+a:hover {
+  filter: brightness(0.8);
+  text-decoration: underline;
+}
+
+.post-image {
+  box-shadow: 1px 1px 2px 1px rgb(0 0 0 / 20%);
+}

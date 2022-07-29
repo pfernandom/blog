@@ -1,6 +1,6 @@
 [build]
-    publish = "public/"
-    command = "npm run build"
+    publish = "out/"
+    command = "npm run deploy"
 
 [context.production]
   environment = { NODE_VERSION = "16.13.0" }

@@ -1,0 +1,74 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Pedro's Tech Blog",
+    "home_page_url": "https://localhost:8000",
+    "feed_url": "https://localhost:8000/rss/feed.json",
+    "description": "A blog about many things, all tech and software related.",
+    "icon": "https://localhost:8000/logo.svg",
+    "author": {
+        "name": "Pedro Marquez",
+        "url": "https://twitter.com/pfernandom"
+    },
+    "items": [
+        {
+            "id": "https://localhost:8000/blog/2019/6/html-chunking",
+            "content_html": "How does HTML chunking work when streaming HTML files to the browser?",
+            "url": "https://localhost:8000/blog/2019/6/html-chunking",
+            "title": "Streaming HTML responses",
+            "summary": "How does HTML chunking work when streaming HTML files to the browser?",
+            "date_modified": "2019-06-21T05:00:00.000Z",
+            "author": {
+                "name": "Pedro Marquez",
+                "url": "https://twitter.com/pfernandom"
+            }
+        },
+        {
+            "id": "https://localhost:8000/blog/2019/7/array-fill",
+            "content_html": "I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??",
+            "url": "https://localhost:8000/blog/2019/7/array-fill",
+            "title": "Weird behavior for matrix created with Array.fill()",
+            "summary": "I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??",
+            "date_modified": "2019-07-04T05:00:00.000Z",
+            "author": {
+                "name": "Pedro Marquez",
+                "url": "https://twitter.com/pfernandom"
+            }
+        },
+        {
+            "id": "https://localhost:8000/blog/2019",
+            "content_html": "What exactly happens to your web application when a user clicks on their browser's back button?",
+            "url": "https://localhost:8000/blog/2019",
+            "title": "What happens when you click on the browser's \"back\" button?",
+            "summary": "What exactly happens to your web application when a user clicks on their browser's back button?",
+            "date_modified": "2019-08-16T05:00:00.000Z",
+            "author": {
+                "name": "Pedro Marquez",
+                "url": "https://twitter.com/pfernandom"
+            }
+        },
+        {
+            "id": "https://localhost:8000/blog/2022/7/component-wonder",
+            "content_html": "Modern front-end development is based in components. Let us explore the wonders of this paradigm.",
+            "url": "https://localhost:8000/blog/2022/7/component-wonder",
+            "title": "The wonderful world of component-based development",
+            "summary": "Modern front-end development is based in components. Let us explore the wonders of this paradigm.",
+            "date_modified": "2022-07-18T05:00:00.000Z",
+            "author": {
+                "name": "Pedro Marquez",
+                "url": "https://twitter.com/pfernandom"
+            }
+        },
+        {
+            "id": "https://localhost:8000/blog/2022/7/flutter-app-state",
+            "content_html": "Managing state in a Flutter app using data streams and a service locator",
+            "url": "https://localhost:8000/blog/2022/7/flutter-app-state",
+            "title": "Managing state in Flutter apps with data streaming",
+            "summary": "Managing state in a Flutter app using data streams and a service locator",
+            "date_modified": "2022-07-18T05:00:00.000Z",
+            "author": {
+                "name": "Pedro Marquez",
+                "url": "https://twitter.com/pfernandom"
+            }
+        }
+    ]
+}

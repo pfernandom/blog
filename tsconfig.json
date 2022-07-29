@@ -1,0 +1,67 @@
+{
+  "ts-node": {
+    // these options are overrides used only by ts-node
+    // same as the --compilerOptions flag and the TS_NODE_COMPILER_OPTIONS environment variable
+    "compilerOptions": {
+      "module": "CommonJS",
+      "isolatedModules": false
+    },
+    "include": [
+      "next-env.d.ts",
+      "**/*.ts",
+      "**/*.tsx",
+      "src/**/*.tsx",
+      "scripts/gen-imports.mts"
+    ],
+    "exclude": [
+      "node_modules",
+    ]
+  },
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "components": [
+        "./src/components"
+      ],
+      "pages": [
+        "./src/pages"
+      ],
+      "helpers": [
+        "./src/helpers"
+      ],
+      "models": [
+        "./src/models"
+      ]
+    },
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/**/*.tsx",
+    "scripts/gen-imports.mts",
+    "scripts/gen-imports.tts"
+  ],
+  "exclude": [
+    "node_modules",
+    "./scripts"
+  ]
+}

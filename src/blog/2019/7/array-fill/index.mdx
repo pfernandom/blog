@@ -1,0 +1,78 @@
+---
+title: Weird behavior for matrix created with Array.fill()
+date: "2019-07-04T12:00:03.284Z"
+description:
+  [
+    "I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??",
+  ]
+published: true
+hero_image: "./hero.png"
+hero_image_alt: "Hero image for the post"
+---
+
+I was using JavaScript for completing some Leetcode challenges and I got some pretty weird behavior.
+
+I tried to create a matrix (a two-dimension array, or array of arrays), initialize it with `false` and then use it in some backtracking problem. I did something like this:
+
+```javascript
+// Initialize a 3x4 matrix with "false" values.
+const matrix = Array(3).fill(Array(4).fill(false));
+
+// some stringify to capture the actual values at this point of the execution
+console.log(JSON.stringify(matrix));
+
+// set middle value to true
+matrix[1][1] = true;
+
+console.log(JSON.stringify(matrix));
+```
+
+And my console prints this:
+
+```javascript
+[
+  [false, false, false, false],
+  [false, false, false, false],
+  [false, false, false, false],
+][
+  ([false, true, false, false],
+  [false, true, false, false],
+  [false, true, false, false])
+];
+```
+
+Wait, what? If I only set the value at 1,1 to **true**, why am I getting changed values in the whole column?
+
+Well, this is because the parameter passed to `Array.fill()` is not really a callback. It only gets evaluated once, and its used for filling all the elements in the array.
+
+So, in this case, we have only two arrays. The array `A` (`Array(3)`), which has 3 elements, and array `B` (`Array(4)`) which has 4 elements.
+
+`Array(4)` creates array `B`, and `B` is passed as parameter to the `Array(3).fill(B)`.
+
+To be clearer, this is what we are actually doing, broken into more steps:
+
+```javascript
+const B = Array(4).fill(false);
+const A = Array(3).fill(B);
+const matrix = A;
+```
+
+As we can see, we're filling `A` with the same reference of `B`, three times. Any changes to `B` will be reflected in each element of `A`.
+
+### How do we fix it?
+
+Try this instead:
+
+```javascript
+const matrix = Array(3)
+  .fill()
+  .map((el) => Array(4).fill(false));
+```
+
+This will create array `A`, and then use the `map` function to call `Array(4).fill(false)` once per each element of `A`, generating new arrays for each one.
+
+Looking back at why the problem happened, it seems pretty obvious. However, when I was puzzled when it first happened, and I couldn't find any example of anyone else doing the same.
+
+Hope this helps other people.
+
+PS. Happy birthday, USA!

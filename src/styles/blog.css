@@ -41,6 +41,12 @@ a.social-icon:hover,
   overflow: hidden;
 }
 
+.circle-image-empty {
+  height: 100%;
+  width: 100%;
+  background-image: radial-gradient(#f3f3f3 10%, #c4c4c1 80%);
+}
+
 .link-post {
   color: var(---heading-color);
 }
@@ -145,4 +151,15 @@ a.social-icon:hover,
   padding-bottom: 2em;
   padding-left: 0.5em;
   font-style: italic;
+}
+
+.codepen {
+  height: 300px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid;
+  margin: 1em 0;
+  padding: 1em;
 }

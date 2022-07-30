@@ -61,7 +61,7 @@ const getAllFiles = function (
   return arrayOfFiles;
 };
 
-export function getPostByFileInfo(slugFile: FileInfo): PostInfo {
+export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
   const curDirRelative = join(process.cwd(), "src");
   const fileContents = fs.readFileSync(
     join(curDirRelative, slugFile.filePath),
@@ -70,6 +70,9 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo {
 
   const { data, content } = matter(fileContents);
   const publicPath = join("/opt_images/", slugFile?.dirPath);
+  if (!data.published) {
+    return null;
+  }
 
   const date = format(parseISO(data.date), "MMMM dd, yyyy");
   const {
@@ -115,7 +118,10 @@ export function getAllPosts() {
   const curDirRelative = join(process.cwd(), "src");
   const slugs = getAllFiles(curDir, /.mdx?$/gi, [], curDirRelative);
 
-  const posts: Array<PostInfo> = slugs.map((slug) => getPostByFileInfo(slug));
+  const posts: Array<PostInfo> = slugs
+    .map((slug) => getPostByFileInfo(slug))
+    .filter((post) => post != null)
+    .map((post) => post as PostInfo);
 
   return posts;
 }

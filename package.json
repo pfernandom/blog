@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 8000",
-    "build": "npm run resize && npm run gen-imports && next build",
-    "deploy": "npm run resize && npm run gen-imports && next build && next export",
+    "build": "npm run resize  && next build",
+    "deploy": "npm run resize  && next build && next export",
     "start": "next start",
     "lint": "next lint",
     "resize": "npx ts-node  -O '{\"module\":\"commonjs\"}' ./scripts/resize.ts ",
     "gen-imports": "npx ts-node  --project tsconfig-dev.json ./scripts/gen-imports.ts",
-    "static-serve": "sh ./scripts/static.sh"
+    "static-serve": "sh ./scripts/static.sh",
+    "resize-image": "npx ts-node ./scripts/resize-image.ts"
   },
   "dependencies": {
     "@mapbox/rehype-prism": "^0.8.0",
@@ -47,11 +48,13 @@
     "@types/react-helmet": "^6.1.5",
     "@types/sharp": "^0.30.4",
     "@types/typography": "^0.16.4",
+    "@types/yargs": "^17.0.10",
     "eslint": "8.20.0",
     "eslint-config-next": "12.2.3",
+    "nodemon": "^2.0.19",
     "sharp": "^0.30.7",
     "ts-node": "^10.9.1",
     "typescript": "4.7.4",
-    "nodemon": "^2.0.19"
+    "yargs": "^17.5.1"
   }
 }

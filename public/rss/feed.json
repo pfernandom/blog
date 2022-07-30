@@ -35,24 +35,12 @@
             }
         },
         {
-            "id": "https://localhost:8000/blog/2019",
-            "content_html": "What exactly happens to your web application when a user clicks on their browser's back button?",
-            "url": "https://localhost:8000/blog/2019",
-            "title": "What happens when you click on the browser's \"back\" button?",
-            "summary": "What exactly happens to your web application when a user clicks on their browser's back button?",
-            "date_modified": "2019-08-16T05:00:00.000Z",
-            "author": {
-                "name": "Pedro Marquez",
-                "url": "https://twitter.com/pfernandom"
-            }
-        },
-        {
-            "id": "https://localhost:8000/blog/2022/7/component-wonder",
-            "content_html": "Modern front-end development is based in components. Let us explore the wonders of this paradigm.",
-            "url": "https://localhost:8000/blog/2022/7/component-wonder",
-            "title": "The wonderful world of component-based development",
-            "summary": "Modern front-end development is based in components. Let us explore the wonders of this paradigm.",
-            "date_modified": "2022-07-18T05:00:00.000Z",
+            "id": "https://localhost:8000/blog/2022/7/dark-mode-css",
+            "content_html": "Native CSS variables make it really easy to build themes for our site, including 'dark mode'. In this post we describe how to enable themes with just CSS and HTML, no dependencies needed.",
+            "url": "https://localhost:8000/blog/2022/7/dark-mode-css",
+            "title": "Building a dark-mode theme with CSS variables",
+            "summary": "Native CSS variables make it really easy to build themes for our site, including 'dark mode'. In this post we describe how to enable themes with just CSS and HTML, no dependencies needed.",
+            "date_modified": "2022-07-29T05:00:00.000Z",
             "author": {
                 "name": "Pedro Marquez",
                 "url": "https://twitter.com/pfernandom"

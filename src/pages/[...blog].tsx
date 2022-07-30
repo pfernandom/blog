@@ -7,6 +7,8 @@ import m from "src/imports";
 import dynamic, { Loader } from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Head from "next/head";
+import Image from "src/components/image";
 
 export function getNextAndPrev(posts: Array<PostInfo>, currentPost: PostInfo) {
   const filtered = posts.filter((p) => p.frontmatter.published);
@@ -30,7 +32,7 @@ type ErrorParams = {
 };
 
 function DynamicSlot({ chunk }: { chunk: string }) {
-  const DynamicBlogPost = useMemo(() => dynamic(m[chunk] as Loader), [chunk]);
+  const DynamicBlogPost = useMemo(() => dynamic(m(chunk) as Loader), [chunk]);
 
   return (
     <Suspense fallback="Loading">
@@ -49,8 +51,27 @@ const BlogPlaceholder: NextPage<ErrorParams> = ({ blog, post, posts }) => {
   const prevAndNext = getNextAndPrev(posts, post);
   const { prev, next } = prevAndNext;
 
+  // const heroImg = dynamic(
+  //   import(
+  //     `${post.frontmatter.hero_image
+  //       .replace("/opt_images", "src")
+  //       .replace("webp", "jpeg")}`
+  //   )
+  // );
+
   return (
     <>
+      <Head>
+        <script
+          async
+          src="https://cpwebassets.codepen.io/assets/embed/ei.js"
+        ></script>
+      </Head>
+
+      {/* <Suspense>
+        <Image src={heroImg} alt="Herro image"></Image>
+      </Suspense> */}
+
       <div className="blog-post-date">
         &#x1F4C6;{" "}
         <span className="blog-post-date-text">{post.frontmatter.date}</span>

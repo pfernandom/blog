@@ -54,11 +54,11 @@ const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
                   router.prefetch(post.slug);
                 }}
               >
-                {post.frontmatter.hero_image && (
-                  <div
-                    style={{ width: 70, height: 70 }}
-                    className="circle-image-container"
-                  >
+                <div
+                  style={{ width: 70, height: 70 }}
+                  className="circle-image-container"
+                >
+                  {post.frontmatter.hero_image ? (
                     <Image
                       src={image}
                       className="circle-image"
@@ -69,8 +69,11 @@ const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
                       height={70}
                       objectFit="cover"
                     />
-                  </div>
-                )}
+                  ) : (
+                    <div className="circle-image-empty"></div>
+                  )}
+                </div>
+
                 <div className="link-content">
                   <h3
                     className="link-post"

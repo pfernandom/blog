@@ -35,6 +35,26 @@ function MyApp({
                 site: "@site",
                 cardType: "summary_large_image",
               }}
+              openGraph={{
+                title: "Pedro's blog",
+                description:
+                  "I am a full-stack software developer with a Master of Science in Computer Science and Machine Learning. I have more than 10 years of professional experience in multiple roles that cover application security, back-end, front-end development, and infrastructure development. I currently work as a full-stack engineer at LinkedIn.",
+                url: "https://pfernandom.github.io",
+                type: "profile",
+                profile: {
+                  firstName: "Pedro",
+                  lastName: "Marquez-Soto",
+                  gender: "male",
+                },
+                images: [
+                  {
+                    url: "https://pedromarquez.dev/profile-pic.jpg]",
+                    width: 850,
+                    height: 650,
+                    alt: "Profile Photo",
+                  },
+                ],
+              }}
             />
             <Layout
               location="/"

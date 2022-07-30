@@ -59,7 +59,7 @@ const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
       <BlogPostSEO
         url={getPageUrl(post.slug)}
         images={[getPageUrl(post.frontmatter.hero_image, true)]}
-        author={""}
+        author={"Pedro Marquez-Soto"}
         {...post.frontmatter}
       ></BlogPostSEO>
 

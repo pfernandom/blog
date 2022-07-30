@@ -9,6 +9,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "src/components/image";
+import ShareButtons from "src/components/share-buttons";
+import { ArticleJsonLd, DefaultSeo } from "next-seo";
 
 export function getNextAndPrev(posts: Array<PostInfo>, currentPost: PostInfo) {
   const filtered = posts.filter((p) => p.frontmatter.published);
@@ -29,20 +31,31 @@ type ErrorParams = {
   blog: Array<string>;
   post: PostInfo;
   posts: PostInfo[];
+  host: string;
 };
 
 function DynamicSlot({ chunk }: { chunk: string }) {
   const DynamicBlogPost = useMemo(() => dynamic(m(chunk) as Loader), [chunk]);
 
   return (
-    <Suspense fallback="Loading">
+    <div className="blog-post-content">
       <DynamicBlogPost />
-    </Suspense>
+    </div>
   );
 }
 
-const BlogPlaceholder: NextPage<ErrorParams> = ({ blog, post, posts }) => {
+const BlogPlaceholder: NextPage<ErrorParams> = ({
+  post,
+  posts,
+  host,
+  metadata,
+}) => {
   const router = useRouter();
+
+  function getPageUrl(slug: string, hasTrailingSlash: boolean = false) {
+    const path = hasTrailingSlash ? slug.slice(1) : slug;
+    return [host, "/", path].join("");
+  }
 
   const path: string[] = router.query.blog as string[];
 
@@ -60,7 +73,7 @@ const BlogPlaceholder: NextPage<ErrorParams> = ({ blog, post, posts }) => {
   // );
 
   return (
-    <>
+    <div>
       <Head>
         <script
           async
@@ -68,13 +81,29 @@ const BlogPlaceholder: NextPage<ErrorParams> = ({ blog, post, posts }) => {
         ></script>
       </Head>
 
-      {/* <Suspense>
-        <Image src={heroImg} alt="Herro image"></Image>
-      </Suspense> */}
+      <ArticleJsonLd
+        type="Blog"
+        url={getPageUrl(post.slug)}
+        title={post.frontmatter.title}
+        images={[getPageUrl(post.frontmatter.hero_image, true)]}
+        datePublished={post.frontmatter.date}
+        dateModified={post.frontmatter.date}
+        authorName={metadata.title}
+        description={post.frontmatter.description.join(". ")}
+      />
 
-      <div className="blog-post-date">
-        &#x1F4C6;{" "}
-        <span className="blog-post-date-text">{post.frontmatter.date}</span>
+      <div className="blog-post-actions">
+        <div className="blog-post-date">
+          &#x1F4C6;{" "}
+          <span className="blog-post-date-text">{post.frontmatter.date}</span>
+        </div>
+
+        <ShareButtons
+          title={post.frontmatter.title}
+          url={getPageUrl(post.slug)}
+          author="Pedro Marquez"
+          description={post.frontmatter.description.join(". ")}
+        ></ShareButtons>
       </div>
 
       <DynamicSlot chunk={chunk} />
@@ -85,6 +114,7 @@ const BlogPlaceholder: NextPage<ErrorParams> = ({ blog, post, posts }) => {
           flexWrap: `wrap`,
           justifyContent: `space-between`,
           listStyle: `none`,
+          marginTop: "3em",
           padding: 0,
         }}
       >
@@ -103,27 +133,27 @@ const BlogPlaceholder: NextPage<ErrorParams> = ({ blog, post, posts }) => {
           )}
         </li>
       </ul>
-    </>
+    </div>
   );
 };
 
 export default BlogPlaceholder;
 
 export async function getStaticProps({ params }: { params: ErrorParams }) {
-  console.log("nav");
-
   const posts: Array<PostInfo> = getAllPosts();
 
   const selectedPost = posts.find((post: PostInfo) => {
     return post.slug.includes(params.blog?.join("/"));
   });
 
+  const host = process.env["SITE_URL"];
   return {
     props: {
       metadata: selectedPost?.frontmatter ?? {},
       blog: params.blog ?? [],
       post: selectedPost ?? {},
       posts: posts ?? [],
+      host,
     },
   };
 }

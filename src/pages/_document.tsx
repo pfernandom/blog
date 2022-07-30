@@ -48,11 +48,6 @@ class MyDocument extends Document {
           gtag('config', 'G-XV91RNV97M');
         `}
           </Script>
-
-          <meta
-            name="keywords"
-            content="java, dart, flutter, javascript, react, software development, pedro marquez"
-          />
         </Head>
         <ThemeContext.Provider value="dark">
           <Main />

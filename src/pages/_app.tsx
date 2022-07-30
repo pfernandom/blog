@@ -13,6 +13,7 @@ import MDXComponentsDef from "src/components/mdx-components";
 import News from "src/components/news";
 import { ThemeContext } from "./_document";
 import { PostInfo } from "src/models/interfaces";
+import { DefaultSeo } from "next-seo";
 
 function MyApp({
   Component,
@@ -26,7 +27,15 @@ function MyApp({
       {(value) => {
         return (
           <MDXProvider components={MDXComponentsDef}>
-            {/* <HelmetProvider context={this.helmetContext}> */}
+            <DefaultSeo
+              title={pageProps.metadata.title}
+              description={pageProps.metadata.description}
+              twitter={{
+                handle: "@pfernandom",
+                site: "@site",
+                cardType: "summary_large_image",
+              }}
+            />
             <Layout
               location="/"
               theme={value}

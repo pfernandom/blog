@@ -11,7 +11,6 @@ const MDXComponentsDef: import("mdx/types").MDXComponents = {
   a: (props: {}): ReactElement => <a {...props} />,
   h1: (props): ReactElement => <h1 {...props} />,
   img: (props): ReactElement => {
-    console.log({ MDXComponentsDef: props });
     return (
       <Image {...(props as ImageProps)} layout="fill" placeholder="empty" />
     );

@@ -24,6 +24,7 @@
     "http-server": "^14.1.1",
     "lowlight": "^2.7.0",
     "next": "12.2.3",
+    "next-seo": "^5.5.0",
     "prismjs": "^1.16.0",
     "react": "^18.2.0",
     "react-dom": "18.2.0",

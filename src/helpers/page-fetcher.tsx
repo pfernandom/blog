@@ -81,6 +81,7 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
     hero_image: relativeHero,
     hero_image_alt,
     published,
+    key_words,
   } = data;
 
   const hero_image = relativeHero
@@ -105,6 +106,7 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
       hero_image_blur,
       hero_image_alt: hero_image_alt ?? "",
       date,
+      key_words: parseKeyWords(key_words),
       published,
     },
     content: content
@@ -124,4 +126,10 @@ export function getAllPosts() {
     .map((post) => post as PostInfo);
 
   return posts;
+}
+
+function parseKeyWords(keywords: string) {
+  return keywords
+    .split(/[a-zA-Z0-9],( )+?/gi)
+    .filter((keyword) => keyword.trim().length);
 }

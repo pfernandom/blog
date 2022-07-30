@@ -2,6 +2,7 @@ export interface Post {
   title: string;
   date: string;
   description: Array<string>;
+  key_words: Array<string>;
   hero_image: string;
   hero_image_blur: string;
   hero_image_alt: string;

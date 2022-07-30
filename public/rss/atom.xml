@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://localhost:8000</id>
+    <id>https://pedromarquez.dev</id>
     <title>Pedro's Tech Blog</title>
-    <updated>2022-07-30T00:34:23.975Z</updated>
+    <updated>2022-07-30T16:24:54.900Z</updated>
     <generator>Feed for Node.js</generator>
     <author>
         <name>Pedro Marquez</name>
         <email>pfernandom@gmail.com</email>
         <uri>https://twitter.com/pfernandom</uri>
     </author>
-    <link rel="alternate" href="https://localhost:8000"/>
-    <link rel="self" href="https://localhost:8000/rss/atom.xml"/>
-    <subtitle>A blog about many things, all tech and software related.</subtitle>
-    <logo>https://localhost:8000/logo.svg</logo>
-    <icon>https://localhost:8000/favicon.png</icon>
+    <link rel="alternate" href="https://pedromarquez.dev"/>
+    <link rel="self" href="https://pedromarquez.dev/rss/atom.xml"/>
+    <subtitle>A blog about software development: JavaScript, Java, Flutter, and everything I find out there that may be cool</subtitle>
+    <logo>https://pedromarquez.dev/logo.svg</logo>
+    <icon>https://pedromarquez.dev/favicon.png</icon>
     <rights>All rights reserved 2022</rights>
     <entry>
         <title type="html"><![CDATA[Streaming HTML responses]]></title>
-        <id>https://localhost:8000/blog/2019/6/html-chunking</id>
-        <link href="https://localhost:8000/blog/2019/6/html-chunking"/>
+        <id>https://pedromarquez.dev/blog/2019/6/html-chunking</id>
+        <link href="https://pedromarquez.dev/blog/2019/6/html-chunking"/>
         <updated>2019-06-21T05:00:00.000Z</updated>
         <summary type="html"><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></summary>
         <content type="html"><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></content>
@@ -35,8 +35,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Weird behavior for matrix created with Array.fill()]]></title>
-        <id>https://localhost:8000/blog/2019/7/array-fill</id>
-        <link href="https://localhost:8000/blog/2019/7/array-fill"/>
+        <id>https://pedromarquez.dev/blog/2019/7/array-fill</id>
+        <link href="https://pedromarquez.dev/blog/2019/7/array-fill"/>
         <updated>2019-07-04T05:00:00.000Z</updated>
         <summary type="html"><![CDATA[I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??]]></summary>
         <content type="html"><![CDATA[I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??]]></content>
@@ -53,8 +53,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Building a dark-mode theme with CSS variables]]></title>
-        <id>https://localhost:8000/blog/2022/7/dark-mode-css</id>
-        <link href="https://localhost:8000/blog/2022/7/dark-mode-css"/>
+        <id>https://pedromarquez.dev/blog/2022/7/dark-mode-css</id>
+        <link href="https://pedromarquez.dev/blog/2022/7/dark-mode-css"/>
         <updated>2022-07-29T05:00:00.000Z</updated>
         <summary type="html"><![CDATA[Native CSS variables make it really easy to build themes for our site, including 'dark mode'. In this post we describe how to enable themes with just CSS and HTML, no dependencies needed.]]></summary>
         <content type="html"><![CDATA[Native CSS variables make it really easy to build themes for our site, including 'dark mode'. In this post we describe how to enable themes with just CSS and HTML, no dependencies needed.]]></content>
@@ -71,8 +71,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Managing state in Flutter apps with data streaming]]></title>
-        <id>https://localhost:8000/blog/2022/7/flutter-app-state</id>
-        <link href="https://localhost:8000/blog/2022/7/flutter-app-state"/>
+        <id>https://pedromarquez.dev/blog/2022/7/flutter-app-state</id>
+        <link href="https://pedromarquez.dev/blog/2022/7/flutter-app-state"/>
         <updated>2022-07-18T05:00:00.000Z</updated>
         <summary type="html"><![CDATA[Managing state in a Flutter app using data streams and a service locator]]></summary>
         <content type="html"><![CDATA[Managing state in a Flutter app using data streams and a service locator]]></content>

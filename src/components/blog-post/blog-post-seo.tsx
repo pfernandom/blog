@@ -35,6 +35,7 @@ export default function BlogPostSEO({
       <Head>
         {images.map((image) => (
           <meta
+            prefix="og: http://ogp.me/ns#"
             key="image"
             name="image"
             property="og:image"
@@ -57,7 +58,7 @@ export default function BlogPostSEO({
         canonical="https://www.canonical.ie/"
         openGraph={{
           title,
-          description: description.join(". "),
+          description: description.join(". ").slice(0, 95) + "...",
           url,
           type: "article",
           article: {

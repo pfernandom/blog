@@ -53,7 +53,8 @@ export default function ShareButtons({
   }
 
   useEffect(() => {
-    if (navigator.share) {
+    const share = navigator.share;
+    if (share) {
       <SocialIcon
         className="expand-button"
         network="sharethis"

@@ -1,16 +1,16 @@
-import React, { Suspense, useMemo, useEffect } from "react";
+import React from "react";
 
 import { NextPage } from "next";
-import { Metadata, PostInfo } from "../models/interfaces";
-import { getAllPosts } from "src/helpers/page-fetcher";
-import m from "src/imports";
-import dynamic, { Loader } from "next/dynamic";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Head from "next/head";
-import Image from "src/components/image";
-import ShareButtons from "src/components/share-buttons";
-import { ArticleJsonLd, DefaultSeo } from "next-seo";
+import BlogPostActions from "src/components/blog-post/blog-post-actions";
+import BlogPostSEO from "src/components/blog-post/blog-post-seo";
+import { getAllPosts } from "src/helpers/page-fetcher";
+import urlGetterFactory from "src/helpers/url-getter-factory";
+import { Metadata, PostInfo } from "../models/interfaces";
+import DynamicSlot from "src/components/blog-post/blog-post-dynamic-slot";
+import BlogPostFooter from "src/components/blog-post/blog-post-footer";
 
 export function getNextAndPrev(posts: Array<PostInfo>, currentPost: PostInfo) {
   const filtered = posts.filter((p) => p.frontmatter.published);
@@ -26,7 +26,7 @@ export function getNextAndPrev(posts: Array<PostInfo>, currentPost: PostInfo) {
   return { prev, next };
 }
 
-type ErrorParams = {
+type BlogPlaceholderParams = {
   metadata: Metadata;
   blog: Array<string>;
   post: PostInfo;
@@ -34,43 +34,18 @@ type ErrorParams = {
   host: string;
 };
 
-function DynamicSlot({ chunk }: { chunk: string }) {
-  const DynamicBlogPost = useMemo(() => dynamic(m(chunk) as Loader), [chunk]);
-
-  return (
-    <div className="blog-post-content">
-      <DynamicBlogPost />
-    </div>
-  );
-}
-
-const BlogPlaceholder: NextPage<ErrorParams> = ({
+const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
   post,
   posts,
   host,
-  metadata,
 }) => {
   const router = useRouter();
-
-  function getPageUrl(slug: string, hasTrailingSlash: boolean = false) {
-    const path = hasTrailingSlash ? slug.slice(1) : slug;
-    return [host, "/", path].join("");
-  }
-
   const path: string[] = router.query.blog as string[];
-
+  const getPageUrl = urlGetterFactory(host);
   const chunk = path.join("/");
 
   const prevAndNext = getNextAndPrev(posts, post);
   const { prev, next } = prevAndNext;
-
-  // const heroImg = dynamic(
-  //   import(
-  //     `${post.frontmatter.hero_image
-  //       .replace("/opt_images", "src")
-  //       .replace("webp", "jpeg")}`
-  //   )
-  // );
 
   return (
     <div>
@@ -81,65 +56,29 @@ const BlogPlaceholder: NextPage<ErrorParams> = ({
         ></script>
       </Head>
 
-      <ArticleJsonLd
-        type="Blog"
+      <BlogPostSEO
         url={getPageUrl(post.slug)}
-        title={post.frontmatter.title}
         images={[getPageUrl(post.frontmatter.hero_image, true)]}
-        datePublished={post.frontmatter.date}
-        dateModified={post.frontmatter.date}
-        authorName={metadata.title}
-        description={post.frontmatter.description.join(". ")}
-      />
+        author={""}
+        {...post.frontmatter}
+      ></BlogPostSEO>
 
-      <div className="blog-post-actions">
-        <div className="blog-post-date">
-          &#x1F4C6;{" "}
-          <span className="blog-post-date-text">{post.frontmatter.date}</span>
-        </div>
-
-        <ShareButtons
-          title={post.frontmatter.title}
-          url={getPageUrl(post.slug)}
-          author="Pedro Marquez"
-          description={post.frontmatter.description.join(". ")}
-        ></ShareButtons>
-      </div>
+      <BlogPostActions host={host} {...post} />
 
       <DynamicSlot chunk={chunk} />
 
-      <ul
-        style={{
-          display: `flex`,
-          flexWrap: `wrap`,
-          justifyContent: `space-between`,
-          listStyle: `none`,
-          marginTop: "3em",
-          padding: 0,
-        }}
-      >
-        <li style={{ flexBasis: "40%" }}>
-          {prev && (
-            <Link href={prev.slug}>
-              <span> ← {prev.frontmatter.title} </span>
-            </Link>
-          )}
-        </li>
-        <li style={{ flexBasis: "40%" }}>
-          {next && (
-            <Link href={next.slug}>
-              <span>{next.frontmatter.title} →</span>
-            </Link>
-          )}
-        </li>
-      </ul>
+      <BlogPostFooter prev={prev} next={next} />
     </div>
   );
 };
 
 export default BlogPlaceholder;
 
-export async function getStaticProps({ params }: { params: ErrorParams }) {
+export async function getStaticProps({
+  params,
+}: {
+  params: BlogPlaceholderParams;
+}) {
   const posts: Array<PostInfo> = getAllPosts();
 
   const selectedPost = posts.find((post: PostInfo) => {

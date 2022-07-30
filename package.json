@@ -11,7 +11,8 @@
     "resize": "npx ts-node  -O '{\"module\":\"commonjs\"}' ./scripts/resize.ts ",
     "gen-imports": "npx ts-node  --project tsconfig-dev.json ./scripts/gen-imports.ts",
     "static-serve": "sh ./scripts/static.sh",
-    "resize-image": "npx ts-node ./scripts/resize-image.ts"
+    "resize-image": "npx ts-node ./scripts/resize-image.ts",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@mapbox/rehype-prism": "^0.8.0",
@@ -52,6 +53,7 @@
     "@types/yargs": "^17.0.10",
     "eslint": "8.20.0",
     "eslint-config-next": "12.2.3",
+    "husky": "^8.0.1",
     "nodemon": "^2.0.19",
     "sharp": "^0.30.7",
     "ts-node": "^10.9.1",

@@ -28,8 +28,8 @@ function MyApp({
         return (
           <MDXProvider components={MDXComponentsDef}>
             <DefaultSeo
-              title={pageProps.metadata.title}
-              description={pageProps.metadata.description}
+              title={pageProps.metadata?.title}
+              description={pageProps.metadata?.description}
               twitter={{
                 handle: "@pfernandom",
                 site: "@site",

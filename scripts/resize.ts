@@ -51,6 +51,27 @@ function main() {
   const files = getAllFiles(postsDirectory, regexExt, []);
   console.log({ files });
 
+  const optimizedRegex = /\.(webp)$/gi;
+  const optimizedImages = getAllFiles(postsDirectory, optimizedRegex, []);
+
+  optimizedImages.forEach(
+    ({ fileName, filePath: fileRelativePath, dirPath }) => {
+      const filePath = path.join(postsDirectory, fileRelativePath);
+      const saveDirPath = path.join(
+        process.cwd(),
+        "public",
+        "opt_images",
+        "blog",
+        dirPath
+      );
+      fs.mkdirSync(saveDirPath, {
+        recursive: true,
+      });
+
+      fs.copyFileSync(filePath, path.join(saveDirPath, fileName));
+    }
+  );
+
   files.forEach(({ fileName, filePath: fileRelativePath, dirPath }) => {
     const filePath = path.join(postsDirectory, fileRelativePath);
     const saveDirPath = path.join(
@@ -63,6 +84,9 @@ function main() {
     fs.mkdirSync(saveDirPath, {
       recursive: true,
     });
+
+    optimizedImages;
+
     sharp(filePath)
       .metadata()
       .then(({ width }) => {

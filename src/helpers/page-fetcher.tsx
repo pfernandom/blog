@@ -82,6 +82,9 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
     hero_image_alt,
     published,
     key_words,
+    social_title,
+    social_subtitle,
+    social_footer,
   } = data;
 
   const hero_image = relativeHero
@@ -108,6 +111,10 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
       date,
       key_words: parseKeyWords(key_words),
       published,
+      social_title: social_title ?? title,
+      social_subtitle: social_subtitle ?? description[0],
+      social_footer:
+        social_footer ?? "Visit pedromarquez.dev for the full post",
     },
     content: content
       .replaceAll("](./", `](${publicPath}/`)
@@ -125,6 +132,11 @@ export function getAllPosts() {
     .filter((post) => post != null)
     .map((post) => post as PostInfo);
 
+  posts.sort(
+    (a, b) =>
+      new Date(b.frontmatter.date).getTime() -
+      new Date(a.frontmatter.date).getTime()
+  );
   return posts;
 }
 

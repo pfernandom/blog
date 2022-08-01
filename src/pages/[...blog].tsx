@@ -2,7 +2,7 @@ import React from "react";
 
 import { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
+import Script from "next/script";
 import { useRouter } from "next/router";
 import BlogPostActions from "src/components/blog-post/blog-post-actions";
 import BlogPostSEO from "src/components/blog-post/blog-post-seo";
@@ -49,12 +49,7 @@ const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
 
   return (
     <div>
-      <Head>
-        <script
-          async
-          src="https://cpwebassets.codepen.io/assets/embed/ei.js"
-        ></script>
-      </Head>
+      <Script src="https://cpwebassets.codepen.io/assets/embed/ei.js"></Script>
 
       <BlogPostSEO
         url={getPageUrl(post.slug)}

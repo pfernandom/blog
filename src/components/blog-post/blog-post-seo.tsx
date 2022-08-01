@@ -55,7 +55,7 @@ export default function BlogPostSEO({
       />
 
       <NextSeo
-        canonical="https://www.canonical.ie/"
+        canonical={url}
         openGraph={{
           title,
           description: description.join(". ").slice(0, 95) + "...",

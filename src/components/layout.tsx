@@ -56,17 +56,10 @@ function Layout({
   return (
     <>
       <News></News>
-      <div
-        style={{
-          marginLeft: `auto`,
-          marginRight: `auto`,
-          maxWidth: rhythm(24),
-          padding: `${rhythm(1)} ${rhythm(3 / 4)}`,
-        }}
-      >
+      <div className="layout-content">
         <header>{header}</header>
         <SocialPane />
-        <main>{children}</main>
+        <main className="main">{children}</main>
 
         <footer>
           <a

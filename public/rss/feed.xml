@@ -4,7 +4,7 @@
         <title>Pedro's Tech Blog</title>
         <link>https://pedromarquez.dev</link>
         <description>A blog about software development: JavaScript, Java, Flutter, and everything I find out there that may be cool</description>
-        <lastBuildDate>Sat, 30 Jul 2022 19:40:51 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 01 Aug 2022 21:27:47 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -13,26 +13,6 @@
             <link>https://pedromarquez.dev</link>
         </image>
         <copyright>All rights reserved 2022</copyright>
-        <item>
-            <title><![CDATA[Streaming HTML responses]]></title>
-            <link>https://pedromarquez.dev/blog/2019/6/html-chunking</link>
-            <guid>https://pedromarquez.dev/blog/2019/6/html-chunking</guid>
-            <pubDate>Fri, 21 Jun 2019 05:00:00 GMT</pubDate>
-            <description><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></description>
-            <content:encoded><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></content:encoded>
-            <author>pfernandom@gmail.com (Pedro Marquez)</author>
-            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2019/6/html-chunking/hero.webp"/>
-        </item>
-        <item>
-            <title><![CDATA[Weird behavior for matrix created with Array.fill()]]></title>
-            <link>https://pedromarquez.dev/blog/2019/7/array-fill</link>
-            <guid>https://pedromarquez.dev/blog/2019/7/array-fill</guid>
-            <pubDate>Thu, 04 Jul 2019 05:00:00 GMT</pubDate>
-            <description><![CDATA[I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??]]></description>
-            <content:encoded><![CDATA[I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??]]></content:encoded>
-            <author>pfernandom@gmail.com (Pedro Marquez)</author>
-            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2019/7/array-fill/hero.webp"/>
-        </item>
         <item>
             <title><![CDATA[Building a dark-mode theme with CSS variables]]></title>
             <link>https://pedromarquez.dev/blog/2022/7/dark-mode-css</link>
@@ -52,6 +32,26 @@
             <content:encoded><![CDATA[Managing state in a Flutter app using data streams and a service locator]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
             <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/7/flutter-app-state/hero.webp"/>
+        </item>
+        <item>
+            <title><![CDATA[Weird behavior for matrix created with Array.fill()]]></title>
+            <link>https://pedromarquez.dev/blog/2019/7/array-fill</link>
+            <guid>https://pedromarquez.dev/blog/2019/7/array-fill</guid>
+            <pubDate>Thu, 04 Jul 2019 05:00:00 GMT</pubDate>
+            <description><![CDATA[I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??]]></description>
+            <content:encoded><![CDATA[I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??]]></content:encoded>
+            <author>pfernandom@gmail.com (Pedro Marquez)</author>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2019/7/array-fill/hero.webp"/>
+        </item>
+        <item>
+            <title><![CDATA[Streaming HTML responses]]></title>
+            <link>https://pedromarquez.dev/blog/2019/6/html-chunking</link>
+            <guid>https://pedromarquez.dev/blog/2019/6/html-chunking</guid>
+            <pubDate>Fri, 21 Jun 2019 05:00:00 GMT</pubDate>
+            <description><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></description>
+            <content:encoded><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></content:encoded>
+            <author>pfernandom@gmail.com (Pedro Marquez)</author>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2019/6/html-chunking/hero.webp"/>
         </item>
     </channel>
 </rss>

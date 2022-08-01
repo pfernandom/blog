@@ -11,30 +11,6 @@
     },
     "items": [
         {
-            "id": "https://pedromarquez.dev/blog/2019/6/html-chunking",
-            "content_html": "How does HTML chunking work when streaming HTML files to the browser?",
-            "url": "https://pedromarquez.dev/blog/2019/6/html-chunking",
-            "title": "Streaming HTML responses",
-            "summary": "How does HTML chunking work when streaming HTML files to the browser?",
-            "date_modified": "2019-06-21T05:00:00.000Z",
-            "author": {
-                "name": "Pedro Marquez",
-                "url": "https://twitter.com/pfernandom"
-            }
-        },
-        {
-            "id": "https://pedromarquez.dev/blog/2019/7/array-fill",
-            "content_html": "I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??",
-            "url": "https://pedromarquez.dev/blog/2019/7/array-fill",
-            "title": "Weird behavior for matrix created with Array.fill()",
-            "summary": "I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??",
-            "date_modified": "2019-07-04T05:00:00.000Z",
-            "author": {
-                "name": "Pedro Marquez",
-                "url": "https://twitter.com/pfernandom"
-            }
-        },
-        {
             "id": "https://pedromarquez.dev/blog/2022/7/dark-mode-css",
             "content_html": "Native CSS variables make it really easy to build themes for our site, including 'dark mode'. In this post we describe how to enable themes with just CSS and HTML, no dependencies needed.",
             "url": "https://pedromarquez.dev/blog/2022/7/dark-mode-css",
@@ -53,6 +29,30 @@
             "title": "Managing state in Flutter apps with data streaming",
             "summary": "Managing state in a Flutter app using data streams and a service locator",
             "date_modified": "2022-07-18T05:00:00.000Z",
+            "author": {
+                "name": "Pedro Marquez",
+                "url": "https://twitter.com/pfernandom"
+            }
+        },
+        {
+            "id": "https://pedromarquez.dev/blog/2019/7/array-fill",
+            "content_html": "I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??",
+            "url": "https://pedromarquez.dev/blog/2019/7/array-fill",
+            "title": "Weird behavior for matrix created with Array.fill()",
+            "summary": "I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??",
+            "date_modified": "2019-07-04T05:00:00.000Z",
+            "author": {
+                "name": "Pedro Marquez",
+                "url": "https://twitter.com/pfernandom"
+            }
+        },
+        {
+            "id": "https://pedromarquez.dev/blog/2019/6/html-chunking",
+            "content_html": "How does HTML chunking work when streaming HTML files to the browser?",
+            "url": "https://pedromarquez.dev/blog/2019/6/html-chunking",
+            "title": "Streaming HTML responses",
+            "summary": "How does HTML chunking work when streaming HTML files to the browser?",
+            "date_modified": "2019-06-21T05:00:00.000Z",
             "author": {
                 "name": "Pedro Marquez",
                 "url": "https://twitter.com/pfernandom"

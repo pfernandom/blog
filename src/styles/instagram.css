@@ -1,0 +1,11 @@
+.instagram-posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 350px);
+  margin-bottom: 2em;
+  align-items: center;
+  justify-content: center;
+}
+
+.instagram-post-tile {
+  text-align: center;
+}

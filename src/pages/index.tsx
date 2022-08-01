@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "src/components/image";
-//import styles from "../styles/Home.module.css";
 
 import React, { useContext } from "react";
 import Link from "next/link";
@@ -21,11 +20,6 @@ type HomeParams = {
 
 const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
   const router = useRouter();
-  posts.sort(
-    (a, b) =>
-      new Date(b.frontmatter.date).getTime() -
-      new Date(a.frontmatter.date).getTime()
-  );
 
   return (
     <>

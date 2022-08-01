@@ -29,9 +29,6 @@ code {
   pre {
     filter: brightness(0.95);
   }
-  a {
-    filter: brightness(1.2);
-  }
 }
 
 h1 {

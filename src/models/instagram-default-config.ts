@@ -3,9 +3,9 @@ import { InstagramPost } from "./InstagramPost";
 export const InstagramDefaultConfig = (slug: string = "") =>
   new InstagramPost({
     slug,
-    width: 300,
-    height: 300,
-    fontSize: "10px",
+    width: 1080,
+    height: 1080,
+    fontSize: "36px",
     fonts: {
       topLink: {
         color: "black",

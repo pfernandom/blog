@@ -52,6 +52,10 @@ export default function InstagramEditTools({
   const [isGridVisible, setGridVisible] = useState(false);
   const [isOutlineVisible, setOutlinesVisible] = useState(false);
   const [savedStatus, setSavedStatus] = useState(SavedStatus.INITIAL);
+  const [containerSize, setContainerSize] = useState({
+    width: 300,
+    height: 300,
+  });
 
   const [currentConfig, setConfig] = useState(new InstagramPost(defaultConfig));
   const { width, height, fontSize, fonts } = currentConfig;
@@ -69,6 +73,7 @@ export default function InstagramEditTools({
           post={post}
           currentConfig={currentConfig}
           editConfig={{ isGridVisible, isOutlineVisible }}
+          containerSize={containerSize}
         />
         <div style={{ display: "flex", flexDirection: "column" }}>
           <label>
@@ -174,25 +179,11 @@ export default function InstagramEditTools({
       <button
         onClick={() => {
           if (inPreview) {
-            setConfig(
-              new InstagramPost({
-                ...currentConfig,
-                width: 300,
-                height: 300,
-                fontSize: "10px",
-              })
-            );
+            setContainerSize({ width: 300, height: 300 });
             setPreview(false);
             return;
           }
-          setConfig(
-            new InstagramPost({
-              ...currentConfig,
-              width: 1080,
-              height: 1080,
-              fontSize: "36px",
-            })
-          );
+          setContainerSize({ width: 1080, height: 1080 });
           setPreview(true);
         }}
       >

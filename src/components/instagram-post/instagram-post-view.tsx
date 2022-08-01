@@ -17,11 +17,16 @@ export default function InstagramPostView({
   currentConfig = InstagramDefaultConfig(),
   editConfig = {},
   outerRef = null,
+  containerSize = {
+    width: 300,
+    height: 300,
+  },
 }: {
   post: PostInfo;
   currentConfig?: InstagramPost;
   editConfig?: InstagramPostEditConfig;
   outerRef?: RefObject<HTMLCanvasElement> | null;
+  containerSize?: { width: number; height: number };
 }) {
   const innerCanvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -61,7 +66,7 @@ export default function InstagramPostView({
     let nexty = canvasManager.drawText({
       text: post?.frontmatter.social_title ?? "",
       xem,
-      yem: 8,
+      yem: 6,
       font: title,
       isOutlineVisible,
     });
@@ -84,6 +89,8 @@ export default function InstagramPostView({
       font: footer,
       isOutlineVisible,
     });
+
+    //canvasManager.scale();
   }, [
     width,
     height,
@@ -104,7 +111,12 @@ export default function InstagramPostView({
         ref={canvasRef}
         width={width}
         height={height}
-        style={{ fontSize, height: "fit-content", margin: "2em" }}
+        style={{
+          fontSize,
+          width: containerSize.width,
+          height: containerSize.height,
+        }}
+        className="instagram-canvas"
       />
       <img
         style={{ display: "none" }}

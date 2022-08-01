@@ -9,3 +9,8 @@
 .instagram-post-tile {
   text-align: center;
 }
+
+.instagram-canvas {
+  height: fit-content;
+  margin: 1em;
+}

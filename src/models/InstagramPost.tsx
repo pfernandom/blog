@@ -10,9 +10,9 @@ export class InstagramPost implements InstagramPostType {
 
   constructor({
     slug = "",
-    width = 300,
-    height = 300,
-    fontSize = "10px",
+    width = 1080,
+    height = 1080,
+    fontSize = "36px",
     fonts,
   }: InstagramPostType) {
     this.slug = slug;

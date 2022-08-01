@@ -13,6 +13,9 @@ function hslToString(color: RGBColor | string): string {
   return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
+function toPx(size: number) {
+  return `${size}`;
+}
 function getImageSize(canvasWidth: number, canvasHeight: number) {
   //     const BLOG_POST_IMG_WIDTH = 440;
   // const BLOG_POST_IMG_HEIGHT = 220;
@@ -41,7 +44,8 @@ export default class CanvasManager {
 
   drawBackground() {
     const { ctx, currentConfig } = this;
-    const { width, height, fontSize, fonts } = currentConfig;
+    const { fontSize, fonts } = currentConfig;
+    const { width, height } = this.getScaledSize();
 
     const x0 = width / 2;
     const y0 = height / 2;
@@ -58,8 +62,8 @@ export default class CanvasManager {
   }
 
   drawGrid({ rem, color }: { rem: number; color: string }) {
-    const { ctx, currentConfig } = this;
-    const { width, height, fontSize, fonts } = currentConfig;
+    const { ctx } = this;
+    const { width, height } = this.getScaledSize();
 
     for (let i = 0; i < height; i += 1) {
       //for (let j = 0; j < width; j++) {
@@ -97,8 +101,8 @@ export default class CanvasManager {
     font: CanvasFont;
     isOutlineVisible: boolean;
   }) {
-    const { ctx, em, currentConfig } = this;
-    const { width, height, fontSize, fonts } = currentConfig;
+    const { ctx, em } = this;
+    const { width } = this.getScaledSize();
 
     const w = width - xem * em * 2;
     const xi = xem * em;
@@ -116,8 +120,7 @@ export default class CanvasManager {
   }
 
   getLines({ text, maxWidth }: { text: string; maxWidth: number }) {
-    const { ctx, em, currentConfig } = this;
-    const { width, height, fontSize, fonts } = currentConfig;
+    const { ctx } = this;
 
     var words = text.split(" ");
     var lines = [];
@@ -150,8 +153,8 @@ export default class CanvasManager {
     font: CanvasFont;
     isOutlineVisible: boolean;
   }) {
-    const { ctx, em, currentConfig } = this;
-    const { width } = currentConfig;
+    const { ctx, em } = this;
+    const { width } = this.getScaledSize();
 
     const xi = xem * em;
     const yi = yem * em;
@@ -194,21 +197,22 @@ export default class CanvasManager {
     imgRef?: HTMLImageElement | null;
     yem: number;
   }) {
-    const { ctx, em, currentConfig } = this;
-    const { width, height, fonts } = currentConfig;
+    const { ctx, em } = this;
+    const { width, height } = this.getScaledSize();
 
     const { width: imgW, height: imgH } = getImageSize(width, height);
 
     const xem = (width - imgW) / 2;
-
+    ctx.beginPath();
     if (imgRef) {
       ctx.drawImage(imgRef!, xem, yem * em, imgW, imgH);
     }
+    ctx.closePath();
     return yem + imgH / em;
   }
 
   addShadow<T>(renderFn: () => T): T {
-    const { ctx, em, currentConfig } = this;
+    const { ctx } = this;
     ctx.beginPath();
     const sc = ctx.shadowColor;
     const sb = ctx.shadowBlur;
@@ -230,5 +234,34 @@ export default class CanvasManager {
 
   getImage() {
     return this.canvas.toDataURL("image/png");
+  }
+
+  getScaledSize() {
+    const { ctx, currentConfig } = this;
+    const { width, height } = currentConfig;
+
+    // if (window.devicePixelRatio) {
+    //   const result = {
+    //     width: width * window.devicePixelRatio,
+    //     height: height * window.devicePixelRatio,
+    //     styleWidth: width,
+    //     styleHeight: height,
+    //   };
+    //   return result;
+    // }
+
+    return {
+      width,
+      height,
+      styleWidth: width,
+      styleHeight: height,
+    };
+  }
+
+  scale() {
+    const { width, height } = this.getScaledSize();
+    //this.canvas.setAttribute("width", toPx(width));
+    //this.canvas.setAttribute("height", toPx(height));
+    //this.ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
   }
 }

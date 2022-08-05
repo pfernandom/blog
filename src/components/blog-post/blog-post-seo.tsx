@@ -32,6 +32,17 @@ export default function BlogPostSEO({
 
   return (
     <>
+      <Head>
+        {images.map((image) => (
+          <meta
+            prefix="og: http://ogp.me/ns#"
+            key="image"
+            name="image"
+            property="og:image"
+            content={image}
+          ></meta>
+        ))}
+      </Head>
       <ArticleJsonLd
         type="Blog"
         url={url}

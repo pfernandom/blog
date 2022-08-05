@@ -12,10 +12,10 @@
     "items": [
         {
             "id": "https://pedromarquez.dev/blog/2022/7/dark-mode-css",
-            "content_html": "Native CSS variables make it really easy to build themes for our site, including 'dark mode'. In this post we describe how to enable themes with just CSS and HTML, no dependencies needed.",
+            "content_html": "Native CSS variables make it really easy to build themes for a web app, including 'dark mode'. In this post we describe how to enable themes with just CSS and HTML, no dependencies needed.",
             "url": "https://pedromarquez.dev/blog/2022/7/dark-mode-css",
             "title": "Building a dark-mode theme with CSS variables",
-            "summary": "Native CSS variables make it really easy to build themes for our site, including 'dark mode'. In this post we describe how to enable themes with just CSS and HTML, no dependencies needed.",
+            "summary": "Native CSS variables make it really easy to build themes for a web app, including 'dark mode'. In this post we describe how to enable themes with just CSS and HTML, no dependencies needed.",
             "date_modified": "2022-07-29T05:00:00.000Z",
             "author": {
                 "name": "Pedro Marquez",

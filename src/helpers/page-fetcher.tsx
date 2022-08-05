@@ -100,6 +100,10 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
       )
     : "";
 
+  const hero_image_original = relativeHero
+    ? path.join(publicPath, relativeHero)
+    : "";
+
   return {
     slug: slugFile?.dirPath,
     frontmatter: {
@@ -107,6 +111,7 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
       description,
       hero_image,
       hero_image_blur,
+      hero_image_original,
       hero_image_alt: hero_image_alt ?? "",
       date,
       key_words: parseKeyWords(key_words),

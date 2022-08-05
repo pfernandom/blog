@@ -57,7 +57,7 @@ export default function InstagramPostView({
 
     canvasManager.drawTopLink({
       xem: 2,
-      yem: 2,
+      yem: 1.5,
       heightEm: 2,
       font: topLink,
       isOutlineVisible,
@@ -66,7 +66,7 @@ export default function InstagramPostView({
     let nexty = canvasManager.drawText({
       text: post?.frontmatter.social_title ?? "",
       xem,
-      yem: 6,
+      yem: 6.5,
       font: title,
       isOutlineVisible,
     });
@@ -79,13 +79,13 @@ export default function InstagramPostView({
     });
 
     nexty = canvasManager.addShadow(() =>
-      canvasManager.drawImage({ imgRef: imgRef?.current, yem: nexty + 1 })
+      canvasManager.drawImage({ imgRef: imgRef?.current, yem: nexty + 2 })
     );
 
     canvasManager.drawText({
       text: post?.frontmatter.social_footer ?? "",
       xem,
-      yem: nexty + 4,
+      yem: canvasManager.footerTextStart,
       font: footer,
       isOutlineVisible,
     });

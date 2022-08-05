@@ -48,14 +48,14 @@ const getAllFiles = function (
   return arrayOfFiles;
 };
 
-function main(filePath: string, newFileName: string = "") {
+function main(filePath: string, newFileName: string = "", ext: string) {
   const dir = path.dirname(filePath);
 
   const regex = /(jpeg|jpg|png|gif)/gi;
 
   const name =
     newFileName.length === 0
-      ? `_opt_${path.basename(filePath).replace(regex, "webp")}`
+      ? `_opt_${path.basename(filePath).replace(regex, ext || "webp")}`
       : newFileName;
   console.log({ dir, name });
 
@@ -79,11 +79,25 @@ function main(filePath: string, newFileName: string = "") {
   sharp(filePath)
     .metadata()
     .then((imageParams) => {
-      sharp(filePath, { animated: !!name.match(regex) })
-        .resize(width, height, {
+      let process = sharp(filePath, { animated: !!name.match(regex) }).resize(
+        width,
+        height,
+        {
           fit: crop,
-        })
-        .webp({ lossless: false, quality: 90 })
+        }
+      );
+
+      switch (ext) {
+        case "jpeg":
+        case "jpg":
+          process = process.jpeg();
+        case "webp":
+          process = process.webp({ lossless: false, quality: 90 });
+        default:
+          process = process.webp({ lossless: false, quality: 90 });
+      }
+
+      process
         .toFile(`${dir}/${name}`, function (err) {
           // output.jpg is a 300 pixels wide and 200 pixels high image
           // containing a scaled and cropped version of input.jpg
@@ -107,8 +121,11 @@ const args = yargs(hideBin(process.argv))
   .options({
     name: { type: "string", default: "" },
     export: { type: "boolean", default: false },
+    ext: { type: "string", default: "" },
   })
   .parseSync();
 
 console.log({ args });
-main(process.argv[2], args.name);
+main(process.argv[2], args.name, args.ext);
+
+/// npx ts-node ./scripts/resize-image.ts ./src/blog/2022/7/dark-mode-css/hero.jpeg --name hero.webp --export

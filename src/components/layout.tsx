@@ -4,9 +4,7 @@ import { ReactNode } from "react";
 
 import { rhythm, scale } from "../utils/typography";
 import { useRouter } from "next/router";
-import { ThemeContext } from "src/pages/_document";
 import SocialPane from "./social";
-import { PostInfo } from "src/models/interfaces";
 import News from "./news";
 
 function Layout({

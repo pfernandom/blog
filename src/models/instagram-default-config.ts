@@ -8,7 +8,7 @@ export const InstagramDefaultConfig = (slug: string = "") =>
     fontSize: "36px",
     fonts: {
       topLink: {
-        color: "black",
+        color: "white",
         size: "1em",
         family: "Courier",
         lineHeight: 1.5,
@@ -26,7 +26,7 @@ export const InstagramDefaultConfig = (slug: string = "") =>
         lineHeight: 1.5,
       },
       footer: {
-        color: "black",
+        color: "white",
         size: "1em",
         family: "Helvetica",
         lineHeight: 1.5,

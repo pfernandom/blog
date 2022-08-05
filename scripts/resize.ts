@@ -1,75 +1,10 @@
 import sharp from "sharp";
 import fs from "fs";
-import path, { join } from "path";
+import path from "path";
+import { getAllFiles, postsDirectory } from "./common";
 
 const BLOG_POST_IMG_WIDTH = 440;
 const BLOG_POST_IMG_HEIGHT = 220;
-
-type FileInfo = {
-  fileName: string;
-  filePath: string;
-  dirPath: string;
-};
-
-const postsDirectory = join(process.cwd(), "src", "blog");
-
-const getAllFiles = function (
-  dirPath: string,
-  pattern: RegExp,
-  arrayOfFiles: Array<FileInfo> | undefined = []
-) {
-  const files = fs.readdirSync(dirPath);
-
-  arrayOfFiles = arrayOfFiles || [];
-
-  files.forEach(function (file) {
-    const regex = new RegExp(pattern);
-    if (fs.statSync(dirPath + "/" + file).isDirectory()) {
-      arrayOfFiles = getAllFiles(dirPath + "/" + file, regex, arrayOfFiles);
-    } else {
-      if (regex.test(file)) {
-        console.log(file);
-        const relativePath = path.relative(
-          postsDirectory,
-          path.join(dirPath, "/")
-        );
-        arrayOfFiles.push({
-          fileName: file,
-          filePath: [relativePath, "/", file].join(""),
-          dirPath: relativePath,
-        });
-      }
-      //  else {
-      //   console.log(`Found "${file}": Failed to match ${regex} Not processed`);
-      //   console.log(file.match(regex));
-      // }
-    }
-  });
-
-  return arrayOfFiles;
-};
-
-// function checkSizes() {
-//   const regexExt = /hero\.(jpeg|jpg|png|gif|webp)$/gi;
-//   const files = getAllFiles(postsDirectory, regexExt, []);
-//   const imagesToResize = new Set([]);
-//   files.forEach(({ fileName, filePath: fileRelativePath, dirPath }) => {
-//     const filePath = path.join(postsDirectory, fileRelativePath);
-//     sharp(filePath)
-//       .metadata()
-//       .then(({ width, height }) => {
-//         if (width != BLOG_POST_IMG_WIDTH || height != BLOG_POST_IMG_HEIGHT) {
-//           console.log(`Image ${filePath} has not the expected size. It has w=${width}, h=${height}
-//           and w=${BLOG_POST_IMG_WIDTH}, h=${BLOG_POST_IMG_HEIGHT} are expected.
-//         `);
-
-//           imagesToResize.add[filePath];
-//         }
-//       });
-//   });
-
-//   return imagesToResize;
-// }
 
 function main() {
   console.log("Optimizing images...");
@@ -182,6 +117,18 @@ function processImage(
   }
 
   process2 = resizeIfNeeded(filePath, width, height, process2);
+
+  process2.toFile(
+    path.join(saveDirPath, fileName),
+
+    function (err) {
+      // output.jpg is a 300 pixels wide and 200 pixels high image
+      // containing a scaled and cropped version of input.jpg
+      if (err) {
+        console.error(err);
+      }
+    }
+  );
 
   process2.toFile(
     path.join(saveDirPath, fileName.replace(regexExt, ".webp")),

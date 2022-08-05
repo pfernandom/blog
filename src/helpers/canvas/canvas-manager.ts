@@ -34,31 +34,45 @@ export default class CanvasManager {
   ctx: CanvasRenderingContext2D;
   em: number;
   currentConfig: InstagramPost;
+  footerStart: number;
 
   constructor(canvas: HTMLCanvasElement, currentConfig: InstagramPost) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d")!;
     this.em = parseFloat(getComputedStyle(canvas).fontSize);
     this.currentConfig = currentConfig;
+    const { height } = this.getScaledSize();
+    this.footerStart = height - 6 * this.em;
+  }
+
+  get footerTextStart() {
+    return this.footerStart / this.em + 2;
   }
 
   drawBackground() {
-    const { ctx, currentConfig } = this;
-    const { fontSize, fonts } = currentConfig;
+    const { ctx } = this;
     const { width, height } = this.getScaledSize();
+
+    const rp = width / 100;
 
     const x0 = width / 2;
     const y0 = height / 2;
-    const r0 = width / 6;
+    const r0 = rp * 37;
     const x1 = x0;
     const y1 = y0;
-    const r1 = width / 2;
+    const r1 = rp * 80;
+    console.log({ x0, y0, r0, x1, y1, r1 });
     const grd = ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
-    grd.addColorStop(0, "rgba(207,247,255,1)");
-    grd.addColorStop(1, "rgba(0,212,255,1)");
+    grd.addColorStop(0, "rgba(149,239,255,1)");
+    grd.addColorStop(1, "rgba(0,239,255,1)");
 
     ctx.fillStyle = grd;
     ctx.fillRect(0, 0, width, height);
+
+    ctx.fillStyle = "#006377";
+    ctx.fillRect(0, this.footerStart, width, height);
+
+    ctx.fillRect(0, 0, width, 4 * this.em);
   }
 
   drawGrid({ rem, color }: { rem: number; color: string }) {

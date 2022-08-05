@@ -32,17 +32,6 @@ export default function BlogPostSEO({
 
   return (
     <>
-      <Head>
-        {images.map((image) => (
-          <meta
-            prefix="og: http://ogp.me/ns#"
-            key="image"
-            name="image"
-            property="og:image"
-            content={image}
-          ></meta>
-        ))}
-      </Head>
       <ArticleJsonLd
         type="Blog"
         url={url}
@@ -58,7 +47,7 @@ export default function BlogPostSEO({
         canonical={url}
         openGraph={{
           title,
-          description: description.join(". ").slice(0, 95) + "...",
+          description: description.join(". "),
           url,
           type: "article",
           article: {

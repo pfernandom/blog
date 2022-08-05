@@ -146,7 +146,5 @@ export function getAllPosts() {
 }
 
 function parseKeyWords(keywords: string) {
-  return keywords
-    .split(/[a-zA-Z0-9],( )+?/gi)
-    .filter((keyword) => keyword.trim().length);
+  return keywords.split(",").filter((keyword) => keyword.trim().length);
 }

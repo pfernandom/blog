@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import { ReactNode } from "react";
 
-import { rhythm, scale } from "../utils/typography";
 import { useRouter } from "next/router";
 import SocialPane from "./social";
 import News from "./news";
@@ -11,12 +10,10 @@ function Layout({
   location,
   title,
   children,
-  theme,
 }: {
   location: string;
   title: string;
   children: ReactNode;
-  theme: string;
 }) {
   // eslint-disable-next-line no-undef
   let header;
@@ -26,8 +23,7 @@ function Layout({
     header = (
       <h1
         style={{
-          ...scale(1),
-          marginBottom: rhythm(1),
+          marginBottom: "1em",
           marginTop: 0,
         }}
       >
@@ -42,7 +38,6 @@ function Layout({
         </div>
         <h1
           style={{
-            fontFamily: `Montserrat, sans-serif`,
             marginTop: 0,
           }}
         >

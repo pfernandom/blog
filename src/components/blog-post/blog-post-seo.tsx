@@ -1,6 +1,7 @@
 import { ArticleJsonLd, NextSeo } from "next-seo";
 import { HTML5MetaTag } from "next-seo/lib/types";
 import Head from "next/head";
+import Script from "next/script";
 import React from "react";
 import { Post } from "src/models/interfaces";
 

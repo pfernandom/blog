@@ -48,19 +48,18 @@ const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
   const { prev, next } = prevAndNext;
 
   const { frontmatter } = post;
+  const seoImages = [
+    frontmatter.hero_image_original ?? null,
+    frontmatter.hero_image,
+  ]
+    .filter((img) => img != null)
+    .map((img) => getPageUrl(img!, true));
 
   return (
     <div>
-      <Script src="https://cpwebassets.codepen.io/assets/embed/ei.js"></Script>
-
       <BlogPostSEO
         url={getPageUrl(post.slug)}
-        images={[
-          getPageUrl(
-            frontmatter.hero_image_original ?? frontmatter.hero_image,
-            true
-          ),
-        ]}
+        images={seoImages}
         author={"Pedro Marquez-Soto"}
         {...post.frontmatter}
       ></BlogPostSEO>

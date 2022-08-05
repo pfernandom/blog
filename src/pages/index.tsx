@@ -8,7 +8,6 @@ import Link from "next/link";
 import Bio from "../components/bio";
 import { getDataFile } from "../helpers/data-fetchers";
 import { getAllPosts } from "../helpers/page-fetcher";
-import { rhythm } from "../utils/typography";
 import { Metadata, PostInfo } from "../models/interfaces";
 import { useRouter } from "next/router";
 import generateRssFeed from "src/helpers/generate-rss-feed";
@@ -49,7 +48,7 @@ const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
                 }}
               >
                 <div
-                  style={{ width: 70, height: 70 }}
+                  style={{ width: 100, height: 100 }}
                   className="circle-image-container"
                 >
                   {post.frontmatter.hero_image ? (
@@ -59,8 +58,8 @@ const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
                       alt={post.frontmatter.hero_image_alt}
                       placeholder="blur"
                       blurDataURL={post.frontmatter.hero_image_blur}
-                      width={70}
-                      height={70}
+                      width={100}
+                      height={100}
                       objectFit="cover"
                     />
                   ) : (
@@ -69,21 +68,22 @@ const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
                 </div>
 
                 <div className="link-content">
-                  <h3
-                    className="link-post"
-                    style={{
-                      marginBottom: rhythm(1 / 4),
-                      marginTop: rhythm(1 / 8),
-                    }}
-                  >
-                    {post.frontmatter.title}
-                  </h3>
+                  <h3 className="link-post">{post.frontmatter.title}</h3>
                   <small>{post.frontmatter.date}</small>
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: post.frontmatter.description.join("\n"),
-                    }}
-                  />
+                  {post.frontmatter.description.map((description) => (
+                    <p
+                      key={description}
+                      dangerouslySetInnerHTML={{
+                        __html: description,
+                      }}
+                    />
+                  ))}
+
+                  {post.frontmatter.key_words.map((keyword) => (
+                    <div key={keyword} className="link-post-keywords">
+                      {keyword}
+                    </div>
+                  ))}
                 </div>
               </div>
             </Link>

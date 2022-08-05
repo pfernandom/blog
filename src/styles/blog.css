@@ -27,28 +27,27 @@ a.social-icon {
 
 a.social-icon:hover,
 .circle-image {
-  padding: 0.2em;
-
   object-fit: cover;
   border-radius: 50%;
   opacity: 1;
+  transform: scale(1.2);
+  padding: 0;
 }
 
 .circle-image-container {
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   align-items: center;
   overflow: hidden;
+  margin-right: 1em;
 }
 
 .circle-image-empty {
   height: 100%;
   width: 100%;
   background-image: radial-gradient(#f3f3f3 10%, #c4c4c1 80%);
-}
-
-.link-post {
-  color: var(---heading-color);
 }
 
 @keyframes onHover {
@@ -87,14 +86,31 @@ a.social-icon:hover,
 
 .link-post-container {
   display: grid;
-  grid-template-columns: 100px auto;
+  grid-template-columns: 120px auto;
   grid-template-rows: auto;
-  margin-bottom: 2em;
+  margin: 1em 2em;
   align-items: center;
+  justify-items: center;
+}
+
+.link-post {
+  color: var(---heading-color);
+  margin-top: 0;
+  margin-bottom: 1em;
 }
 
 .link-content {
   color: var(---text-color);
+  width: 100%;
+}
+
+.link-post-keywords {
+  margin-left: 1em;
+  background-color: #ecebeb;
+  padding: 0.2em 0.5em;
+  border-radius: 0.2em;
+  margin: 0.2em;
+  display: inline-block;
 }
 
 .news {
@@ -103,7 +119,8 @@ a.social-icon:hover,
   top: 0;
   left: 0;
   width: 100vw;
-  padding-left: 8em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
@@ -162,6 +179,8 @@ a.social-icon:hover,
 
 .blog-post-content {
   margin-top: 2em;
+  text-rendering: optimizeLegibility;
+  line-height: 1.5em;
 }
 
 .codepen {
@@ -181,12 +200,9 @@ a.social-icon:hover,
   display: inline-block;
   color: #ffffff;
   border: none;
-  padding: 0.1em 0.6em;
   outline: none;
-  text-align: center;
-  font-size: 0.9em;
-  margin: 0 0.2em;
-  border-radius: 0.3em;
+  object-fit: cover;
+  border-radius: 50%;
   margin: 0.2em;
 }
 
@@ -233,4 +249,37 @@ a.social-icon:hover,
 }
 .share-btn.email {
   background: #444444;
+}
+
+@keyframes LoadingStateAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+.loading-state {
+  display: block;
+  margin-bottom: 0.5em;
+  height: 1em;
+  background-image: linear-gradient(
+    to right,
+    #c2c2c2,
+    #c2c2c250 25%,
+    #c2c2c2 50%,
+    #c2c2c250 75%,
+    #c2c2c2 100%
+  );
+  background-size: 200% 100%;
+  animation: LoadingStateAnimation;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.loading-state--heading {
+  width: 15em;
+  height: 1.5em;
 }

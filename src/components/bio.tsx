@@ -3,7 +3,6 @@ import { SocialIcon } from "react-social-icons";
 import Image from "src/components/image";
 import profilePic from "../../public/profile-pic.jpg";
 
-import { rhythm } from "../utils/typography";
 import { Metadata } from "../models/interfaces";
 
 function Bio({ metadata }: { metadata: Metadata }) {
@@ -11,11 +10,11 @@ function Bio({ metadata }: { metadata: Metadata }) {
   return (
     <div
       style={{
-        marginBottom: rhythm(1),
+        marginBottom: "1em",
       }}
     >
       <div className="link-post-container">
-        <div style={{ padding: "1em" }}>
+        <div className="circle-image-container">
           <Image
             src={profilePic}
             alt={author}
@@ -23,7 +22,6 @@ function Bio({ metadata }: { metadata: Metadata }) {
             width={70}
             height={70}
             objectFit="cover"
-            style={{ flexBasis: "105em" }}
           />
         </div>
         <p>

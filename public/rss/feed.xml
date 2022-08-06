@@ -4,7 +4,7 @@
         <title>Pedro's Tech Blog</title>
         <link>https://pedromarquez.dev</link>
         <description>A blog about software development: JavaScript, Java, Flutter, and everything I find out there that may be cool</description>
-        <lastBuildDate>Sat, 06 Aug 2022 01:36:53 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 06 Aug 2022 19:58:55 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -13,6 +13,16 @@
             <link>https://pedromarquez.dev</link>
         </image>
         <copyright>All rights reserved 2022</copyright>
+        <item>
+            <title><![CDATA[Easy parallelism and multi-threading with Java's CompletableFuture]]></title>
+            <link>https://pedromarquez.dev/blog/2022/8/java-futures</link>
+            <guid>https://pedromarquez.dev/blog/2022/8/java-futures</guid>
+            <pubDate>Sat, 06 Aug 2022 05:00:00 GMT</pubDate>
+            <description><![CDATA[In this post, we improve application performance by making multiple parallel requests to a REST API]]></description>
+            <content:encoded><![CDATA[In this post, we improve application performance by making multiple parallel requests to a REST API]]></content:encoded>
+            <author>pfernandom@gmail.com (Pedro Marquez)</author>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/8/java-futures/hero.webp"/>
+        </item>
         <item>
             <title><![CDATA[Building a dark-mode theme with CSS variables]]></title>
             <link>https://pedromarquez.dev/blog/2022/7/dark-mode-css</link>

@@ -79,7 +79,10 @@ export default function InstagramPostView({
     });
 
     nexty = canvasManager.addShadow(() =>
-      canvasManager.drawImage({ imgRef: imgRef?.current, yem: nexty + 2 })
+      canvasManager.drawImage({
+        imgRef: imgRef?.current,
+        yem: canvasManager.footerTextStart - 10,
+      })
     );
 
     canvasManager.drawText({

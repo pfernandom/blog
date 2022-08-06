@@ -1,0 +1,11 @@
+---
+title: Managing state in Flutter apps with data streaming
+date: "2022-07-18T22:12:03.284Z"
+description:
+  ["Managing state in a Flutter app using data streams and a service locator"]
+hero_image:
+hero_image_alt: "A hero image for this post about state management"
+published: false
+---
+
+import Image from "src/components/image";

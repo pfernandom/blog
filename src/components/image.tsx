@@ -26,12 +26,15 @@ export default function Image({
     return n;
   };
 
+  console.log(arguments);
+
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <span className={["blog-img", className].join(" ")}>
         <NextImage
-          width={scaleNum(size.width ?? width)}
-          height={scaleNum(size.height ?? height)}
+          width={scaleNum(width ?? size.width)}
+          height={scaleNum(height ?? size.height)}
+          objectFit={objectFit}
           {...rest}
           loader={customLoader}
         />

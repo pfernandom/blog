@@ -23,6 +23,7 @@ img {
 
 a.social-icon {
   box-shadow: none;
+  transform: scale(1);
 }
 
 a.social-icon:hover {
@@ -33,14 +34,26 @@ a.social-icon:hover {
   padding: 0;
 }
 
+@media screen and (max-width: 500px) {
+  a.social-icon:hover {
+    transform: scale(1);
+  }
+
+  code[class*="language-"],
+  pre[class*="language-"] {
+    font-size: 0.9em !important;
+  }
+}
+
 .circle-image-container {
+  flex-shrink: 0;
   width: 70px;
   height: 70px;
+  margin: 1em;
   border-radius: 50%;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   align-items: center;
   overflow: hidden;
-  margin-right: 1em;
 }
 
 .circle-image-empty {
@@ -84,12 +97,29 @@ a.social-icon:hover {
 }
 
 .link-post-container {
-  display: grid;
-  grid-template-columns: 120px auto;
-  grid-template-rows: auto;
+  display: flex;
   margin: 1em 2em;
   align-items: center;
   justify-items: center;
+  justify-content: center;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+@media screen and (max-width: 400px) {
+  .link-post-container {
+    flex-wrap: wrap;
+    margin: 0;
+    margin-bottom: 1em;
+  }
+
+  .bio-image {
+    display: none;
+  }
+
+  .social-icons-section {
+    display: none;
+  }
 }
 
 .link-post {
@@ -106,10 +136,17 @@ a.social-icon:hover {
 .link-post-keywords {
   margin-left: 1em;
   background-color: #ecebeb;
+  color: black;
   padding: 0.2em 0.5em;
   border-radius: 0.2em;
   margin: 0.2em;
   display: inline-block;
+}
+
+@media (prefers-color-scheme: dark) {
+  .link-post-keywords {
+    filter: invert();
+  }
 }
 
 .news {
@@ -140,16 +177,8 @@ a.social-icon:hover {
 }
 
 @media screen and (max-width: 700px) {
-  .news {
-    padding: 0.2em 1em;
-  }
-
   .news a {
     text-decoration: underline;
-  }
-
-  .link-post-a {
-    margin-bottom: 0.5em;
   }
 }
 
@@ -182,6 +211,9 @@ a.social-icon:hover {
   margin-top: 2em;
   text-rendering: optimizeLegibility;
   line-height: 1.5em;
+  text-align: justify;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .blog-post-content .blog-img {
@@ -217,8 +249,19 @@ a.social-icon:hover {
   opacity: 0.8;
 }
 
-.share-buttons .expand-button {
-  display: none !important;
+.share-buttons {
+  position: relative;
+}
+
+.share-buttons--expanded {
+  position: absolute;
+  display: flex;
+  left: -10em;
+  flex-direction: row;
+  width: min(4vh, fit-content);
+  background-color: white;
+  box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
+  border-radius: 0.3em;
 }
 
 @media screen and (max-width: 500px) {

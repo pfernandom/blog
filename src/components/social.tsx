@@ -4,10 +4,8 @@ import { SocialIcon } from "react-social-icons";
 export default function SocialPane() {
   return (
     <div
+      className="social-icons-section"
       style={{
-        position: "fixed",
-        top: "2em",
-        right: "1em",
         display: "flex",
         flexDirection: "column",
         zIndex: 2,

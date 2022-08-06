@@ -52,55 +52,50 @@ export default function ShareButtons({
     }
   }
 
-  useEffect(() => {
-    const share = navigator.share;
-    if (share) {
+  return (
+    <div className={`share-buttons`}>
+      {/* Basic Share Links */}
       <SocialIcon
         className="expand-button"
         network="sharethis"
         label="Share to..."
         onClick={() => {
-          share();
+          setExpanded(!isExpanded);
         }}
-      ></SocialIcon>;
-    }
-  });
+      ></SocialIcon>
 
-  return (
-    <div className={`share-buttons`}>
-      {/* Basic Share Links */}
-
-      {/* Twitter (url, text, @mention) */}
-      <ShareLink
-        className="twitter"
-        href={`https://twitter.com/share?url=${url}&text=${title}&via=${username}`}
-      >
-        Twitter
-      </ShareLink>
-
-      {/* Facebook (url) */}
-      <ShareLink
-        className="facebook"
-        href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
-      >
-        Facebook
-      </ShareLink>
-
-      {/* Reddit (url, title) */}
-      <ShareLink
-        className="reddit"
-        href={`https://reddit.com/submit?url=${url}&title=${title}`}
-      >
-        Reddit
-      </ShareLink>
-
-      {/* LinkedIn (url, title, summary, source url) */}
-      <ShareLink
-        className="linkedin"
-        href={`https://www.linkedin.com/shareArticle?url=${url}&title=${title}&summary=${description}&source=${url}`}
-      >
-        LinkedIn
-      </ShareLink>
+      {isExpanded && (
+        <div className="share-buttons--expanded">
+          {/* Twitter (url, text, @mention) */}
+          <ShareLink
+            className="twitter"
+            href={`https://twitter.com/share?url=${url}&text=${title}&via=${username}`}
+          >
+            Twitter
+          </ShareLink>
+          {/* Facebook (url) */}
+          <ShareLink
+            className="facebook"
+            href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
+          >
+            Facebook
+          </ShareLink>
+          {/* Reddit (url, title) */}
+          <ShareLink
+            className="reddit"
+            href={`https://reddit.com/submit?url=${url}&title=${title}`}
+          >
+            Reddit
+          </ShareLink>
+          {/* LinkedIn (url, title, summary, source url) */}
+          <ShareLink
+            className="linkedin"
+            href={`https://www.linkedin.com/shareArticle?url=${url}&title=${title}&summary=${description}&source=${url}`}
+          >
+            LinkedIn
+          </ShareLink>
+        </div>
+      )}
     </div>
   );
 }

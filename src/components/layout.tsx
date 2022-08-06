@@ -24,7 +24,7 @@ function Layout({
       <h1
         style={{
           marginBottom: "1em",
-          marginTop: 0,
+          marginTop: "0.5em",
         }}
       >
         {title}
@@ -39,6 +39,8 @@ function Layout({
         <h1
           style={{
             marginTop: 0,
+            marginBottom: "0.5em",
+            paddingRight: "0.5em",
           }}
         >
           {title}
@@ -50,8 +52,10 @@ function Layout({
     <>
       <News></News>
       <div className="layout-content">
-        <header>{header}</header>
-        <SocialPane />
+        <div style={{ display: "flex" }}>
+          <header>{header}</header>
+          <SocialPane />
+        </div>
         <main className="main">{children}</main>
 
         <footer>

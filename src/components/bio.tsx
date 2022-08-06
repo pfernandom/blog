@@ -14,7 +14,7 @@ function Bio({ metadata }: { metadata: Metadata }) {
       }}
     >
       <div className="link-post-container">
-        <div className="circle-image-container">
+        <div className="circle-image-container bio-image">
           <Image
             src={profilePic}
             alt={author}

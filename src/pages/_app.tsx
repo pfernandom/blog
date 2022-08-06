@@ -19,6 +19,12 @@ function MyApp({
 }) {
   return (
     <>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0,maximum-scale=1.4"
+        />
+      </Head>
       <link
         rel="preload"
         href="/fonts/Montserrat-Regular.otf"

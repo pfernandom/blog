@@ -82,13 +82,11 @@ class MyStatefulWidgetState extends State<MyStatefulWidget> {
 
 The `MyStatefulWidgetState` widget renders the following view:
 
-<div style={{ width: "50%", margin: "0 auto" }} className="post-image">
-  <Image
-    src={appstate1}
-    alt={"User clicks in the button and a list of notifications is rendered"}
-    layout="responsive"
-  />
-</div>
+<Image
+  className="post-image"
+  src={appstate1}
+  alt={"User clicks in the button and a list of notifications is rendered"}
+/>
 
 In this example, when the user clicks the `Fetch notifications` button, the function `fetchUpdates()` is called. This function returns a Future object, and once the request completes successfully, we set the list of updates in the variable `updates`.
 
@@ -315,15 +313,13 @@ Since the stream may be empty, we need to handle the case where the widget has n
 
 Now, when the user clicks in the button, the new updates will be sent to the stream and all widgets listening to it will re-render:
 
-<div style={{ width: "50%", margin: "0 auto" }} className="post-image">
-  <Image
-    src={appstate2}
-    alt={
-      "User clicks in the button, a list of notifications is rendered and the notification icon is rendered as well."
-    }
-    layout="responsive"
-  />
-</div>
+<Image
+  className="post-image"
+  src={appstate2}
+  alt={
+    "User clicks in the button, a list of notifications is rendered and the notification icon is rendered as well."
+  }
+/>
 
 We could take this example even further and make `MyStatefulWidgetState` a stateless widget, getting its state directly from the same stream. Feel free to take this extra step and practice this state management approach.
 

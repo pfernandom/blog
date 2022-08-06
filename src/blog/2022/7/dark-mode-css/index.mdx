@@ -85,7 +85,9 @@ Notice that we moved the variable definitions to a block named `:root`. This pse
 This means that, from here, all CSS rules on the page will have access to these variables.
 
 <Image
+  className="post-image"
   src={image1}
+  scale={0.4}
   alt="A web page with a black background, gold-colored title and white font text"
 />
 
@@ -239,6 +241,15 @@ Optionally, we can remove the dark-mode toggle button if the option is already s
 
 The best part of this media query is that it removes the need of using JavaScript to apply dark-mode to the
 page. But, as always, make sure that the browsers your expect to target [support the media query](https://caniuse.com/?search=prefers-color-scheme).
+
+An easy way to test `prefers-color-scheme` is through Chrome's Rendering tools:
+
+<Image
+  className="post-image"
+  src={image2}
+  scale={0.5}
+  alt="Chrome's rendering tools showing a dropdown to emulate prefers-color-scheme"
+/>
 
 ## Codepen
 

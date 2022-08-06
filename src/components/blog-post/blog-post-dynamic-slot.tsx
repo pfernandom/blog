@@ -19,11 +19,8 @@ function GhostContent() {
         ))}
       </div>
       {Array.from(Array(2).keys()).map((elements) => (
-        <>
-          <div
-            key={elements}
-            className="loading-state loading-state--heading"
-          ></div>
+        <div key={elements}>
+          <div className="loading-state loading-state--heading"></div>
           <div>
             {Array.from(Array(3).keys()).map((ps) => (
               <p key={ps}>
@@ -33,7 +30,7 @@ function GhostContent() {
               </p>
             ))}
           </div>
-        </>
+        </div>
       ))}
     </div>
   );
@@ -43,7 +40,6 @@ export default function DynamicSlot({ chunk }: { chunk: string }) {
   const DynamicBlogPost: LoadableComponent = dynamic(m(chunk) as Loader, {
     loading: () => <GhostContent />,
   });
-  console.log(DynamicBlogPost);
   return (
     <div className="blog-post-content">
       {/* <GhostContent /> */}

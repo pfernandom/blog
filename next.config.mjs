@@ -28,7 +28,7 @@ const nextConfig = withMDX({
   swcMinify: true,
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   images: {
-    domains: ["pfernandom.github.io", "localhost"],
+    domains: ["pedromarquez.dev", "localhost"],
     loader: "custom",
   },
 });

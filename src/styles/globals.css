@@ -78,5 +78,14 @@ p {
   padding: 0 2em;
 }
 
+a {
+  color: var(---heading-color);
+}
+
+a:hover {
+  transform: scale(1.05);
+  display: inline-block;
+}
+
 @import url(./blog.css);
 @import url(./instagram.css);

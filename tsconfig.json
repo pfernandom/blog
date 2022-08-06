@@ -63,5 +63,11 @@
   "exclude": [
     "node_modules",
     "./scripts"
-  ]
+  ],
+  "rules": {
+    "no-console": [
+      true,
+      "warning"
+    ]
+  }
 }

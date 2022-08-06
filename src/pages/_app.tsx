@@ -19,12 +19,12 @@ function MyApp({
 }) {
   return (
     <>
-      <style jsx>{`
-        @font-face {
-          font-family: Montserrat;
-          src: url("/Montserrat-Regular.otf") format("opentype");
-        }
-      `}</style>
+      <link
+        rel="preload"
+        href="/Montserrat-Regular.otf"
+        as="font"
+        type="font/opentype"
+      ></link>
       <MDXProvider components={MDXComponentsDef}>
         <DefaultSeo
           title={pageProps.metadata?.title}

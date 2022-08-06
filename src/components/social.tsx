@@ -1,16 +1,9 @@
 import React from "react";
 import { SocialIcon } from "react-social-icons";
 
-export default function SocialPane() {
+export default function SocialPane({}) {
   return (
-    <div
-      className="social-icons-section"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        zIndex: 2,
-      }}
-    >
+    <div className="social-icons-section">
       <SocialIcon
         url="https://www.instagram.com/pedro.marquez.soto/"
         fgColor="white"

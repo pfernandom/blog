@@ -24,7 +24,7 @@ function Bio({ metadata }: { metadata: Metadata }) {
             objectFit="cover"
           />
         </div>
-        <p>
+        <p className="bio-content">
           Written by <strong>{author}</strong> who lives and works in Austin,
           Texas, doing all things front-end (and some back-end too).
         </p>

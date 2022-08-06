@@ -52,7 +52,7 @@ function Layout({
     <>
       <News></News>
       <div className="layout-content">
-        <div style={{ display: "flex" }}>
+        <div className="layout-header">
           <header>{header}</header>
           <SocialPane />
         </div>

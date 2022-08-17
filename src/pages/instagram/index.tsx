@@ -31,6 +31,7 @@ const InstagramLinks: NextPage<InstagramLinksParams> = ({
         <div key={post.slug} className="instagram-post-tile">
           <Link href={post.slug}>
             <InstagramPostView
+              pageNumber={1}
               post={post}
               currentConfig={new InstagramPost(postToConfig[post.slug])}
             />

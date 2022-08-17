@@ -2,8 +2,8 @@ import { RGBColor } from "react-color";
 import { InstagramPost } from "src/models/InstagramPost";
 import { CanvasFont } from "src/models/interfaces";
 
-const BLOG_POST_IMG_WIDTH = 440;
-const BLOG_POST_IMG_HEIGHT = 220;
+const BLOG_POST_IMG_WIDTH = 440 * 1.4;
+const BLOG_POST_IMG_HEIGHT = 220 * 1.4;
 
 function hslToString(color: RGBColor | string): string {
   if (typeof color === "string") {
@@ -16,16 +16,21 @@ function hslToString(color: RGBColor | string): string {
 function toPx(size: number) {
   return `${size}`;
 }
-function getImageSize(canvasWidth: number, canvasHeight: number) {
+function getImageSize(
+  canvasWidth: number,
+  canvasHeight: number,
+  imgWidth: number = BLOG_POST_IMG_WIDTH,
+  imgHeight: number = BLOG_POST_IMG_HEIGHT
+) {
   //     const BLOG_POST_IMG_WIDTH = 440;
   // const BLOG_POST_IMG_HEIGHT = 220;
 
-  if (canvasWidth > BLOG_POST_IMG_WIDTH) {
-    return { width: BLOG_POST_IMG_WIDTH, height: BLOG_POST_IMG_HEIGHT };
+  if (canvasWidth > imgWidth) {
+    return { width: imgWidth, height: imgHeight };
   }
 
-  const width = BLOG_POST_IMG_WIDTH * (100 / canvasWidth);
-  const height = BLOG_POST_IMG_HEIGHT * (100 / canvasHeight);
+  const width = imgWidth * (100 / canvasWidth);
+  const height = imgHeight * (100 / canvasHeight);
   return { width, height };
 }
 
@@ -42,7 +47,7 @@ export default class CanvasManager {
     this.em = parseFloat(getComputedStyle(canvas).fontSize);
     this.currentConfig = currentConfig;
     const { height } = this.getScaledSize();
-    this.footerStart = height - 6 * this.em;
+    this.footerStart = height - 4 * this.em;
   }
 
   get footerTextStart() {
@@ -61,7 +66,6 @@ export default class CanvasManager {
     const x1 = x0;
     const y1 = y0;
     const r1 = rp * 80;
-    console.log({ x0, y0, r0, x1, y1, r1 });
     const grd = ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
     grd.addColorStop(0, "rgba(149,239,255,1)");
     grd.addColorStop(1, "rgba(0,239,255,1)");
@@ -72,7 +76,7 @@ export default class CanvasManager {
     ctx.fillStyle = "#006377";
     ctx.fillRect(0, this.footerStart, width, height);
 
-    ctx.fillRect(0, 0, width, 4 * this.em);
+    ctx.fillRect(0, 0, width, 3 * this.em);
   }
 
   drawGrid({ rem, color }: { rem: number; color: string }) {
@@ -133,12 +137,26 @@ export default class CanvasManager {
     ctx.fillText("pedromarquez.dev", xi, yi + em, width);
   }
 
-  getLines({ text, maxWidth }: { text: string; maxWidth: number }) {
+  getLines({
+    text,
+    maxWidth,
+    font,
+  }: {
+    text: string;
+    maxWidth: number;
+    font?: CanvasFont;
+  }) {
     const { ctx } = this;
 
     var words = text.split(" ");
     var lines = [];
     var currentLine = words[0];
+
+    const preFont = ctx.font;
+
+    if (font != null) {
+      ctx.font = font.toString();
+    }
 
     for (var i = 1; i < words.length; i++) {
       var word = words[i];
@@ -151,6 +169,7 @@ export default class CanvasManager {
       }
     }
     lines.push(currentLine);
+    ctx.font = preFont;
     return lines;
   }
 
@@ -184,10 +203,12 @@ export default class CanvasManager {
 
     const h = lines.length * lineHeight * em;
 
+    ctx.textBaseline = "middle";
+
     if (isOutlineVisible) {
       ctx.beginPath();
       ctx.strokeStyle = hslToString(font.color);
-      ctx.strokeRect(xi, yi - em, w, h);
+      ctx.strokeRect(xi, yi - (lineHeight / 2) * em, w, h);
       ctx.closePath();
     }
 
@@ -195,7 +216,7 @@ export default class CanvasManager {
       ctx.beginPath();
       ctx.fillStyle = hslToString(font.color);
       ctx.textAlign = "center";
-      ctx.fillText(line, width / 2, yi + index * 1.5 * em, width);
+      ctx.fillText(line, width / 2, yi + index * lineHeight * em, width);
       ctx.strokeStyle = "yellow";
       ctx.textAlign = "start";
       ctx.closePath();
@@ -204,39 +225,63 @@ export default class CanvasManager {
     return yi / em + lines.length * lineHeight;
   }
 
+  getScaledImageSize({
+    imgHeight,
+    imgWidth,
+  }: {
+    imgHeight?: number;
+    imgWidth?: number;
+  }) {
+    const { width, height } = this.getScaledSize();
+    return getImageSize(width, height, imgWidth, imgHeight);
+  }
+
   drawImage({
     imgRef,
     yem,
+    imgWidth,
+    imgHeight,
   }: {
     imgRef?: HTMLImageElement | null;
     yem: number;
+    imgWidth?: number;
+    imgHeight?: number;
   }) {
     const { ctx, em } = this;
     const { width, height } = this.getScaledSize();
-
-    const { width: imgW, height: imgH } = getImageSize(width, height);
+    const { width: imgW, height: imgH } = getImageSize(
+      width,
+      height,
+      imgWidth,
+      imgHeight
+    );
 
     const xem = (width - imgW) / 2;
     ctx.beginPath();
     if (imgRef) {
-      ctx.drawImage(imgRef!, xem, yem * em, imgW, imgH);
+      ctx.drawImage(
+        imgRef!,
+        xem,
+        yem * em,
+        imgWidth ?? imgW,
+        imgHeight ?? imgH
+      );
     }
     ctx.closePath();
     return yem + imgH / em;
   }
 
-  addShadow<T>(renderFn: () => T): T {
+  addShadow<T>(renderFn: () => T, styles?: Partial<CanvasShadowStyles>): T {
     const { ctx } = this;
     ctx.beginPath();
     const sc = ctx.shadowColor;
     const sb = ctx.shadowBlur;
     const sox = ctx.shadowOffsetX;
     const soy = ctx.shadowOffsetY;
-    ctx.shadowOffsetY = 6;
-    ctx.shadowColor = "black";
-    ctx.shadowBlur = 6;
-    ctx.shadowOffsetX = 6;
-    ctx.shadowOffsetY = 6;
+    ctx.shadowColor = styles?.shadowColor ?? "black";
+    ctx.shadowBlur = styles?.shadowBlur ?? 6;
+    ctx.shadowOffsetX = styles?.shadowOffsetX ?? 6;
+    ctx.shadowOffsetY = styles?.shadowOffsetY ?? 6;
     const res = renderFn();
     ctx.shadowColor = sc;
     ctx.shadowBlur = sb;

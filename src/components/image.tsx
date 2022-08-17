@@ -26,8 +26,6 @@ export default function Image({
     return n;
   };
 
-  console.log(arguments);
-
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <span className={["blog-img", className].join(" ")}>

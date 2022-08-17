@@ -88,8 +88,13 @@ a {
 
 a:hover {
   text-decoration: underline;
-  display: inline-block;
 }
 
 @import url(./blog.css);
 @import url(./instagram.css);
+
+blockquote {
+  padding: 0.5em;
+  background-color: gainsboro;
+  font-family: Courier;
+}

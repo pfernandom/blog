@@ -152,9 +152,10 @@ function resizeIfNeeded(
   const crop = "cover";
 
   if (
-    (filePath.includes("hero") && width != BLOG_POST_IMG_WIDTH) ||
-    height != BLOG_POST_IMG_HEIGHT
+    filePath.includes("hero") &&
+    (width != BLOG_POST_IMG_WIDTH || height != BLOG_POST_IMG_HEIGHT)
   ) {
+    console.log("Resize image " + filePath);
     process = process.resize(BLOG_POST_IMG_WIDTH, BLOG_POST_IMG_HEIGHT, {
       fit: crop,
     });

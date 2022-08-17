@@ -4,7 +4,7 @@
         <title>Pedro's Tech Blog</title>
         <link>https://pedromarquez.dev</link>
         <description>A blog about software development: JavaScript, Java, Flutter, and everything I find out there that may be cool</description>
-        <lastBuildDate>Sat, 06 Aug 2022 21:49:31 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 17 Aug 2022 15:59:44 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -13,6 +13,16 @@
             <link>https://pedromarquez.dev</link>
         </image>
         <copyright>All rights reserved 2022</copyright>
+        <item>
+            <title><![CDATA[New book: "Backend Developer in 30 Days"]]></title>
+            <link>https://pedromarquez.dev/blog/2022/8/book</link>
+            <guid>https://pedromarquez.dev/blog/2022/8/book</guid>
+            <pubDate>Tue, 16 Aug 2022 05:00:00 GMT</pubDate>
+            <description><![CDATA["Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization"]]></description>
+            <content:encoded><![CDATA["Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization"]]></content:encoded>
+            <author>pfernandom@gmail.com (Pedro Marquez)</author>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/8/book/book.webp"/>
+        </item>
         <item>
             <title><![CDATA[Easy parallelism and multi-threading with Java's CompletableFuture]]></title>
             <link>https://pedromarquez.dev/blog/2022/8/java-futures</link>

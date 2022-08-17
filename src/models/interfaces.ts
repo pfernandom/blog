@@ -10,6 +10,8 @@ export interface Post {
   hero_image_original?: string;
   hero_image_blur: string;
   hero_image_alt: string;
+  hero_width: number;
+  hero_height: number;
   published: boolean;
   social_title: string;
   social_subtitle: string;

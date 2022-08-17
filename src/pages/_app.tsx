@@ -29,13 +29,19 @@ function MyApp({
         rel="preload"
         href="/fonts/Montserrat-Regular.otf"
         as="font"
-        type="font/opentype"
+        type="font/otf"
       ></link>
       <link
         rel="preload"
         href="/fonts/Roboto-Regular.ttf"
         as="font"
         type="font/ttf"
+      ></link>
+      <link
+        rel="preload"
+        href="/fonts/futura-pt/FuturaPTMedium.otf"
+        as="font"
+        type="font/otf"
       ></link>
       <MDXProvider components={MDXComponentsDef}>
         <DefaultSeo

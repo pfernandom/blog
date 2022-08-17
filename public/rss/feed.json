@@ -11,6 +11,18 @@
     },
     "items": [
         {
+            "id": "https://pedromarquez.dev/blog/2022/8/book",
+            "content_html": "\"Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization\"",
+            "url": "https://pedromarquez.dev/blog/2022/8/book",
+            "title": "New book: \"Backend Developer in 30 Days\"",
+            "summary": "\"Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization\"",
+            "date_modified": "2022-08-16T05:00:00.000Z",
+            "author": {
+                "name": "Pedro Marquez",
+                "url": "https://twitter.com/pfernandom"
+            }
+        },
+        {
             "id": "https://pedromarquez.dev/blog/2022/8/java-futures",
             "content_html": "In this post, we improve application performance by making multiple parallel requests to a REST API",
             "url": "https://pedromarquez.dev/blog/2022/8/java-futures",

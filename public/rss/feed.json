@@ -11,6 +11,18 @@
     },
     "items": [
         {
+            "id": "https://pedromarquez.dev/blog/2022/8/flutter-code-gen-1",
+            "content_html": "Dart libraries like Mockito make heavy use of source-code generation.. In the first of this series of posts, we will explore why we need to generate Dart source code in a Flutter project and what alternatives we have.",
+            "url": "https://pedromarquez.dev/blog/2022/8/flutter-code-gen-1",
+            "title": "Source code generation in Flutter & Dart (Part 1): Reflection and code gen",
+            "summary": "Dart libraries like Mockito make heavy use of source-code generation.. In the first of this series of posts, we will explore why we need to generate Dart source code in a Flutter project and what alternatives we have.",
+            "date_modified": "2022-08-26T05:00:00.000Z",
+            "author": {
+                "name": "Pedro Marquez",
+                "url": "https://twitter.com/pfernandom"
+            }
+        },
+        {
             "id": "https://pedromarquez.dev/blog/2022/8/book",
             "content_html": "\"Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization\"",
             "url": "https://pedromarquez.dev/blog/2022/8/book",

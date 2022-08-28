@@ -36,3 +36,5 @@ yarn-error.log*
 
 
 public/opt_images
+
+*/node_modules

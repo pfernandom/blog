@@ -126,8 +126,8 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
         social_footer ?? "Visit pedromarquez.dev for the full post",
     },
     content: content
-      .replaceAll("](./", `](${publicPath}/`)
-      .replaceAll(".gif", ".webp"),
+      .replace(/\]\(.\//g, `](${publicPath}/`)
+      .replace(/.gif/g, ".webp"),
   };
 }
 

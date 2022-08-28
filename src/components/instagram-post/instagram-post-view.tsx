@@ -1,24 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-import { useRouter } from "next/router";
-import React, {
-  ReactNode,
-  RefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { InstagramDefaultConfig } from "src/models/instagram-default-config";
-import CanvasManager from "src/helpers/canvas/canvas-manager";
-import { PostInfo } from "src/models/interfaces";
-import ColorPicker from "./color-picker";
-import { InstagramPost } from "src/models/InstagramPost";
-import InstagramBackground from "./InstagramBackground.jpeg";
-import Image from "src/components/image";
+import { ReactNode, RefObject, useEffect, useRef, useState } from 'react'
+import Image from 'src/components/image'
+import CanvasManager from 'src/helpers/canvas/canvas-manager'
+import { InstagramDefaultConfig } from 'src/models/instagram-default-config'
+import { InstagramPost } from 'src/models/InstagramPost'
+import { PostInfo } from 'src/models/interfaces'
+import InstagramBackground from './InstagramBackground.jpeg'
 
 type InstagramPostEditConfig = {
-  isGridVisible?: boolean;
-  isOutlineVisible?: boolean;
-};
+  isGridVisible?: boolean
+  isOutlineVisible?: boolean
+}
 
 export default function InstagramPostView({
   post,
@@ -31,43 +23,45 @@ export default function InstagramPostView({
     height: 300,
   },
   withInstagramBackground = false,
+  description,
   children,
 }: {
-  post: PostInfo;
-  pageNumber: Number;
-  currentConfig?: InstagramPost;
-  editConfig?: InstagramPostEditConfig;
-  outerRef?: RefObject<HTMLCanvasElement> | null;
-  containerSize?: { width: number; height: number };
-  withInstagramBackground?: Boolean;
-  children?: ReactNode;
+  post: PostInfo
+  pageNumber: Number
+  currentConfig?: InstagramPost
+  editConfig?: InstagramPostEditConfig
+  outerRef?: RefObject<HTMLCanvasElement> | null
+  containerSize?: { width: number; height: number }
+  withInstagramBackground?: Boolean
+  description?: string
+  children?: ReactNode
 }) {
-  const innerCanvasRef = useRef<HTMLCanvasElement>(null);
+  const innerCanvasRef = useRef<HTMLCanvasElement>(null)
 
-  const canvasRef = outerRef ?? innerCanvasRef;
-  const imgRef = useRef<HTMLImageElement>(null);
-  const [isImageLoaded, setImageLoaded] = useState(false);
+  const canvasRef = outerRef ?? innerCanvasRef
+  const imgRef = useRef<HTMLImageElement>(null)
+  const [isImageLoaded, setImageLoaded] = useState(false)
 
-  const { width, height, fontSize, fonts } = currentConfig;
+  const { width, height, fontSize, fonts } = currentConfig
 
-  const { isGridVisible = false, isOutlineVisible = false } = editConfig;
+  const { isGridVisible = false, isOutlineVisible = false } = editConfig
 
   useEffect(() => {
-    const canvas = canvasRef.current!;
-    const em = parseFloat(getComputedStyle(canvas).fontSize);
+    const canvas = canvasRef.current!
+    const em = parseFloat(getComputedStyle(canvas).fontSize)
 
-    const canvasManager = new CanvasManager(canvas, currentConfig);
+    const canvasManager = new CanvasManager(canvas, currentConfig)
 
-    canvasManager.drawBackground();
+    canvasManager.drawBackground()
 
-    const { title, topLink, subtitle, footer } = fonts!;
+    const { title, topLink, subtitle, footer } = fonts!
 
     //drawGrid(em, "grey");
     if (isGridVisible) {
-      canvasManager.drawGrid({ rem: 2 * em, color: "red" });
+      canvasManager.drawGrid({ rem: 2 * em, color: 'red' })
     }
 
-    const xem = 4;
+    const xem = 4
 
     canvasManager.drawTopLink({
       xem: 2,
@@ -75,13 +69,13 @@ export default function InstagramPostView({
       heightEm: 2,
       font: topLink,
       isOutlineVisible,
-    });
+    })
 
-    let nexty = 6;
+    let nexty = 6
     nexty = canvasManager.addShadow(
       () =>
         (nexty = canvasManager.drawText({
-          text: post?.frontmatter.social_title ?? "",
+          text: post?.frontmatter.social_title ?? '',
           xem: 2,
           yem: nexty,
           font: title,
@@ -91,19 +85,19 @@ export default function InstagramPostView({
         shadowBlur: 1,
         shadowOffsetX: 1,
         shadowOffsetY: 1,
-        shadowColor: "#00c5e8",
+        shadowColor: '#00c5e8',
       }
-    );
+    )
 
     const { height: imgH } = canvasManager.getScaledImageSize({
       imgHeight: post.frontmatter.hero_height,
       imgWidth: post.frontmatter.hero_width,
-    });
-    const { width } = canvasManager.getScaledSize();
+    })
+    const { width } = canvasManager.getScaledSize()
 
-    const footerStart = canvasManager.footerTextStart - 2;
-    const imgHEm = imgH / em;
-    const midEm = (footerStart + nexty - 2) / 2;
+    const footerStart = canvasManager.footerTextStart - 2
+    const imgHEm = imgH / em
+    const midEm = (footerStart + nexty - 2) / 2
 
     switch (pageNumber) {
       case 1:
@@ -114,19 +108,20 @@ export default function InstagramPostView({
             imgHeight: post.frontmatter.hero_height,
             imgWidth: post.frontmatter.hero_width,
           })
-        );
-        break;
+        )
+        break
       case 2:
-        const w = width - xem * em * 2;
+      default:
+        const w = width - xem * em * 2
         const lines = canvasManager.getLines({
-          text: post?.frontmatter.social_subtitle ?? "",
+          text: post?.frontmatter.social_subtitle ?? '',
           maxWidth: w,
           font: subtitle,
-        }).length;
+        }).length
         canvasManager.addShadow(
           () =>
             (nexty = canvasManager.drawText({
-              text: post?.frontmatter.social_subtitle ?? "",
+              text: description ?? post?.frontmatter.social_subtitle ?? '',
               xem,
               yem: midEm - ((subtitle.lineHeight ?? 1) * lines) / 2,
               font: subtitle,
@@ -136,22 +131,21 @@ export default function InstagramPostView({
             shadowBlur: 1,
             shadowOffsetX: 0,
             shadowOffsetY: 0,
-            shadowColor: "grey",
+            shadowColor: 'grey',
           }
-        );
-        break;
-      default:
+        )
+        break
     }
 
-    let yem = canvasManager.footerTextStart;
+    let yem = canvasManager.footerTextStart
 
     canvasManager.drawText({
-      text: post?.frontmatter.social_footer ?? "",
+      text: post?.frontmatter.social_footer ?? '',
       xem,
       yem,
       font: footer,
       isOutlineVisible,
-    });
+    })
 
     //canvasManager.scale();
   }, [
@@ -166,7 +160,7 @@ export default function InstagramPostView({
     isImageLoaded,
     canvasRef,
     pageNumber,
-  ]);
+  ])
 
   return (
     <>
@@ -174,11 +168,11 @@ export default function InstagramPostView({
         style={
           withInstagramBackground
             ? {
-                position: "relative",
+                position: 'relative',
                 width: containerSize.width,
-                margin: "1em",
+                margin: '1em',
               }
-            : { width: containerSize.width, margin: "1em" }
+            : { width: containerSize.width, margin: '1em' }
         }
       >
         {withInstagramBackground && (
@@ -204,8 +198,8 @@ export default function InstagramPostView({
             fontSize,
             width: containerSize.width,
             height: containerSize.height,
-            position: withInstagramBackground ? "absolute" : "initial",
-            top: "14.27%",
+            position: withInstagramBackground ? 'absolute' : 'initial',
+            top: '14.27%',
             left: 0,
           }}
           className="instagram-canvas"
@@ -213,15 +207,15 @@ export default function InstagramPostView({
       </div>
       {children}
       <img
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
         ref={imgRef}
         src={post.frontmatter.hero_image}
         alt={post.frontmatter.hero_image_alt}
         width={width / 2}
         onLoad={() => {
-          setImageLoaded(true);
+          setImageLoaded(true)
         }}
       />
     </>
-  );
+  )
 }

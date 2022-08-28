@@ -4,7 +4,7 @@
         <title>Pedro's Tech Blog</title>
         <link>https://pedromarquez.dev</link>
         <description>A blog about software development: JavaScript, Java, Flutter, and everything I find out there that may be cool</description>
-        <lastBuildDate>Wed, 17 Aug 2022 15:59:44 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 28 Aug 2022 00:29:39 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -13,6 +13,16 @@
             <link>https://pedromarquez.dev</link>
         </image>
         <copyright>All rights reserved 2022</copyright>
+        <item>
+            <title><![CDATA[Source code generation in Flutter & Dart (Part 1): Reflection and code gen]]></title>
+            <link>https://pedromarquez.dev/blog/2022/8/flutter-code-gen-1</link>
+            <guid>https://pedromarquez.dev/blog/2022/8/flutter-code-gen-1</guid>
+            <pubDate>Fri, 26 Aug 2022 05:00:00 GMT</pubDate>
+            <description><![CDATA[Dart libraries like Mockito make heavy use of source-code generation.. In the first of this series of posts, we will explore why we need to generate Dart source code in a Flutter project and what alternatives we have.]]></description>
+            <content:encoded><![CDATA[Dart libraries like Mockito make heavy use of source-code generation.. In the first of this series of posts, we will explore why we need to generate Dart source code in a Flutter project and what alternatives we have.]]></content:encoded>
+            <author>pfernandom@gmail.com (Pedro Marquez)</author>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/8/flutter-code-gen-1/hero.webp"/>
+        </item>
         <item>
             <title><![CDATA[New book: "Backend Developer in 30 Days"]]></title>
             <link>https://pedromarquez.dev/blog/2022/8/book</link>

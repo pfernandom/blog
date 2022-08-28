@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://pedromarquez.dev</id>
     <title>Pedro's Tech Blog</title>
-    <updated>2022-08-17T15:59:44.978Z</updated>
+    <updated>2022-08-28T00:29:39.164Z</updated>
     <generator>Feed for Node.js</generator>
     <author>
         <name>Pedro Marquez</name>
@@ -15,6 +15,24 @@
     <logo>https://pedromarquez.dev/logo.svg</logo>
     <icon>https://pedromarquez.dev/favicon.png</icon>
     <rights>All rights reserved 2022</rights>
+    <entry>
+        <title type="html"><![CDATA[Source code generation in Flutter & Dart (Part 1): Reflection and code gen]]></title>
+        <id>https://pedromarquez.dev/blog/2022/8/flutter-code-gen-1</id>
+        <link href="https://pedromarquez.dev/blog/2022/8/flutter-code-gen-1"/>
+        <updated>2022-08-26T05:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Dart libraries like Mockito make heavy use of source-code generation.. In the first of this series of posts, we will explore why we need to generate Dart source code in a Flutter project and what alternatives we have.]]></summary>
+        <content type="html"><![CDATA[Dart libraries like Mockito make heavy use of source-code generation.. In the first of this series of posts, we will explore why we need to generate Dart source code in a Flutter project and what alternatives we have.]]></content>
+        <author>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </author>
+        <contributor>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </contributor>
+    </entry>
     <entry>
         <title type="html"><![CDATA[New book: "Backend Developer in 30 Days"]]></title>
         <id>https://pedromarquez.dev/blog/2022/8/book</id>

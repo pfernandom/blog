@@ -5,6 +5,26 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch via NPM",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/md-plugin",
+            "runtimeArgs": [
+                "run",
+                "test"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha",
+            "program": "npm run test",
+        },
+        {
             "type": "pwa-node",
             "request": "launch",
             "name": "Launch Program",

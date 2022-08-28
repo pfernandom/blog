@@ -2,8 +2,9 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+
   /* font: 100%/1.75 "Avenir Next", "Helvetica Neue", "Segoe UI", "Helvetica",
     "Arial", sans-serif; */
 }
@@ -14,23 +15,32 @@ footer {
 
 code {
   background: #f5f2f0;
-  padding: 0em 0.5em;
+  padding: 0 0.5em;
   display: inline-block;
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 1.1em;
+}
+
+:not(pre) code {
+  margin: 1px;
+  padding-left: 1px;
+  padding-right: 1px;
 }
 
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
+
   body {
     color: white;
     background: black;
   }
+
   code {
     background-color: grey;
   }
+
   pre {
     filter: brightness(0.95);
   }
@@ -42,7 +52,7 @@ h3,
 h4 {
   font-family: Montserrat, sans-serif;
   font-weight: 500;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   line-height: 1.1;
 }
 
@@ -90,11 +100,71 @@ a:hover {
   text-decoration: underline;
 }
 
-@import url(./blog.css);
-@import url(./instagram.css);
+@import './blog.css';
+@import './instagram.css';
 
 blockquote {
-  padding: 0.5em;
+  --background: #fff;
+  --color: #00cc8f;
+  --font-size: 1.2em;
+
+  /* padding: 0.5em;
   background-color: gainsboro;
-  font-family: Courier;
+  font-family: Courier; */
+  border-left: 3px solid var(--color);
+  color: #1a1a1a;
+  font-family: Georgia, Times, 'Times New Roman', serif;
+  font-size: var(--font-size);
+  font-style: italic;
+  line-height: 1.8em;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-left: 0;
+  padding: 1em 2em;
+  position: relative;
+  transition: 0.2s border ease-in-out;
+  z-index: 0;
+  width: 80%;
+}
+
+blockquote p {
+  margin: 0;
+  margin-bottom: 0.5em;
+}
+
+blockquote::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -4px;
+  height: 2em;
+  background-color: var(--background);
+  width: 5px;
+  margin-top: -1em;
+}
+
+blockquote::after {
+  content: '\201C';
+  position: absolute;
+  top: 50%;
+  left: -0.5em;
+  color: var(--color);
+  font-style: normal;
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 1.5em;
+  text-align: center;
+  text-indent: -2px;
+  width: 1em;
+  margin-top: -0.5em;
+  transition: 0.2s all ease-in-out, 0.4s transform ease-in-out;
+}
+
+blockquote.active:after {
+  transform: rotateY(360deg);
+}
+
+blockquote h3 {
+  margin-top: 0;
+  font-size: var(--font-size);
 }

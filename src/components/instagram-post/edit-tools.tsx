@@ -219,25 +219,29 @@ export default function InstagramEditTools({
       {inPreview && (
         <button
           onClick={() => {
-            ;[canvasRef1, canvasRef2].forEach((canvasRef, index) => {
-              const url = canvasRef.current?.toDataURL('image/png')
+            ;[canvasRef1, canvasRef2, canvasRef3].forEach(
+              (canvasRef, index) => {
+                const url = canvasRef.current?.toDataURL('image/png')
 
-              fetch('/api/canvas-image', {
-                method: 'POST',
-                body: JSON.stringify({
-                  img: url,
-                  fileName: post?.slug + `/img${index}`,
-                }),
-              })
-                .then(async (data) => {
-                  setSavedStatus(SavedStatus.SAVED)
+                fetch('/api/canvas-image', {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    img: url,
+                    fileName: post?.slug + `/img${index}`,
+                  }),
                 })
-                .catch((err) => {
-                  setSavedStatus(SavedStatus.ERROR)
-                })
+                  .then(async (data) => {
+                    setSavedStatus(SavedStatus.SAVED)
+                    confirm('Saved')
+                  })
+                  .catch((err) => {
+                    setSavedStatus(SavedStatus.ERROR)
+                    alert('Error: err')
+                  })
 
-              setSavedStatus(SavedStatus.SAVING)
-            })
+                setSavedStatus(SavedStatus.SAVING)
+              }
+            )
           }}
         >
           {getSaveButtonText(savedStatus)}

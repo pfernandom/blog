@@ -28,9 +28,9 @@ const nextConfig = bundle(
     experimental: {
       newNextLinkBehavior: true,
     },
-    productionBrowserSourceMaps: true,
+    productionBrowserSourceMaps: false,
     reactStrictMode: true,
-    swcMinify: false,
+    swcMinify: true,
     pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
     images: {
       domains: ['pedromarquez.dev', 'localhost'],

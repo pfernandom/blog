@@ -9,6 +9,7 @@ import reddit from 'react-social-icons/build/networks/reddit'
 import linkedin from 'react-social-icons/build/networks/linkedin'
 import instagram from 'react-social-icons/build/networks/instagram'
 import medium from 'react-social-icons/build/networks/medium'
+import rss from 'react-social-icons/build/networks/rss'
 
 SocialIconDatabase.importNetworks([
   facebook,
@@ -17,6 +18,7 @@ SocialIconDatabase.importNetworks([
   reddit,
   linkedin,
   medium,
+  rss,
 ])
 
 export default function SocialPane({}) {

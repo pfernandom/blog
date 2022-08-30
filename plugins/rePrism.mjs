@@ -41,7 +41,42 @@ const rePrism = (options) => {
     visit(tree, 'element', visitor)
   }
 
+  function extractCode(children, className) {
+    if (className?.length ?? 0 > 0) {
+      return className.includes('-') ? className.split('-')[1] : className
+    }
+    // return null
+    return (
+      (children.match(
+        /(List<)|(new )|(ObjectMapper)|(java.)|(Future)|(Thread)|(Runnable)|(ForkJoinPool)|([a-z]+?\.?[a-z]+\()/
+      ) &&
+        'java') ||
+      (children.match(/(@)/i) && 'dart') ||
+      (children.match(/(then)|(Promise)/) && 'js') ||
+      (children.match(/(<[a-z]+>?)/) && 'jsx') ||
+      (children.match(/[a-z]+.[a-z]+$/) && 'bash') ||
+      (children.match(/data-[a-z0-9]*/) && 'jsx') ||
+      (children.match(/(prefers-color-scheme)/) && 'css')
+    )
+  }
+
   function visitor(node, index, parent) {
+    if (parent.tagName !== 'pre' && node.tagName === 'code') {
+      const value =
+        node.value ?? node.children.map((c) => c.value).join(',') ?? ''
+
+      const codeLang = extractCode(value, node.properties.className ?? '')
+      try {
+        if (codeLang !== null) {
+          const result = refractor.highlight(nodeToString(node), codeLang)
+          node.properties.className = 'language-' + codeLang
+          node.children = result
+          return
+        }
+      } catch (err) {
+        console.error('Problem highlighting ' + node, err)
+      }
+    }
     if (!parent || parent.tagName !== 'pre' || node.tagName !== 'code') {
       return
     }

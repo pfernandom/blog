@@ -2,7 +2,6 @@
 import { MDXComponents, MDXProps } from 'mdx/types'
 import { ImageProps } from 'next/image'
 import { ReactElement } from 'react'
-import Code from './code'
 
 import Image from 'src/components/image'
 
@@ -17,7 +16,7 @@ const MDXComponentsDef: MDXComponents = {
       <Image {...(props as ImageProps)} layout="fill" placeholder="empty" />
     )
   },
-  code: Code,
+  // code: Code,
 }
 
 export default MDXComponentsDef

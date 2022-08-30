@@ -1,24 +1,24 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "src/components/image";
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import Image from 'src/components/image'
 
-import React, { useContext } from "react";
-import Link from "next/link";
+import React, { useContext } from 'react'
+import Link from 'next/link'
 
-import Bio from "../components/bio";
-import { getDataFile } from "../helpers/data-fetchers";
-import { getAllPosts } from "../helpers/page-fetcher";
-import { Metadata, PostInfo } from "../models/interfaces";
-import { useRouter } from "next/router";
-import generateRssFeed from "src/helpers/generate-rss-feed";
+import Bio from '../components/bio'
+import { getDataFile } from '../helpers/data-fetchers'
+import { getAllPosts } from '../helpers/page-fetcher'
+import { Metadata, PostInfo } from '../models/interfaces'
+import { useRouter } from 'next/router'
+import generateRssFeed from 'src/helpers/generate-rss-feed'
 
 type HomeParams = {
-  metadata: Metadata;
-  posts: Array<PostInfo>;
-};
+  metadata: Metadata
+  posts: Array<PostInfo>
+}
 
 const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <>
@@ -31,8 +31,8 @@ const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
       {posts
         .filter((post) => post.frontmatter.published)
         .map((post) => {
-          const title = post.frontmatter.title || post.slug;
-          const image = post.frontmatter.hero_image;
+          const title = post.frontmatter.title || post.slug
+          const image = post.frontmatter.hero_image
 
           return (
             <Link
@@ -44,7 +44,7 @@ const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
                 className="link-post-container link-post-a"
                 data-key={post.slug}
                 onMouseEnter={() => {
-                  router.prefetch(post.slug);
+                  router.prefetch(post.slug)
                 }}
               >
                 <div
@@ -87,24 +87,24 @@ const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
                 </div>
               </div>
             </Link>
-          );
+          )
         })}
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
 
 export async function getStaticProps() {
-  await generateRssFeed();
-  const metadata: Metadata = await getDataFile("src/data/metadata.json");
+  await generateRssFeed()
+  const metadata: Metadata = await getDataFile('src/data/metadata.json')
 
-  const posts: Array<PostInfo> = getAllPosts();
+  const posts: Array<PostInfo> = getAllPosts()
 
   return {
     props: {
       posts,
       metadata,
     },
-  };
+  }
 }

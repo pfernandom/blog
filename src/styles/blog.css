@@ -178,6 +178,11 @@ a.social-icon:hover {
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
+.news a {
+  color: #00538b;
+  text-decoration: underline;
+}
+
 @media (prefers-color-scheme: dark) {
   .news {
     color: black;
@@ -208,7 +213,7 @@ a.social-icon:hover {
 
 .blog-post-actions {
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
 }
 
 .blog-post-date {
@@ -226,10 +231,10 @@ a.social-icon:hover {
 }
 
 .blog-post-content {
-  margin-top: 2em;
+  margin-top: 1em;
   text-rendering: optimizeLegibility;
   line-height: 1.5em;
-  text-align: justify;
+  /* text-align: justify; */
   word-break: break-word;
   hyphens: auto;
 }
@@ -375,4 +380,24 @@ a.social-icon:hover {
   display: inline-block;
   font-family: Roboto, sans-serif;
   font-size: 1.1em;
+}
+
+/* CODE */
+
+pre[class*='language-'] {
+  background-color: #fbfbfb !important;
+  border: solid #cfcfcf 1px;
+}
+
+:not(pre) > code[class*='language-'] {
+  font-size: 0.9em;
+  margin: 0 0.3em;
+}
+
+.token.comment.token.comment {
+  color: #586776;
+}
+
+.token.namespace.token.namespace {
+  opacity: 1;
 }

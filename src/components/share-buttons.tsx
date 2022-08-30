@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { MouseEventHandler, useState } from 'react'
 import {
   SocialIcon,
   SocialIconDatabase,
@@ -19,6 +19,38 @@ type ShareButtonsProps = {
   author: string
   description: string
   username?: string
+}
+
+function IconButton({
+  className,
+  style,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button
+      {...props}
+      className={`${className} social-icon share-btn`}
+      style={{
+        borderRadius: '3em',
+        border: 'none',
+        backgroundColor: 'transparent',
+        ...style,
+      }}
+    >
+      <svg
+        className="social-svg"
+        style={{ width: '50px', height: '50px', borderRadius: '3em' }}
+        viewBox="0 0 64 64"
+      >
+        <g className="social-svg-mask">
+          <path d={share.mask} style={{ fill: share.color }} />
+        </g>
+        <g className="social-svg-icon" style={{ fill: 'white' }}>
+          <path d={share.icon} />
+        </g>
+      </svg>
+    </button>
+  )
 }
 
 function ShareLink({
@@ -66,14 +98,13 @@ export default function ShareButtons({
   return (
     <div className={`share-buttons`}>
       {/* Basic Share Links */}
-      <SocialIcon
+      <IconButton
+        aria-label="Expand share buttons"
         className="expand-button"
-        network="sharethis"
-        label="Share to..."
         onClick={() => {
           setExpanded(!isExpanded)
         }}
-      ></SocialIcon>
+      ></IconButton>
 
       {isExpanded && (
         <div className="share-buttons--expanded">

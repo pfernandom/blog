@@ -52,11 +52,9 @@ export default function DynamicSlot({
         onLoad?.call(loadingProps)
       }
       return <div dangerouslySetInnerHTML={{ __html: ssrContent }}></div>
-      // return <GhostContent />
     },
   })
 
-  //src/blog/2022/8/flutter-code-gen-1/index.mdx
   return (
     <div className="blog-post-content">
       {/* <GhostContent /> */}

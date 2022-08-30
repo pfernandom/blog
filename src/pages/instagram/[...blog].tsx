@@ -61,7 +61,6 @@ export async function getStaticProps({
   )
 
   const host = process.env['SITE_URL']
-  console.log({ env: process.env.NODE_ENV })
   return {
     props: {
       notFound: process.env.NODE_ENV === 'production',

@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react'
 import Document, {
   Html,
   Head,
   Main,
   NextScript,
   DocumentContext,
-} from "next/document";
-import Script from "next/script";
+} from 'next/document'
+import Script from 'next/script'
 
-export const ThemeContext = React.createContext("light");
+export const ThemeContext = React.createContext('light')
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
-    const originalRenderPage = ctx.renderPage;
-    let helmetContext;
+    const originalRenderPage = ctx.renderPage
+    let helmetContext
 
     // Run the React rendering logic synchronously
     const page = (ctx.renderPage = () =>
@@ -22,17 +22,17 @@ class MyDocument extends Document {
         enhanceApp: (App: any) => App,
         // Useful for wrapping in a per-page basis
         enhanceComponent: (Component: any) => Component,
-      }));
+      }))
 
     // Run the parent `getInitialProps`, it now includes the custom `renderPage`
-    const initialProps = await Document.getInitialProps(ctx);
+    const initialProps = await Document.getInitialProps(ctx)
 
-    return { ...initialProps, ...page, helmetContext, test: "yeah" };
+    return { ...initialProps, ...page, helmetContext, test: 'yeah' }
   }
 
   render() {
     return (
-      <Html lang="en_US">
+      <Html lang="en-US">
         <Head>
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           <Script
@@ -55,8 +55,8 @@ class MyDocument extends Document {
           <NextScript />
         </ThemeContext.Provider>
       </Html>
-    );
+    )
   }
 }
 
-export default MyDocument;
+export default MyDocument

@@ -2,9 +2,9 @@ import dynamic, {
   DynamicOptionsLoadingProps,
   LoadableComponent,
   Loader,
-} from "next/dynamic";
-import React, { useMemo } from "react";
-import m from "src/imports";
+} from 'next/dynamic'
+import React, { useMemo } from 'react'
+import m from 'src/imports'
 
 function GhostContent() {
   return (
@@ -33,17 +33,34 @@ function GhostContent() {
         </div>
       ))}
     </div>
-  );
+  )
 }
 
-export default function DynamicSlot({ chunk }: { chunk: string }) {
-  const DynamicBlogPost: LoadableComponent = dynamic(m(chunk) as Loader, {
-    loading: () => <GhostContent />,
-  });
+export default function DynamicSlot({
+  chunk,
+  ssrContent,
+  onLoad,
+}: {
+  chunk: string
+  ssrContent: string
+  onLoad?: () => void
+}) {
+  const DynamicBlogPost: LoadableComponent = dynamic(() => m(chunk), {
+    ssr: false,
+    loading: (loadingProps) => {
+      if (!loadingProps.isLoading) {
+        onLoad?.call(loadingProps)
+      }
+      return <div dangerouslySetInnerHTML={{ __html: ssrContent }}></div>
+      // return <GhostContent />
+    },
+  })
+
+  //src/blog/2022/8/flutter-code-gen-1/index.mdx
   return (
     <div className="blog-post-content">
       {/* <GhostContent /> */}
       <DynamicBlogPost />
     </div>
-  );
+  )
 }

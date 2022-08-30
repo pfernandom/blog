@@ -1,14 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { SocialIcon } from "react-social-icons";
-import useMediaQuery from "src/helpers/use-media-query";
+import React, { useState } from 'react'
+import {
+  SocialIcon,
+  SocialIconDatabase,
+} from 'react-social-icons/build/react-social-icons-lite'
+import facebook from 'react-social-icons/build/networks/facebook'
+import twitter from 'react-social-icons/build/networks/twitter'
+import reddit from 'react-social-icons/build/networks/reddit'
+import linkedin from 'react-social-icons/build/networks/linkedin'
+import share from 'react-social-icons/build/networks/sharethis'
+
+import useMediaQuery from 'src/helpers/use-media-query'
+
+SocialIconDatabase.importNetworks([facebook, twitter, reddit, linkedin, share])
 
 type ShareButtonsProps = {
-  url: string;
-  title: string;
-  author: string;
-  description: string;
-  username?: string;
-};
+  url: string
+  title: string
+  author: string
+  description: string
+  username?: string
+}
 
 function ShareLink({
   className,
@@ -25,7 +36,7 @@ function ShareLink({
       target="_blank"
       rel="noreferrer"
     />
-  );
+  )
 }
 
 export default function ShareButtons({
@@ -33,9 +44,9 @@ export default function ShareButtons({
   title,
   author,
   description,
-  username = "pfernandom",
+  username = 'pfernandom',
 }: ShareButtonsProps) {
-  const [isExpanded, setExpanded] = useState(false);
+  const [isExpanded, setExpanded] = useState(false)
 
   function share() {
     if (navigator.share) {
@@ -45,10 +56,10 @@ export default function ShareButtons({
           text: description,
           url,
         })
-        .then(() => console.log("Successful share"))
-        .catch((error) => console.log("Error sharing", error));
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error))
     } else {
-      console.log("Share not supported on this browser, do it the old way.");
+      console.log('Share not supported on this browser, do it the old way.')
     }
   }
 
@@ -60,7 +71,7 @@ export default function ShareButtons({
         network="sharethis"
         label="Share to..."
         onClick={() => {
-          setExpanded(!isExpanded);
+          setExpanded(!isExpanded)
         }}
       ></SocialIcon>
 
@@ -97,5 +108,5 @@ export default function ShareButtons({
         </div>
       )}
     </div>
-  );
+  )
 }

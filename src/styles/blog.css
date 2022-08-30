@@ -57,8 +57,8 @@ a.social-icon:hover {
     transform: scale(1);
   }
 
-  code[class*="language-"],
-  pre[class*="language-"] {
+  code[class*='language-'],
+  pre[class*='language-'] {
     font-size: 0.9em !important;
   }
 }
@@ -348,4 +348,31 @@ a.social-icon:hover {
 .loading-state--heading {
   width: 15em;
   height: 1.5em;
+}
+
+.post-table {
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.post-table thead {
+  font-weight: bold;
+  background: #f5f2f0;
+}
+
+.post-table tr {
+  flex-direction: row;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border: 1px grey solid;
+}
+
+.post-table td {
+  margin: 1em 0;
+  min-width: 200px;
+  flex-direction: column;
+  padding: 0 0.5em;
+  display: inline-block;
+  font-family: Roboto, sans-serif;
+  font-size: 1.1em;
 }

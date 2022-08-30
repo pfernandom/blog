@@ -1,8 +1,8 @@
+import dynamic, { LoadableComponent } from 'next/dynamic'
 import { useRef, useState } from 'react'
 import { InstagramDefaultConfig } from 'src/models/instagram-default-config'
 import { InstagramPost } from 'src/models/InstagramPost'
 import { PostInfo } from 'src/models/interfaces'
-import ColorPicker from './color-picker'
 import InstagramPostView from './instagram-post-view'
 
 const allFonts = [
@@ -75,6 +75,14 @@ export default function InstagramEditTools({
     property,
     color: font.color,
   }))
+
+  const ColorPicker = dynamic(() => import('./color-picker'), {
+    ssr: false,
+    loading: (loadingProps) => {
+      return <div></div>
+      // return <GhostContent />
+    },
+  })
 
   return (
     <>
@@ -219,29 +227,33 @@ export default function InstagramEditTools({
       {inPreview && (
         <button
           onClick={() => {
-            ;[canvasRef1, canvasRef2, canvasRef3].forEach(
-              (canvasRef, index) => {
-                const url = canvasRef.current?.toDataURL('image/png')
+            const images = [canvasRef1, ...refs]
+              .map((canvasRef) => canvasRef.current?.toDataURL('image/png'))
+              .filter((el) => el)
 
-                fetch('/api/canvas-image', {
-                  method: 'POST',
-                  body: JSON.stringify({
-                    img: url,
-                    fileName: post?.slug + `/img${index}`,
-                  }),
-                })
-                  .then(async (data) => {
-                    setSavedStatus(SavedStatus.SAVED)
-                    confirm('Saved')
-                  })
-                  .catch((err) => {
-                    setSavedStatus(SavedStatus.ERROR)
-                    alert('Error: err')
-                  })
+            fetch('/api/canvas-image', {
+              method: 'POST',
+              body: JSON.stringify({
+                img: images,
+                fileName: post?.slug,
+              }),
+            })
+              .then(async (data) => {
+                console.log(data)
+                if (!data.ok) {
+                  setSavedStatus(SavedStatus.ERROR)
+                  alert('Error: ' + data.statusText)
+                  return
+                }
+                setSavedStatus(SavedStatus.SAVED)
+                confirm('Saved')
+              })
+              .catch((err) => {
+                setSavedStatus(SavedStatus.ERROR)
+                alert('Error: ' + err)
+              })
 
-                setSavedStatus(SavedStatus.SAVING)
-              }
-            )
+            setSavedStatus(SavedStatus.SAVING)
           }}
         >
           {getSaveButtonText(savedStatus)}

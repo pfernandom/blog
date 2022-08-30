@@ -1,14 +1,6 @@
 {
-    "ts-node": {
-        // these options are overrides used only by ts-node
-        // same as the --compilerOptions flag and the TS_NODE_COMPILER_OPTIONS environment variable
-        "compilerOptions": {
-            "module": "commonjs",
-            "isolatedModules": false
-        }
-    },
     "compilerOptions": {
-        "target": "es5",
+        "target": "esnext",
         "lib": [
             "dom",
             "dom.iterable",
@@ -18,15 +10,14 @@
         "skipLibCheck": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
-        "noEmit": true,
+        "noEmit": false,
         "esModuleInterop": true,
         "module": "esnext",
         "moduleResolution": "node",
         "resolveJsonModule": true,
-        "isolatedModules": true,
-        "jsx": "preserve",
+        "jsx": "react-jsx",
         "incremental": true,
-        "baseUrl": ".",
+        "baseUrl": "./",
         "paths": {
             "components": [
                 "./src/components"

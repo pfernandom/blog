@@ -1,16 +1,15 @@
-import React from "react";
-import { SocialIcon } from "react-social-icons";
-import Image from "src/components/image";
-import profilePic from "../../public/profile-pic.jpg";
+import React from 'react'
+import Image from 'src/components/image'
+import profilePic from '../../public/profile-pic.jpg'
 
-import { Metadata } from "../models/interfaces";
+import { Metadata } from '../models/interfaces'
 
 function Bio({ metadata }: { metadata: Metadata }) {
-  const { author } = metadata;
+  const { author } = metadata
   return (
     <div
       style={{
-        marginBottom: "1em",
+        marginBottom: '1em',
       }}
     >
       <div className="link-post-container">
@@ -30,7 +29,7 @@ function Bio({ metadata }: { metadata: Metadata }) {
         </p>
       </div>
     </div>
-  );
+  )
 }
 
-export default Bio;
+export default Bio

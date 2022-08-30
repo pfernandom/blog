@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://pedromarquez.dev</id>
     <title>Pedro's Tech Blog</title>
-    <updated>2022-08-28T00:31:44.801Z</updated>
+    <updated>2022-08-30T00:11:27.364Z</updated>
     <generator>Feed for Node.js</generator>
     <author>
         <name>Pedro Marquez</name>
@@ -38,8 +38,8 @@
         <id>https://pedromarquez.dev/blog/2022/8/book</id>
         <link href="https://pedromarquez.dev/blog/2022/8/book"/>
         <updated>2022-08-16T05:00:00.000Z</updated>
-        <summary type="html"><![CDATA["Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization"]]></summary>
-        <content type="html"><![CDATA["Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization"]]></content>
+        <summary type="html"><![CDATA[My first book is now for sale! You can find it in Amazon or in bpbonline.com (links in bio).. "Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization"]]></summary>
+        <content type="html"><![CDATA[My first book is now for sale! You can find it in Amazon or in bpbonline.com (links in bio).. "Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization"]]></content>
         <author>
             <name>Pedro Marquez</name>
             <email>pfernandom@gmail.com</email>

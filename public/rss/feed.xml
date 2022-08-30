@@ -4,7 +4,7 @@
         <title>Pedro's Tech Blog</title>
         <link>https://pedromarquez.dev</link>
         <description>A blog about software development: JavaScript, Java, Flutter, and everything I find out there that may be cool</description>
-        <lastBuildDate>Sun, 28 Aug 2022 00:31:44 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 30 Aug 2022 00:11:27 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -28,8 +28,8 @@
             <link>https://pedromarquez.dev/blog/2022/8/book</link>
             <guid>https://pedromarquez.dev/blog/2022/8/book</guid>
             <pubDate>Tue, 16 Aug 2022 05:00:00 GMT</pubDate>
-            <description><![CDATA["Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization"]]></description>
-            <content:encoded><![CDATA["Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization"]]></content:encoded>
+            <description><![CDATA[My first book is now for sale! You can find it in Amazon or in bpbonline.com (links in bio).. "Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization"]]></description>
+            <content:encoded><![CDATA[My first book is now for sale! You can find it in Amazon or in bpbonline.com (links in bio).. "Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization"]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
             <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/8/book/book.webp"/>
         </item>

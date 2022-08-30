@@ -7,6 +7,8 @@ import BlogPostSEO from 'src/components/blog-post/blog-post-seo'
 import { getAllPosts } from 'src/helpers/page-fetcher'
 import urlGetterFactory from 'src/helpers/url-getter-factory'
 import { Metadata, PostInfo } from '../models/interfaces'
+import { renderToStaticMarkup, renderToString } from 'react-dom/server'
+import m from 'src/imports'
 
 export function getNextAndPrev(posts: Array<PostInfo>, currentPost: PostInfo) {
   const filtered = posts.filter((p) => p.frontmatter.published)
@@ -28,12 +30,14 @@ type BlogPlaceholderParams = {
   post: PostInfo
   posts: PostInfo[]
   host: string
+  content: string
 }
 
 const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
   post,
   posts,
   host,
+  content,
 }) => {
   const router = useRouter()
   const path: string[] = router.query.blog as string[]
@@ -62,7 +66,7 @@ const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
 
       <BlogPostActions host={host} {...post} />
 
-      <DynamicSlot chunk={chunk} />
+      <DynamicSlot ssrContent={content} chunk={chunk} />
 
       <BlogPostFooter prev={prev} next={next} />
     </div>
@@ -82,6 +86,9 @@ export async function getStaticProps({
     return post.slug.includes(params.blog?.join('/'))
   })
 
+  const content = selectedPost != null ? await m(selectedPost?.slug) : {}
+  const MDXContent = content.default
+
   const host = process.env['SITE_URL']
   return {
     props: {
@@ -90,6 +97,7 @@ export async function getStaticProps({
       post: selectedPost ?? {},
       posts: posts ?? [],
       host,
+      content: renderToStaticMarkup(<MDXContent />),
     },
   }
 }

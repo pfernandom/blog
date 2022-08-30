@@ -3,8 +3,7 @@
     // these options are overrides used only by ts-node
     // same as the --compilerOptions flag and the TS_NODE_COMPILER_OPTIONS environment variable
     "compilerOptions": {
-      "module": "CommonJS",
-      "isolatedModules": false
+      "esModuleInterop": true
     },
     "include": [
       "next-env.d.ts",
@@ -24,6 +23,7 @@
       "dom.iterable",
       "esnext"
     ],
+    "outDir": "./dist2",
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -58,7 +58,9 @@
     "**/*.tsx",
     "src/**/*.tsx",
     "scripts/gen-imports.mts",
-    "scripts/gen-imports.tts"
+    "scripts/gen-imports.tts",
+    "scripts/resize.mts",
+    "scripts/mdxToMd.mts"
   ],
   "exclude": [
     "node_modules",

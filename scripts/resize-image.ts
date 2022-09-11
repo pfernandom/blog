@@ -163,7 +163,7 @@ const args = yargs(hideBin(process.argv))
   
   Common configs: 
   - Dev.to:
-  npx ts-node ./scripts/resize-image.ts src/blog/2022/8/flutter-code-gen-1/hero.jpeg --name devto.png --ext png --scaleX 1 --scaleY 0.42
+  npx ts-node --project tsconfig-scripts.json ./scripts/resize-image.ts src/blog/2022/8/flutter-code-gen-1/hero.jpeg --name devto.png --ext png --scaleX 1 --scaleY 0.42
   
   `
   )
@@ -189,4 +189,4 @@ main(process.argv[2], {
   scaleY,
 })
 
-/// npx ts-node ./scripts/resize-image.ts ./src/blog/2022/7/dark-mode-css/hero.jpeg --name hero.webp --export
+/// npx ts-node  --project tsconfig-scripts.json ./scripts/resize-image.ts ./src/blog/2022/7/dark-mode-css/hero.jpeg --name hero.webp --export

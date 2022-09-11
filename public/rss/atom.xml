@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://pedromarquez.dev</id>
     <title>Pedro's Tech Blog</title>
-    <updated>2022-08-30T06:19:18.736Z</updated>
+    <updated>2022-09-11T22:41:30.959Z</updated>
     <generator>Feed for Node.js</generator>
     <author>
         <name>Pedro Marquez</name>
@@ -15,6 +15,24 @@
     <logo>https://pedromarquez.dev/logo.svg</logo>
     <icon>https://pedromarquez.dev/favicon.png</icon>
     <rights>All rights reserved 2022</rights>
+    <entry>
+        <title type="html"><![CDATA[Converting and customizing Markdown files to HTML with Unified, remark & rehype]]></title>
+        <id>https://pedromarquez.dev/blog/2022/9/markdown-to-html</id>
+        <link href="https://pedromarquez.dev/blog/2022/9/markdown-to-html"/>
+        <updated>2022-09-12T05:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Hosting your own blog is easier on Markdown!. Many tools exist for converting Markdown to HTML, and in this post we will learn how to use some of them.]]></summary>
+        <content type="html"><![CDATA[Hosting your own blog is easier on Markdown!. Many tools exist for converting Markdown to HTML, and in this post we will learn how to use some of them.]]></content>
+        <author>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </author>
+        <contributor>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </contributor>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Source code generation in Flutter & Dart (Part 1): Reflection and code gen]]></title>
         <id>https://pedromarquez.dev/blog/2022/8/flutter-code-gen-1</id>

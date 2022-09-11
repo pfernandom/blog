@@ -4,6 +4,7 @@ import remarkFrontmatter from 'remark-frontmatter'
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import rePrism from './plugins/rePrism.mjs'
+import path from 'path'
 
 const bundle = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',

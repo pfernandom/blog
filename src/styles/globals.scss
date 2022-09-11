@@ -72,7 +72,8 @@ h2 {
 }
 
 h2,
-h3 {
+h3,
+h4 {
   color: var(---heading-color);
   filter: brightness(0.8);
 }
@@ -100,8 +101,8 @@ a:hover {
   text-decoration: underline;
 }
 
-@import './blog.css';
-@import './instagram.css';
+@import './blog.scss';
+@import './instagram.scss';
 
 blockquote {
   --background: #fff;

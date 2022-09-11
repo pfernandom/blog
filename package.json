@@ -16,7 +16,8 @@
     "puremd": "npx ts-node  --project ./tsconfig-scripts.json ./scripts/mdxToMd.ts",
     "prepare": "husky install",
     "analyze": "ANALYZE=true npm run build",
-    "analyze-dep": "npx depcruise --output-type json --reaches 'react-color' --focus '^src' ./src > deps.json "
+    "analyze-dep": "npx depcruise --output-type json --reaches 'react-color' --focus '^src' ./src > deps.json ",
+    "devto": "find ./src -type f -name \"hero.*\" -print0 | xargs -0 -I {} npx ts-node --project tsconfig-scripts.json ./scripts/resize-image.ts {} --name devto.png --ext png --scaleX 1 --scaleY 0.42"
   },
   "dependencies": {
     "@mdx-js/loader": "^2.1.2",
@@ -46,6 +47,7 @@
     "remark-frontmatter": "^4.0.1",
     "remark-html": "^15.0.1",
     "remark-mdx-frontmatter": "^2.0.3",
+    "sass": "^1.54.9",
     "typeface-merriweather": "0.0.72",
     "typeface-montserrat": "0.0.54",
     "typography": "^0.16.21",
@@ -76,7 +78,7 @@
     "nodemon": "^2.0.19",
     "prettier": "2.7.1",
     "rehype-highlight": "^5.0.2",
-    "rehype-inline-code-classname": "^1.0.7",
+    "rehype-inline-code-classname": "^1.0.9",
     "sharp": "^0.30.7",
     "stylelint": "^14.11.0",
     "stylelint-config-prettier": "^9.0.3",

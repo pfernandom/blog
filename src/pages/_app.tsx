@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '../styles/globals.scss'
 import 'highlight.js/styles/github-dark-dimmed.css'
 
 import 'prismjs/themes/prism.min.css'

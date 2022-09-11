@@ -163,7 +163,7 @@ a.social-icon:hover {
 
 @media (prefers-color-scheme: dark) {
   .link-post-keywords {
-    filter: invert();
+    filter: #{'invert()'};
   }
 }
 
@@ -186,12 +186,12 @@ a.social-icon:hover {
 @media (prefers-color-scheme: dark) {
   .news {
     color: black;
-    filter: invert();
+    filter: #{'invert()'};
   }
   .news a {
     color: var(---heading-color);
     filter: brightness(1.2);
-    filter: invert();
+    filter: #{'invert()'};
   }
 
   .news a :hover {
@@ -240,7 +240,7 @@ a.social-icon:hover {
 }
 
 .blog-post-content .blog-img {
-  max-width: min(100vw, fit-content);
+  max-width: min(100vw, #{'fit-content'});
 }
 
 .codepen {
@@ -281,7 +281,7 @@ a.social-icon:hover {
   display: flex;
   left: -10em;
   flex-direction: row;
-  width: min(4vh, fit-content);
+  width: min(4vh, #{'fit-content'});
   background-color: white;
   box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
   border-radius: 0.3em;
@@ -356,20 +356,22 @@ a.social-icon:hover {
 }
 
 .post-table {
+  --border-color: rgba(190, 190, 190, 0.602);
   border-collapse: collapse;
   margin: 0 auto;
 }
 
 .post-table thead {
   font-weight: bold;
-  background: #f5f2f0;
+  background: var(--border-color);
+  border: 1px var(--border-color) solid;
 }
 
 .post-table tr {
   flex-direction: row;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
-  border: 1px grey solid;
+  border: 1px var(--border-color) solid;
 }
 
 .post-table td {

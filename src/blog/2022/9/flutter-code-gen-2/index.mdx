@@ -1,0 +1,683 @@
+---
+title: 'Source code gen in Flutter & Dart: How to create a builder to generate SQL code'
+date: '2022-09-16'
+description:
+  [
+    'In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.',
+  ]
+hero_image: ./hero.jpeg
+hero_image_alt: 'A hero image for this post about Dart code generation.'
+published: true
+key_words: flutter, dart, builder, source_gen, hibernate, orm
+---
+
+In the [first part](https://pedromarquez.dev/blog/2022/8/flutter-code-gen-1) of this series of posts, we discussed how Flutter and -Dart in general- makes use of [builders](https://pub.dev/packages/build) to generate source code _during_ the build process.
+
+We saw the example of [json-serializable](https://pub.dev/packages/json_serializable), a builder that "decorates" Dart classes with methods to serialize and deserialize its contents to -and from- JSON.
+
+In this post, we will describe how to create a custom builder that will _generate both SQL and Dart code_ out of a Dart class. This builder will follow a pattern similar to `json-serializable`: We will define a set of annotations that we will use to annotate classes for which we want to generate SQL code.
+
+## Some inspiration
+
+You may be familiar with the [Hibernate ORM](https://hibernate.org/orm/), an implementation of the Java Persistence API (JPA) specification.
+
+In JPA, we can annotate Java classes and their attributes with `java^@Table`, `java^@Entity`, `java^@Id` and `java^@Column` -among others- to create a mapping between a SQL table and a Java class.
+
+For instance, if we wanted to map a class `Employee` to a SQL table called `EMPLOYEE`, we would annotate the class as follows:
+
+```java
+import javax.persistence.*;
+
+@Entity
+@Table(name = "EMPLOYEE")
+public class Employee {
+   @Id @GeneratedValue
+   @Column(name = "id")
+   private int id;
+
+   @Column(name = "first_name")
+   private String firstName;
+
+   @Column(name = "last_name")
+   private String lastName;
+   //...
+```
+
+This mapping lets the application generate SQL code to create, query and update the SQL table.
+
+Drawing inspiration from JPA, we will create a builder to generate the SQL for creating a SQL table out of annotated Dart classes.
+
+_A note about database and generators: The example in this post is only for educative purposes. If you want something more production-ready that performs the kind of SQL manipulation our example generator does, take a look at [Dirft](https://github.com/simolus3/drift) or [Floot](https://pub.dev/packages/floor)_.
+
+## Plan
+
+From a high level, here is what we will do:
+
+- Define a project structure
+- Define a set of annotations
+- Create methods to build SQL
+- Define the builder
+- Using and executing the builder
+
+## Step 1: Define our project structure
+
+For reasons that we will define in a couple of sections, we will create two different projects: `db_builder` and `db_builder_generator`.
+
+Other builders follow a similar pattern:
+
+- [injectable](https://github.com/Milad-Akarie/injectable), which is split between the packages `injectable` and `injectable_generator`.
+- `json-serializable`, which is split between `json_annotation` and `json_serializable`.
+
+The two Dart projects will contain the following structure:
+
+```bash
+db_builder
+├── build.yaml
+├── lib
+│   ├── annotations.dart
+│   └── ...
+└── pubspec.yaml
+```
+
+````bash
+db_builder_generator
+├── build.yaml
+├── lib
+│   └── builder
+│       ├── builder.dart
+│       ├── builders
+│           └── ...
+├── pubspec.yaml
+```
+````
+
+## Step 2: Define a set of annotations
+
+In Dart, there is no special syntax to create annotations. A regular Dart class can be used as an annotation.
+
+Inside the `db_builder` project, we will create a `lib/annotations.dart` file and we will start defining classes for our annotations:
+
+```dart
+// Will be used as: @DatabaseTable("table_name")
+class DatabaseTable {
+  final String name;
+  const DatabaseTable(this.name);
+}
+
+// Will be used as: @DatabaseColumn("col_name", "TEXT", isRequired: true)
+class DatabaseColumn {
+  final String name;
+  final String type;
+  final bool isRequired;
+  final bool isNotNull;
+  final bool isUnique;
+  final String? defaultValue;
+
+  const DatabaseColumn(this.name, this.type,
+    {this.isRequired = false,
+    this.isNotNull = false,
+    this.isUnique = false,
+    this.defaultValue});
+}
+```
+
+These annotations will be added to classes used to hold database record data:
+
+```dart
+@DatabaseTable("test_table_2")
+class TestEntity2 {
+  int id;
+  String name;
+  @DatabaseColumn("file_path", "TEXT")
+  String filePath;
+
+  TestEntity2(this.id, this.name, {this.filePath = ""});
+}
+```
+
+The annotations as used in the previous code snippet work as regular class constructors:
+
+```dart
+DatabaseTable("test_table_2")
+DatabaseColumn("file_path", "TEXT")
+```
+
+## Step 3: Create methods to build SQL
+
+The next step is to create methods that will allow us to serialize the contents of our annotations into SQL statements. We will generate table definition statements like the following:
+
+```sql
+CREATE TABLE test_table_2 (file_path TEXT)
+```
+
+There are many ways to approach the serialization process, but the simplest one is to override the annotation's `toString` method:
+
+```dart
+@JsonSerializable()
+class DatabaseColumn {
+  // ...
+
+  @override
+  String toString() {
+    var params = ['$name ${type}'];
+    if (isRequired) {
+      params.add('REQUIRED');
+    }
+    if (isNotNull) {
+      params.add('NOT NULL');
+    }
+    if (isUnique) {
+      params.add("UNIQUE");
+    }
+    if (defaultValue != null) {
+      params.add("DEFAULT '$defaultValue'");
+    }
+
+    return params.join(" ");
+  }
+
+  // ...
+```
+
+## Step 4: Define the builder
+
+Now we get to the core of the post. To define a builder, we must create a `build.yaml` file inside the directory `db_builder_generator` -which we defined in previous steps- and create the Dart source code for the builder.
+
+Our build process will consist of two sub-steps:
+
+1. Create intermediate files `.part.sql` for each Dart file that contains annotated classes.
+2. Collet all `.part.sql` and merge them into a single `/sql/create.sql` file.
+
+### Defining the code for the builder
+
+A simple way to create the code for the builder is to extend the class `Builder` from the package `build/src/builder/builder.dart`.
+
+_Note: Since we are generating SQL files first, extending `Builder` is a good choice. However, once we start generating Dart source code, a better choice will be to extend `dart^GeneratorForAnnotation<T>` from the `source_gen/source_gen.dart` package. We will explore Dart-code generation in the next post of this series_
+
+```dart
+class SQLBuilder extends Builder {
+  final BuilderOptions options;
+
+   SQLBuilder({
+    required this.options,
+  })
+
+  // ...
+}
+```
+
+Notice that the builder can receive options to customize the building process.
+
+Now, we must override two key methods:
+
+```dart
+@override
+FutureOr<void> build(BuildStep buildStep)
+
+@override
+Map<String, List<String>> get buildExtensions => const { //... }
+```
+
+The `buildExtensions` getter returns a map of the file extensions that will be used for the generated files:
+
+```dart
+@override
+Map<String, List<String>> get buildExtensions => const {
+  r'.dart': ['.part.sql'],
+};
+```
+
+This mapping describes that we will take as input `.dart` files, and we will generate files with the extension `.part.sql`.
+
+The `build` method defines the actual process of creating the SQL files. First, we need to collect all Dart classes that contain the `dart^@DatabaseTable` annotation:
+
+```dart
+TypeChecker typeChecker = TypeChecker.fromRuntime(DatabaseTable);
+
+Future<Iterable<AnnotatedElement>> getClassesAnnotatedWithTable(
+      BuildStep buildStep) async {
+    final lib = await buildStep.resolver
+        .libraryFor(buildStep.inputId, allowSyntaxErrors: true);
+    final libraryReader = LibraryReader(lib);
+    return libraryReader.annotatedWith(typeChecker);
+  }
+```
+
+We use the utility class `dart^LibraryReader` from `source_gen/src/library.dart` to gain access to the collection of files in the project.
+
+Then, we use the method `annotatedWith` to retrieve all the `AnnotatedElement` classes (e.g. `TestEntity2` for our example) that contain the annotation type defined by `dart^TypeChecker.fromRuntime(DatabaseTable)`.
+
+Then, we iterate through the list of `AnnotatedElement`s, and we extract the attributes for each class:
+
+```dart
+var annotated = await getClassesAnnotatedWithTable(buildStep);
+
+var allFields = annotated.map((field) {
+  if (field.element is! ClassElement) {
+    return null;
+  }
+  ClassElement element = field.element as ClassElement;
+  var fieldList = getAllFields(element);
+  // ...
+});
+```
+
+Since our classes could be extending other classes, and getting extra column attributes through inheritance, we must search attributes at two levels:
+
+- Attributes in the annotated class (through `SimpleElementVisitor`).
+- Attributes in the parent class(es) (through a `InheritanceManager3`).
+
+```dart
+import 'package:analyzer/src/dart/element/inheritance_manager3.dart' // ignore: implementation_imports
+    show
+        InheritanceManager3;
+
+List<FieldElement> getAllFields(ClassElement element) {
+    var manager = InheritanceManager3();
+    var visitor = ModelVisitor();
+
+    final inheritedFields = <String, FieldElement>{};
+    for (var v in manager.getInheritedConcreteMap2(element).values) {
+      if (v is PropertyAccessorElement && v.isGetter) {
+        assert(v.variable is FieldElement);
+        final variable = v.variable as FieldElement;
+        assert(!inheritedFields.containsKey(variable.name));
+        inheritedFields[variable.name] = variable;
+      }
+    }
+    element.visitChildren(visitor);
+    return [...visitor.elements, ...inheritedFields.values];
+  }
+```
+
+### Getting inherited attributes
+
+We use the method `manager.getInheritedConcreteMap2(element)` in the class `InheritanceManager3` to retrieve the list of classes in the inheritance chain for the annotated class.
+
+We must iterate through each inherited attribute, filtering out attributes that are not property getters:
+
+```dart
+if (v is PropertyAccessorElement && v.isGetter) {
+  assert(v.variable is FieldElement);
+  final variable = v.variable as FieldElement;
+  inheritedFields[variable.name] = variable;
+}
+```
+
+### Getting the annotated class' attributes
+
+We create a `ModelVisitor` class extending `SimpleElementVisitor` from the package `package:analyzer/dart/element/visitor.dart` to extract the attributes for the annotated class:
+
+```dart
+var visitor = ModelVisitor();
+element.visitChildren(visitor);
+
+// ...
+
+class ModelVisitor extends SimpleElementVisitor {
+  late DartType className;
+  Map<String, DartType> fields = {};
+  Map<String, List<ElementAnnotation>> metaData = {};
+  List<FieldElement> elements = [];
+
+  @override
+  visitConstructorElement(ConstructorElement element) {
+    className = element.type.returnType;
+  }
+
+  @override
+  visitFieldElement(FieldElement element) {
+    fields[element.name] = element.type;
+    metaData[element.name] = element.metadata;
+    elements.add(element);
+  }
+
+  @override
+  visitTopLevelVariableElement(TopLevelVariableElement element) {
+    fields[element.name] = element.type;
+    metaData[element.name] = element.metadata;
+  }
+
+  // ...
+}
+```
+
+Having collected all attributes in the class -both direct and inherited-, we must filter out those that are not annotated with `dart^@DatabaseColumn`:
+
+```dart
+List<DatabaseColumn> getDatabaseColumns(List<FieldElement> fieldList) {
+    return fieldList
+        .where((element) => columnTypeChecker.hasAnnotationOf(element))
+        .map((element) => columnTypeChecker.firstAnnotationOfExact(element))
+        .map((element) => DatabaseColumn.fromDartObj(element!))
+        .toList();
+  }
+```
+
+At the same time, we create a method `DatabaseColumn.fromDartObj` to parse the contents of the annotation instance:
+
+```dart
+factory DatabaseColumn.fromDartObj(DartObject obj) {
+    var reader = ConstantReader(obj);
+
+    var all = DatabaseColumn("", "")
+        .toJson()
+        .keys
+        .map((key) => Tuple2(key, reader.read(key).literalValue));
+
+    return DatabaseColumn.fromJson(
+        Map.fromIterable(all, key: (e) => e.item1, value: (e) => e.item2));
+}
+```
+
+Instead of writing code to pass each attribute by name in `DatabaseColumn`, we use `json_serializable` to convert the annotation attributes to JSON and iterate through each of its attributes. In this way, as we add more attributes to `DatabaseColumn`, we don't need to update the builder to reflect those changes.
+
+This is the reason why we created two packages `db_builder` and `db_builder_generator`: `json_serializable` is a builder by itself. When I tried to keep both the annotations and the builder code in the same package, the build process would result in conflicts between `json_serializable` and `db_builder`; the builder would delete the partial files for the JSON serialization code, causing compilation problems in the build process for `db_builder`.
+
+Of course, you could use the classes in the `analyzer` package to extract the attribute classes, and that may allow you to keep the annotations and the builder in the same package. However, this example shows that keeping two separate packages gives you more flexibility to run other builders in your annotation classes.
+
+Having retrieved, filtered and converted each annotated attribute into instances of `DatabaseColumn`, all we have left to do is serialize the contents of each annotation into a SQL `CREATE` statement:
+
+```dart
+var allFields = annotated.map((field) {
+  if (field.element is! ClassElement) {
+    return null;
+  }
+  ClassElement element = field.element as ClassElement;
+  var fieldList = getAllFields(element);
+  var fields = getDatabaseColumns(fieldList);
+  return buildCreateStatement(field, fields);
+}).where((element) => element != null);
+
+
+// ...
+final db = sql.sqlite3.openInMemory();
+
+String buildCreateStatement(
+      AnnotatedElement field, List<DatabaseColumn> fields) {
+  var query =
+      "CREATE TABLE ${field.annotation.peek("name")?.objectValue.toStringValue()} (${fields.join(",\n")})";
+
+  try {
+    db.prepare(query);
+  } on SqliteException catch (ex, stack) {
+    log.warning("The generated SQL has errors: $query", [ex, stack]);
+  }
+  return query;
+}
+```
+
+Notice an extra thing here: Since I want to generate _valid_ SQL statements, I'm using the [sqlite3](https://pub.dev/packages/sqlite3) to create an in-memory database and try to dry-run the statement with `db.prepare(query)`.
+
+This extra level of validation may not be necessary if you're completely sure the SQL code you're generating is valid, but I think it's nice to get that extra sanity check, especially if you plan to create more complex SQL code like views or `JOIN` queries.
+
+Once we have a list of SQL statements, we write them to their corresponding files using `dart^buildStep.writeAsString`:
+
+```dart
+String _generatedExtension = '.part.sql'
+
+AssetId createAssetId(BuildStep buildStep) {
+  var filePAth = buildStep.inputId.path;
+  var newfile = path.join(path.dirname(filePAth),
+      path.basenameWithoutExtension(filePAth) + _generatedExtension);
+  return AssetId(buildStep.inputId.package, newfile);
+}
+
+// ...
+
+buildStep.writeAsString(
+        createAssetId(buildStep), allFields.join("\n"))
+```
+
+Notice that we get a list of `CREATE` statements for a _single_ file, as Dart files can contain multiple class definitions. If your code is organized to have only one class definition per file, this list will always contain one single `CREATE` statement.
+
+The `writeAsString` method requires us to pass an `AssetId`, which is the complete definition for the file to be generated. In this case, we create a file with the same path as the original Dart file, but using the extension `.part.sql`.
+
+Now, putting it all together, we complete our implementation of the `build` method:
+
+```dart
+@override
+FutureOr<void> build(BuildStep buildStep) async {
+  log.fine("Build SQL");
+
+  try {
+    var annotated = await getClassesAnnotatedWithTable(buildStep);
+
+    var allFields = annotated.map((field) {
+      if (field.element is! ClassElement) {
+        return null;
+      }
+      ClassElement element = field.element as ClassElement;
+      var fieldList = getAllFields(element);
+      var fields = getDatabaseColumns(fieldList);
+      return buildCreateStatement(field, fields);
+    }).where((element) => element != null);
+
+    if (allFields.isEmpty) {
+      return;
+    }
+
+    await buildStep.writeAsString(
+        createAssetId(buildStep), allFields.join("\n"));
+  } catch (err, stack) {
+    log.severe("Failed to generate SQL", err, stack);
+  }
+}
+```
+
+To create a cleaner API, we can create a single `db_builder_generator/builder.dart` file that exports the builders you want to use:
+
+```dart
+import 'builders/SqlBuilder.dart';
+
+Builder sqlBuilder(BuilderOptions options) => SQLBuilder(options: options);
+```
+
+### Defining the builder in build.yaml
+
+Builders are defined by the `builders` attribute in `build.yaml`:
+
+```yaml
+builders:
+  sql_builder:
+    target: ':sql_builder'
+    import: 'package:db_builder_generator/builder/builder.dart'
+    builder_factories: ['sqlBuilder']
+    build_extensions: { '.dart': ['.part.sql'] }
+    auto_apply: dependents
+    build_to: cache
+```
+
+We can find all the attributes for `build.yaml` in the documentation for [build_config](https://pub.dev/packages/build_config). The following are extracts of the attributes we're defining above:
+
+- **import**: _Required_. The import uri that should be used to import the library containing the Builder class. This should always be a package: uri.
+- **builder_factories**: A List\<String\> which contains the names of the top-level methods in the imported library which are a function fitting the typedef Builder `factoryName(BuilderOptions options)`.
+- **build_extensions**: Required. A map from input extension to the list of output extensions that may be created for that input. This must match the merged `buildExtensions` maps from each Builder in builder_factories.
+- **auto_apply**: _Optional_. The packages which should have this builder automatically applied. Defaults to 'none' The possibilities are:
+  - "none": Never apply this Builder unless it is manually configured
+  - "dependents": Apply this Builder to the package with a direct dependency on the package exposing the builder.
+- **build_to**: _Optional_. The location that generated assets should be output to. The possibilities are:
+  - "source": Outputs go to the source tree next to their primary inputs.
+  - "cache": Outputs go to a hidden build cache and won't be published. The default is "cache". If a Builder specifies that it outputs to "source" it will never run on any package other than the root.
+
+So, at a high level, we're passing the location of our builder, the map of output extensions, we only apply it to packages that depend on our builder, and we build to the **cache**.
+
+The cache's location can be found at the project's root in `.dart_tool/build/generated/`.
+
+We chose to build to cache because we don't want to generate a SQL file for each file containing annotated classes. We want to create one single `/lib/sql/create.sql` file containing _all_ create statements in our code base. To get to this result, we must **merge all generated files**.
+
+### Second builder: "combineSql"
+
+Builders can depend on the results of other builders. We will use this fact to create a second builder that will take all `.part.sql` files and merge them into a single file:
+
+```dart
+class SqlCombinerBuilder implements Builder {
+  @override
+  final buildExtensions = const {
+    r'$lib$': ['sql/create.sql']
+  };
+
+  @override
+  Future<void> build(BuildStep buildStep) async {
+    log.fine("Merge all");
+    try {
+      final exports = buildStep.findAssets(Glob('**/*.part.sql'));
+      final content = [
+        await for (var exportLibrary in exports)
+          '-- from: \'${exportLibrary.changeExtension('.dart').uri}\' \n'
+              '${await buildStep.readAsString(exportLibrary)};',
+      ];
+      if (content.isNotEmpty) {
+        buildStep.writeAsString(
+            AssetId(buildStep.inputId.package, 'lib/sql/create.sql'),
+            content.join('\n'));
+      }
+    } catch (err, stack) {
+      log.severe("Failed to merge generated SQL", err, stack);
+    }
+  }
+}
+```
+
+This second builder follows the same pattern as the first one: Extend `Builder` and override the `build` and `buildExtensions` method/attribute.
+
+However, in this builder, we collect all files that have the extension `.part.sql` as follows:
+
+```dart
+final exports = buildStep.findAssets(Glob('**/*.part.sql'));
+```
+
+Then, we merge them all together in a single string:
+
+```dart
+final content = [
+  await for (var exportLibrary in exports)
+    '-- from: \'${exportLibrary.changeExtension('.dart').uri}\' \n'
+        '${await buildStep.readAsString(exportLibrary)};',
+];
+```
+
+The `--` characters indicate a SQL comment, which is useful to know which Dart file was used to generate the current `CREATE statement`.
+
+Finally, if the result string is not empty, we write it to `lib/sql/create.sql`:
+
+```dart
+buildStep.writeAsString(
+  AssetId(buildStep.inputId.package, 'lib/sql/create.sql'),
+  content.join('\n'));
+```
+
+Finally, we expose this builder in `builder.dart`:
+
+```dart
+Builder combineSql(BuilderOptions options) => SqlCombinerBuilder();
+```
+
+### build.yaml definition for "combineSql"
+
+Just as we did with the first builder, we must define an entry in the `build` section of `build.yaml`:
+
+```yaml
+builders:
+  sql_builder:
+    # ...
+  combine_sql:
+    target: ':sql_builder'
+    import: 'package:db_builder_generator/builder/builder.dart'
+    builder_factories: ['combineSql']
+    build_extensions: { $lib$': ['sql/create.sql'] }
+    auto_apply: dependents
+    build_to: source
+    required_inputs: ['.part.sql']
+    applies_builders: ['db_builder_generator:sql_builder']
+```
+
+We define two extra attributes in this configuration:
+
+- **required_inputs**: _Optional_, list of extensions, defaults to empty list. If a Builder must see every input with one or more file extensions they can be specified here and it will be guaranteed to run after any Builder which might produce an output of that type.
+- **applies_builders**: _Optional_, list of Builder keys. Specifies that other builders should be run on any target which will run this Builder.
+
+### Deleting intermediate files
+
+Since we don't need all the `.part.sql` files anymore, we can clean them up to avoid taking up disk space unnecessarily.
+
+We can use `FileDeletingBuilder` from the `builder` package to clean up files as a post-process builder. We expose the builder in `builders.dart`:
+
+```dart
+PostProcessBuilder partCleanup(BuilderOptions) =>
+    FileDeletingBuilder(BuilderOptions);
+```
+
+And we create one last configuration in `build.yaml`, but this time in the `post_process_builders` attribute, instead of the `builders` section:
+
+```yaml
+builders:
+  sql_builder:
+    # ...
+  combine_sql:
+    # ...
+post_process_builders:
+  part_cleanup:
+    import: 'package:db_builder_generator/builder/builder.dart'
+    builder_factory: 'partCleanup'
+```
+
+## Step 5: Using and executing the builder
+
+Having imported our packages into a project -e.g. `mypackage`--, we can configure them in the dependent project's own `mypackage/build.yaml`:
+
+```yaml
+targets:
+  $default:
+    builders:
+      json_serializable:
+        # ...
+      db_builder_generator|sql_builder:
+        enabled: true
+        generate_for:
+          include:
+            - lib/models/**.dart
+```
+
+This configuration will scope the code generation process to only find annotated classes in the `mypackage/lib/models/**.dart` path. In that directory, we have a single file `TestTable2.dart` with the example we described before:
+
+```dart
+@DatabaseTable("test_table_2")
+class TestEntity2 {
+  int id;
+  String name;
+  @DatabaseColumn("file_path", "TEXT")
+  String filePath;
+
+  TestEntity2(this.id, this.name, {this.filePath = ""});
+}
+```
+
+Finally, we execute all builders with the following command:
+
+```bash
+dart run build_runner watch --delete-conflicting-outputs
+```
+
+If everything runs without errors, you should now find a file in the dependent project's path `mypackage/lib/sql` called `mypackage/lib/sql/create.sql`:
+
+```sql
+-- from: 'package:mypackage/models/TestTable2.dart'
+CREATE TABLE test_table_2 (file_path TEXT)
+```
+
+We have successfully generated SQL code out of annotated classes! The `dart run build_runner watch` command will spawn a process that will watch for changes to files in the source code, and regenerate the SQL files appropriately.
+
+## Next steps
+
+In the next post of this series, we will explore how to apply these same concepts to generate Dart source code. While the basic elements are the same, packages like [source_gen](https://pub.dev/packages/source_gen) provide extra utilities that make the process smoother.
+
+## Conclusion
+
+Creating builders involves low-level manipulation of Dart classes and type definitions. However, developers who are familiar with reflection concepts in other languages will find that packages like `analyzer` follow similar patterns.
+
+Source code generation is a powerful tool to generate code that would be time-consuming to write manually and/or requires some level of introspection into existing source code. This fits the definition of "boilerplate" code.
+
+I find that builders are especially useful in cases where we need to write repetitive code for each attribute in multiple class definitions: Object serialization and deserialization, attribute decoration, translating data in objects to specific formats, and in general, any use case that would be simplified if we could just iterate through a list of classes or attributes.
+
+Source code generation is not exclusive to Dart. Java relies heavily on the same patterns for libraries like [Project Lombok](https://projectlombok.org/), which reduces the amount of boilerplate code (getters, setters, and so on) developers need to write, and increases developer productivity.

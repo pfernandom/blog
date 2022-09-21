@@ -25,7 +25,7 @@ export default function handler(
     console.log('Got request')
     var regex = /^data:.+?\/(.+?);base64,(.*?)$/
 
-    console.log({ body })
+    // console.log({ body })
     if (!body.img || body.img.length == 0 || !body.fileName) {
       return res.status(500).send({ cause: 'Not all fields are present' })
     }
@@ -48,7 +48,9 @@ export default function handler(
         'instagram'
       )
 
-      fs.mkdirSync(saveDirPath, {
+      console.log(path.resolve(path.join(saveDirPath, body.fileName, '..')))
+
+      fs.mkdirSync(path.resolve(path.join(saveDirPath, body.fileName, '..')), {
         recursive: true,
       })
 
@@ -61,6 +63,7 @@ export default function handler(
 
     return res.status(200).json({ names: filePaths })
   } catch (err: unknown) {
+    console.error('Failed to saved images:', err)
     return res.status(500).send({ cause: `${err}` })
   }
 }

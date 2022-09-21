@@ -112,7 +112,7 @@ async function main(filePath: string, opts: Options) {
       proc = proc.jpeg()
       break
     case 'png':
-      proc = proc.png()
+      proc = proc.png().flatten({ background: { r: 255, g: 255, b: 255 } })
       break
     case 'webp':
       proc = proc.webp({ lossless: false, quality: 90 })

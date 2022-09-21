@@ -4,7 +4,7 @@
         <title>Pedro's Tech Blog</title>
         <link>https://pedromarquez.dev</link>
         <description>A blog about software development: JavaScript, Java, Flutter, and everything I find out there that may be cool</description>
-        <lastBuildDate>Sun, 11 Sep 2022 22:41:30 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 16 Sep 2022 17:51:25 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -13,6 +13,16 @@
             <link>https://pedromarquez.dev</link>
         </image>
         <copyright>All rights reserved 2022</copyright>
+        <item>
+            <title><![CDATA[Source code gen in Flutter & Dart: How to create a builder to generate SQL code]]></title>
+            <link>https://pedromarquez.dev/blog/2022/9/flutter-code-gen-2</link>
+            <guid>https://pedromarquez.dev/blog/2022/9/flutter-code-gen-2</guid>
+            <pubDate>Fri, 16 Sep 2022 05:00:00 GMT</pubDate>
+            <description><![CDATA[In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.]]></description>
+            <content:encoded><![CDATA[In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.]]></content:encoded>
+            <author>pfernandom@gmail.com (Pedro Marquez)</author>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/9/flutter-code-gen-2/hero.webp"/>
+        </item>
         <item>
             <title><![CDATA[Converting and customizing Markdown files to HTML with Unified, remark & rehype]]></title>
             <link>https://pedromarquez.dev/blog/2022/9/markdown-to-html</link>

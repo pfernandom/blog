@@ -11,6 +11,18 @@
     },
     "items": [
         {
+            "id": "https://pedromarquez.dev/blog/2022/9/flutter-code-gen-2",
+            "content_html": "In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.",
+            "url": "https://pedromarquez.dev/blog/2022/9/flutter-code-gen-2",
+            "title": "Source code gen in Flutter & Dart: How to create a builder to generate SQL code",
+            "summary": "In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.",
+            "date_modified": "2022-09-16T05:00:00.000Z",
+            "author": {
+                "name": "Pedro Marquez",
+                "url": "https://twitter.com/pfernandom"
+            }
+        },
+        {
             "id": "https://pedromarquez.dev/blog/2022/9/markdown-to-html",
             "content_html": "Hosting your own blog is easier on Markdown!. Many tools exist for converting Markdown to HTML, and in this post we will learn how to use some of them.",
             "url": "https://pedromarquez.dev/blog/2022/9/markdown-to-html",

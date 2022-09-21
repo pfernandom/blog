@@ -14,6 +14,7 @@ import json from 'refractor/lang/json.js'
 import dart from 'refractor/lang/dart.js'
 import java from 'refractor/lang/java.js'
 import bash from 'refractor/lang/bash.js'
+import yaml from 'refractor/lang/yaml.js'
 
 refractor.register(jsx)
 refractor.register(json)
@@ -27,6 +28,7 @@ refractor.register(markdown)
 refractor.register(dart)
 refractor.register(java)
 refractor.register(bash)
+refractor.register(yaml)
 
 refractor.alias({ jsx: ['js'] })
 
@@ -45,6 +47,7 @@ const rePrism = (options) => {
     if (className?.length ?? 0 > 0) {
       return className.includes('-') ? className.split('-')[1] : className
     }
+
     // return null
     return (
       (children.match(
@@ -54,9 +57,9 @@ const rePrism = (options) => {
       (children.match(/(@)/i) && 'dart') ||
       (children.match(/(then)|(Promise)/) && 'js') ||
       (children.match(/(<[a-z]+>?)/) && 'jsx') ||
-      (children.match(/[a-z]+.[a-z]+$/) && 'bash') ||
       (children.match(/data-[a-z0-9]*/) && 'jsx') ||
-      (children.match(/(prefers-color-scheme)/) && 'css')
+      (children.match(/(prefers-color-scheme)/) && 'css') ||
+      'bash'
     )
   }
 

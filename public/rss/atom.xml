@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://pedromarquez.dev</id>
     <title>Pedro's Tech Blog</title>
-    <updated>2022-09-11T22:41:30.959Z</updated>
+    <updated>2022-09-16T17:51:25.811Z</updated>
     <generator>Feed for Node.js</generator>
     <author>
         <name>Pedro Marquez</name>
@@ -15,6 +15,24 @@
     <logo>https://pedromarquez.dev/logo.svg</logo>
     <icon>https://pedromarquez.dev/favicon.png</icon>
     <rights>All rights reserved 2022</rights>
+    <entry>
+        <title type="html"><![CDATA[Source code gen in Flutter & Dart: How to create a builder to generate SQL code]]></title>
+        <id>https://pedromarquez.dev/blog/2022/9/flutter-code-gen-2</id>
+        <link href="https://pedromarquez.dev/blog/2022/9/flutter-code-gen-2"/>
+        <updated>2022-09-16T05:00:00.000Z</updated>
+        <summary type="html"><![CDATA[In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.]]></summary>
+        <content type="html"><![CDATA[In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.]]></content>
+        <author>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </author>
+        <contributor>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </contributor>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Converting and customizing Markdown files to HTML with Unified, remark & rehype]]></title>
         <id>https://pedromarquez.dev/blog/2022/9/markdown-to-html</id>

@@ -1,3 +1,7 @@
+@mixin bold {
+  text-shadow: 0.1px 0px 0.1px, -0.1px 0px 0.1px;
+}
+
 html,
 body {
   padding: 0;
@@ -37,9 +41,9 @@ code {
     background: black;
   }
 
-  code {
-    background-color: grey;
-  }
+  // code {
+  //   background-color: grey;
+  // }
 
   pre {
     filter: brightness(0.95);
@@ -65,6 +69,7 @@ h4 {
 h1 {
   font-size: 2em;
   color: var(---heading-color);
+  margin-bottom: 0.5em;
 }
 
 h2 {
@@ -101,13 +106,19 @@ a:hover {
   text-decoration: underline;
 }
 
+@media (prefers-color-scheme: dark) {
+  @import './prism_dark.scss';
+}
+@media (prefers-color-scheme: light) {
+  @import './prism_light.scss';
+}
 @import './blog.scss';
 @import './instagram.scss';
 
 blockquote {
   --background: #fff;
   --color: #00cc8f;
-  --font-size: 1.2em;
+  --font-size: 1em;
 
   /* padding: 0.5em;
   background-color: gainsboro;
@@ -168,4 +179,10 @@ blockquote.active:after {
 blockquote h3 {
   margin-top: 0;
   font-size: var(--font-size);
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote {
+    filter: #{'invert()'};
+  }
 }

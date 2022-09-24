@@ -19,6 +19,7 @@ export interface Post {
   hero_width: number
   hero_height: number
   published: boolean
+  series: string | null
   social_title: string
   social_subtitle: string
   social_footer: string

@@ -4,7 +4,7 @@
         <title>Pedro's Tech Blog</title>
         <link>https://pedromarquez.dev</link>
         <description>A blog about software development: JavaScript, Java, Flutter, and everything I find out there that may be cool</description>
-        <lastBuildDate>Wed, 21 Sep 2022 06:37:48 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 24 Sep 2022 06:33:56 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -14,10 +14,10 @@
         </image>
         <copyright>All rights reserved 2022</copyright>
         <item>
-            <title><![CDATA[Source code gen in Flutter & Dart: How to create a builder to generate SQL code]]></title>
+            <title><![CDATA[Code-gen in Dart & Flutter: How to create a builder to generate SQL code]]></title>
             <link>https://pedromarquez.dev/blog/2022/9/flutter-code-gen-2</link>
             <guid>https://pedromarquez.dev/blog/2022/9/flutter-code-gen-2</guid>
-            <pubDate>Fri, 16 Sep 2022 05:00:00 GMT</pubDate>
+            <pubDate>Wed, 21 Sep 2022 05:00:00 GMT</pubDate>
             <description><![CDATA[In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.]]></description>
             <content:encoded><![CDATA[In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
@@ -34,7 +34,7 @@
             <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/9/markdown-to-html/hero.webp"/>
         </item>
         <item>
-            <title><![CDATA[Source code generation in Flutter & Dart (Part 1): Reflection and code gen]]></title>
+            <title><![CDATA[Code-gen in Dart & Flutter: Reflection and code gen]]></title>
             <link>https://pedromarquez.dev/blog/2022/8/flutter-code-gen-1</link>
             <guid>https://pedromarquez.dev/blog/2022/8/flutter-code-gen-1</guid>
             <pubDate>Fri, 26 Aug 2022 05:00:00 GMT</pubDate>

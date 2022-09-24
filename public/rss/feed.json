@@ -14,9 +14,9 @@
             "id": "https://pedromarquez.dev/blog/2022/9/flutter-code-gen-2",
             "content_html": "In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.",
             "url": "https://pedromarquez.dev/blog/2022/9/flutter-code-gen-2",
-            "title": "Source code gen in Flutter & Dart: How to create a builder to generate SQL code",
+            "title": "Code-gen in Dart & Flutter: How to create a builder to generate SQL code",
             "summary": "In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.",
-            "date_modified": "2022-09-16T05:00:00.000Z",
+            "date_modified": "2022-09-21T05:00:00.000Z",
             "author": {
                 "name": "Pedro Marquez",
                 "url": "https://twitter.com/pfernandom"
@@ -38,7 +38,7 @@
             "id": "https://pedromarquez.dev/blog/2022/8/flutter-code-gen-1",
             "content_html": "Dart libraries like Mockito make heavy use of source-code generation.. In the first of this series of posts, we will explore why we need to generate Dart source code in a Flutter project and what alternatives we have.",
             "url": "https://pedromarquez.dev/blog/2022/8/flutter-code-gen-1",
-            "title": "Source code generation in Flutter & Dart (Part 1): Reflection and code gen",
+            "title": "Code-gen in Dart & Flutter: Reflection and code gen",
             "summary": "Dart libraries like Mockito make heavy use of source-code generation.. In the first of this series of posts, we will explore why we need to generate Dart source code in a Flutter project and what alternatives we have.",
             "date_modified": "2022-08-26T05:00:00.000Z",
             "author": {

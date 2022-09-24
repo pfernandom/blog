@@ -386,10 +386,10 @@ a.social-icon:hover {
 
 /* CODE */
 
-pre[class*='language-'] {
-  background-color: #fbfbfb !important;
-  border: solid #cfcfcf 1px;
-}
+// pre[class*='language-'] {
+//   background-color: #fbfbfb !important;
+//   border: solid #cfcfcf 1px;
+// }
 
 :not(pre) > code[class*='language-'] {
   font-size: 0.9em;
@@ -403,3 +403,18 @@ pre[class*='language-'] {
 .token.namespace.token.namespace {
   opacity: 1;
 }
+
+.batch {
+  background-color: black;
+  color: white;
+  padding: 0.25em;
+  border-radius: 50%;
+  display: flex;
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.5em;
+}
+
+@import './blog/series.scss';

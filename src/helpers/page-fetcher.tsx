@@ -1,28 +1,28 @@
-import matter from "gray-matter";
-import { parseISO, format } from "date-fns";
-import fs from "fs";
-import path from "path";
-import { join } from "path";
-import { PostInfo } from "../models/interfaces";
+import matter from 'gray-matter'
+import { parseISO, format } from 'date-fns'
+import fs from 'fs'
+import path from 'path'
+import { join } from 'path'
+import { PostInfo } from '../models/interfaces'
 
 // Add markdown files in `src/content/blog`
-const postsDirectory = join(process.cwd(), "src", "blog");
+const postsDirectory = join(process.cwd(), 'src', 'blog')
 
 type FileInfo = {
-  fileName: string;
-  filePath: string;
-  dirPath: string;
-};
+  fileName: string
+  filePath: string
+  dirPath: string
+}
 
 class EmptyFileInfo implements FileInfo {
-  fileName: string;
-  filePath: string;
-  dirPath: string;
+  fileName: string
+  filePath: string
+  dirPath: string
 
   constructor() {
-    this.fileName = "";
-    this.filePath = "";
-    this.dirPath = "";
+    this.fileName = ''
+    this.filePath = ''
+    this.dirPath = ''
   }
 }
 
@@ -32,49 +32,49 @@ const getAllFiles = function (
   arrayOfFiles: Array<FileInfo> | undefined = [],
   relativeToPath: string
 ) {
-  const files = fs.readdirSync(dirPath);
+  const files = fs.readdirSync(dirPath)
 
-  arrayOfFiles = arrayOfFiles || [];
+  arrayOfFiles = arrayOfFiles || []
 
   files.forEach(function (file) {
-    const regex = RegExp(pattern, "ig");
-    if (fs.statSync(dirPath + "/" + file).isDirectory()) {
+    const regex = RegExp(pattern, 'ig')
+    if (fs.statSync(dirPath + '/' + file).isDirectory()) {
       arrayOfFiles = getAllFiles(
-        dirPath + "/" + file,
+        dirPath + '/' + file,
         pattern,
         arrayOfFiles,
         relativeToPath
-      );
+      )
     } else if (regex.test(file)) {
       const relativePath = path.relative(
         relativeToPath,
-        path.join(dirPath, "/")
-      );
+        path.join(dirPath, '/')
+      )
       arrayOfFiles.push({
         fileName: file,
-        filePath: [relativePath, "/", file].join(""),
+        filePath: [relativePath, '/', file].join(''),
         dirPath: relativePath,
-      });
+      })
     }
-  });
+  })
 
-  return arrayOfFiles;
-};
+  return arrayOfFiles
+}
 
 export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
-  const curDirRelative = join(process.cwd(), "src");
+  const curDirRelative = join(process.cwd(), 'src')
   const fileContents = fs.readFileSync(
     join(curDirRelative, slugFile.filePath),
-    "utf8"
-  );
+    'utf8'
+  )
 
-  const { data, content } = matter(fileContents);
-  const publicPath = join("/opt_images/", slugFile?.dirPath);
+  const { data, content } = matter(fileContents)
+  const publicPath = join('/opt_images/', slugFile?.dirPath)
   if (!data.published) {
-    return null;
+    return null
   }
 
-  const date = format(parseISO(data.date), "MMMM dd, yyyy");
+  const date = format(parseISO(data.date), 'MMMM dd, yyyy')
   const {
     title,
     description,
@@ -84,27 +84,28 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
     hero_height,
     published,
     key_words,
+    series,
     social_title,
     social_subtitle,
     social_footer,
-  } = data;
+  } = data
 
   const hero_image = relativeHero
     ? path.join(
         publicPath,
-        relativeHero.replace(/(png|jpg|jpeg|gif)/gi, "webp")
+        relativeHero.replace(/(png|jpg|jpeg|gif)/gi, 'webp')
       )
-    : "";
+    : ''
   const hero_image_blur = relativeHero
     ? path.join(
         publicPath,
-        "blur_" + relativeHero?.slice(2).replace(/(png|jpg|jpeg|gif)/gi, "webp")
+        'blur_' + relativeHero?.slice(2).replace(/(png|jpg|jpeg|gif)/gi, 'webp')
       )
-    : "";
+    : ''
 
   const hero_image_original = relativeHero
     ? path.join(publicPath, relativeHero)
-    : "";
+    : ''
 
   return {
     slug: slugFile?.dirPath,
@@ -114,41 +115,42 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
       hero_image,
       hero_image_blur,
       hero_image_original,
-      hero_image_alt: hero_image_alt ?? "",
+      hero_image_alt: hero_image_alt ?? '',
       ...(hero_width && { hero_width }),
       ...(hero_height && { hero_height }),
       date,
       key_words: parseKeyWords(key_words),
+      series: series ?? null,
       published,
       social_title: social_title ?? title,
       social_subtitle: social_subtitle ?? description[0],
       social_footer:
-        social_footer ?? "Visit pedromarquez.dev for the full post",
+        social_footer ?? 'Visit pedromarquez.dev for the full post',
     },
     content: content
       .replace(/\]\(.\//g, `](${publicPath}/`)
-      .replace(/.gif/g, ".webp"),
-  };
+      .replace(/.gif/g, '.webp'),
+  }
 }
 
 export function getAllPosts() {
-  const curDir = join(process.cwd(), "src", "blog");
-  const curDirRelative = join(process.cwd(), "src");
-  const slugs = getAllFiles(curDir, /.mdx?$/gi, [], curDirRelative);
+  const curDir = join(process.cwd(), 'src', 'blog')
+  const curDirRelative = join(process.cwd(), 'src')
+  const slugs = getAllFiles(curDir, /.mdx?$/gi, [], curDirRelative)
 
   const posts: Array<PostInfo> = slugs
     .map((slug) => getPostByFileInfo(slug))
     .filter((post) => post != null)
-    .map((post) => post as PostInfo);
+    .map((post) => post as PostInfo)
 
   posts.sort(
     (a, b) =>
       new Date(b.frontmatter.date).getTime() -
       new Date(a.frontmatter.date).getTime()
-  );
-  return posts;
+  )
+  return posts
 }
 
 function parseKeyWords(keywords: string) {
-  return keywords?.split(",").filter((keyword) => keyword.trim().length) ?? [];
+  return keywords?.split(',').filter((keyword) => keyword.trim().length) ?? []
 }

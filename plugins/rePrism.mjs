@@ -15,6 +15,7 @@ import dart from 'refractor/lang/dart.js'
 import java from 'refractor/lang/java.js'
 import bash from 'refractor/lang/bash.js'
 import yaml from 'refractor/lang/yaml.js'
+import rust from 'refractor/lang/rust.js'
 
 refractor.register(jsx)
 refractor.register(json)
@@ -29,6 +30,7 @@ refractor.register(dart)
 refractor.register(java)
 refractor.register(bash)
 refractor.register(yaml)
+refractor.register(rust)
 
 refractor.alias({ jsx: ['js'] })
 

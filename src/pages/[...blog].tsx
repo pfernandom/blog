@@ -9,6 +9,12 @@ import urlGetterFactory from 'src/helpers/url-getter-factory'
 import { Metadata, PostInfo } from '../models/interfaces'
 import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import m from 'src/imports'
+import {
+  BlogPostSeries,
+  getNextAndPrevSeries,
+} from 'src/components/blog-post/blog-post-series'
+import mapSeriesSlutToTitle from 'src/helpers/blog-series-slug'
+import Link from 'next/link'
 
 export function getNextAndPrev(posts: Array<PostInfo>, currentPost: PostInfo) {
   const filtered = posts.filter((p) => p.frontmatter.published)
@@ -29,6 +35,7 @@ type BlogPlaceholderParams = {
   blog: Array<string>
   post: PostInfo
   posts: PostInfo[]
+  seriesPosts: PostInfo[]
   host: string
   content: string
 }
@@ -36,6 +43,7 @@ type BlogPlaceholderParams = {
 const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
   post,
   posts,
+  seriesPosts,
   host,
   content,
 }) => {
@@ -44,7 +52,12 @@ const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
   const getPageUrl = urlGetterFactory(host)
   const chunk = path.join('/')
 
+  //   prevInSeries.map(p => (<li>{p.frontmatter.title}<li/>));
+
+  // nextInSeries.map(p => (<li>{p.frontmatter.title}<li/>))
+
   const prevAndNext = getNextAndPrev(posts, post)
+  const { prevInSeries, nextInSeries } = getNextAndPrevSeries(post, seriesPosts)
   const { prev, next } = prevAndNext
 
   const { frontmatter } = post
@@ -55,16 +68,42 @@ const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
     .filter((img) => img != null)
     .map((img) => getPageUrl(img!, true))
 
+  const prevS =
+    prevInSeries.length > 0
+      ? getPageUrl(prevInSeries[prevInSeries.length - 1].slug)
+      : null
+  const nextS =
+    nextInSeries.length > 0 ? getPageUrl(nextInSeries[0].slug) : null
+
+  console.log({ series: post.frontmatter.series?.length })
+
+  const isPartOfSeries = seriesPosts.length > 1
+
   return (
     <div>
+      {isPartOfSeries && (
+        <h2 className="blog-series-subtitle">
+          From the series:{' '}
+          <Link
+            href={'/series/' + post.frontmatter.series}
+            style={{ textDecoration: 'underline' }}
+          >
+            {mapSeriesSlutToTitle(post.frontmatter.series as string)}
+          </Link>
+        </h2>
+      )}
+
       <BlogPostSEO
         url={getPageUrl(post.slug)}
         images={seoImages}
         author={'Pedro Marquez-Soto'}
+        seriesPosts={[prevS, nextS]}
         {...post.frontmatter}
       ></BlogPostSEO>
 
       <BlogPostActions host={host} {...post} />
+
+      <BlogPostSeries post={post} seriesPosts={seriesPosts} />
 
       <DynamicSlot ssrContent={content} chunk={chunk} />
 
@@ -86,6 +125,12 @@ export async function getStaticProps({
     return post.slug.includes(params.blog?.join('/'))
   })
 
+  const seriesPosts = posts.filter(
+    (post) =>
+      post.frontmatter.series &&
+      post.frontmatter.series === selectedPost?.frontmatter.series
+  )
+
   const content = selectedPost != null ? await m(selectedPost?.slug) : {}
   const MDXContent = content.default
 
@@ -94,6 +139,7 @@ export async function getStaticProps({
     props: {
       metadata: selectedPost?.frontmatter ?? {},
       blog: params.blog ?? [],
+      seriesPosts: seriesPosts ?? [],
       post: selectedPost ?? {},
       posts: posts ?? [],
       host,

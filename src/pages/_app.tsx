@@ -1,8 +1,5 @@
 import '../styles/globals.scss'
-import 'highlight.js/styles/github-dark-dimmed.css'
 
-import 'prismjs/themes/prism.min.css'
-import 'prismjs/plugins/command-line/prism-command-line.css'
 import Layout from 'src/components/layout'
 import { MDXProvider } from '@mdx-js/react'
 import MDXComponentsDef from 'src/components/mdx/mdx-components'

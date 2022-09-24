@@ -75,8 +75,6 @@ const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
   const nextS =
     nextInSeries.length > 0 ? getPageUrl(nextInSeries[0].slug) : null
 
-  console.log({ series: post.frontmatter.series?.length })
-
   const isPartOfSeries = seriesPosts.length > 1
 
   return (

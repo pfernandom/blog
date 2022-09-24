@@ -6,14 +6,14 @@
 code[class*='language-'],
 pre[class*='language-'] {
   color: #393a34;
-  font-family: 'Consolas', 'Bitstream Vera Sans Mono', 'Courier New', Courier,
-    monospace;
+  font-family: Menlo, Monaco, Consolas, 'Andale Mono', 'Ubuntu Mono',
+    'Courier New', monospace;
   direction: ltr;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
   word-break: normal;
-  font-size: 1em;
+  font-size: 0.9em;
   font-weight: 500;
   line-height: 1.2em;
 
@@ -35,7 +35,7 @@ pre[class*='language-']::selection,
 pre[class*='language-'] ::selection,
 code[class*='language-']::selection,
 code[class*='language-'] ::selection {
-  background-color: #fbfbfb !important;
+  background-color: #d2d2d2 !important;
   border: solid #cfcfcf 1px;
 }
 

@@ -35,7 +35,6 @@ export default function BlogPostSEO({
   }))
 
   const [prevSeries, nextSeries] = seriesPosts
-  console.log({ seriesPosts })
 
   const PrevLink = () =>
     prevSeries ? (

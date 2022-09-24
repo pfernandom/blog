@@ -100,7 +100,6 @@ export async function getStaticProps({
 }: {
   params: { series: string }
 }) {
-  console.log({ oarams: params.series })
   await generateRssFeed()
   const metadata: Metadata = await getDataFile('src/data/metadata.json')
 
@@ -127,8 +126,6 @@ export async function getStaticPaths() {
       .filter((post) => post.frontmatter.series)
       .map((post) => post.frontmatter.series)
   )
-
-  console.log({ postsWithSeries })
 
   return {
     paths: Array.from(postsWithSeries).map((series) => {

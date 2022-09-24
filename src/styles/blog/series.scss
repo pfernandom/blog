@@ -1,5 +1,9 @@
 .blog-series-subtitle {
   margin: 0;
+  width: 80%;
+  @media screen and (min-width: 850px) {
+    width: 100%;
+  }
 }
 .blog-series-list {
   --border-color: gray;
@@ -73,7 +77,16 @@
       background-color: gray;
     }
     a {
-      color: rgb(82, 82, 82);
+      &:hover {
+        background-color: rgb(203, 203, 203);
+        color: black;
+      }
+      @media (prefers-color-scheme: light) {
+        color: rgb(82, 82, 82);
+      }
+      @media (prefers-color-scheme: dark) {
+        color: rgb(210, 210, 210);
+      }
     }
   }
 }

@@ -5,24 +5,26 @@ description:
   ['Learn how to solve some common problems when starting learning Rust']
 hero_image: ./hero.jpeg
 hero_image_alt: 'A hero image for this post about Rust'
-published: false
-key_words: rust
+published: true
+key_words: rust, beginners
 series: rust-for-beginners
 ---
 
-Learning how to code in [Rust](https://www.rust-lang.org/) can be a daunting task. While it is a very powerful language it is not precisely known for being a simple language.
+Learning how to code in [Rust](https://www.rust-lang.org/) can feel like a daunting task. While it is a very powerful language it is not precisely known for being a simple language.
 
 The same concepts that make Rust such a great language are the same that may cause problems for newcomers: [ownership](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html), [lifetimes](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html), among others.
 
 It is not that these concepts are inherently difficult, it's just that they provide safety checks that other languages don't; these safety checks can become an obstacle to people who is familiar with other, more forgiving, languages.
 
+This is why, when someone is writing their first lines of Rust and tries to do simple tasks like passing an object to a function, the compiler will stop them with errors.
+
 Rust compiler relies heavily on static code analysis to find memory errors. While other languages like C or Java allow developers to write code that may result in undesired states (e.g. `NullPointerException` and stack overflows) -which then need to be handled during runtime with error handling and exceptions-, Rust will not allow such code to compile.
 
 In this post, we will focus on common problems that any beginner will find when they start their journey into the world of Rust.
 
-## Error: Trying to modify immutable variables
+## Trying to modify immutable variables
 
-In the following example, we create an instance of a `struct` called `Book`, and we try to assign a different value to it's `title` property:
+In the following example, we create an instance of a `struct` called `Book`, and we try to assign a different value to its `title` property:
 
 ```rust
 struct Book {
@@ -38,7 +40,7 @@ fn main() {
 }
 ```
 
-### Error message
+If we try to compile this code, we will get the following error:
 
 ```bash
 error[E0594]: cannot assign to `book.title`, as `book` is not declared as mutable
@@ -77,7 +79,7 @@ error[E0384]: cannot assign twice to immutable variable `x`
 
 The same solution applies: Use `let mut x = 1` to allow future assignments to `x`.
 
-## Error: Trying to use a "moved" variable
+## Trying to use a "moved" variable
 
 Following the previous example, we now define two functions that receive an instance of `Book` and try to do something with it (e.g. printing its title):
 
@@ -100,7 +102,7 @@ fn main() {
 }
 ```
 
-### Error message
+If we try to compile this code, we will find the following error:
 
 ```bash
 error[E0382]: use of moved value: `book`
@@ -191,7 +193,7 @@ Another solution is to follow the compiler's advice and implement the `Copy` tra
 - Extra memory allocation. If `book` is large and we copy it every time we pass it to a function, we are needlessly consuming memory.
 - Doesn't play well with mutations. If one of the functions is expected to change `book`'s contents, then we must return the copy so the next functions can have access to `book`'s updated values. This results in the same flow as returning ownership, but with extra steps.
 
-## Error: Trying to borrow as both mutable and immutable in the same scope
+## Trying to borrow as both mutable and immutable in the same scope
 
 Now, we will modify the book's title using a new function, and print it with another one. The following code will compile correctly:
 
@@ -279,7 +281,7 @@ fn main() {
 
 This little workaround makes our code compilable again. When we wrap the borrowed instance of `book1` and `rename_book` with a block `{}`, we are creating a new scope for them. Any variable declared inside the block will go out of scope once execution reaches the block's end. Then, by the time execution reaches `let book2`, `book1` will not exist anymore and we will only have a single borrow.
 
-## Error: Trying to keep a reference to a struct value
+## Trying to keep a reference to a struct value
 
 Coming from other languages, it's not uncommon for us to try to keep a reference for an object's attribute:
 

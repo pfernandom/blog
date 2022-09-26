@@ -11,6 +11,18 @@
     },
     "items": [
         {
+            "id": "https://pedromarquez.dev/blog/2022/9/rust-problems",
+            "content_html": "Learn how to solve some common problems when starting learning Rust",
+            "url": "https://pedromarquez.dev/blog/2022/9/rust-problems",
+            "title": "Common Rust problems for beginners: Ownership & mutability",
+            "summary": "Learn how to solve some common problems when starting learning Rust",
+            "date_modified": "2022-09-26T05:00:00.000Z",
+            "author": {
+                "name": "Pedro Marquez",
+                "url": "https://twitter.com/pfernandom"
+            }
+        },
+        {
             "id": "https://pedromarquez.dev/blog/2022/9/flutter-code-gen-2",
             "content_html": "In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.",
             "url": "https://pedromarquez.dev/blog/2022/9/flutter-code-gen-2",

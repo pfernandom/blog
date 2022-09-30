@@ -83,7 +83,7 @@ function processImage(
   saveDirPath: string,
   fileName: string,
   regexExt: RegExp,
-  optimize: boolean = true
+  optimize = true
 ) {
   let process = sharp(filePath)
     //.resize(400)

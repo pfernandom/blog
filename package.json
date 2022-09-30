@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p 8000",
     "build": "npm run resize  && next build",
-    "deploy": "npm run resize  && next build && next export",
+    "deploy": "next build && next export",
     "start": "next start",
     "lint": "next lint",
     "resize": "npx ts-node --project ./tsconfig-scripts.json ./scripts/resize.ts ",

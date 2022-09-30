@@ -29,7 +29,7 @@ const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
       </Head>
       <Bio metadata={metadata} />
       {posts
-        .filter((post) => post.frontmatter.published)
+        .filter((post) => post.frontmatter?.published)
         .map((post) => {
           const title = post.frontmatter.title || post.slug
           const image = post.frontmatter.hero_image
@@ -99,7 +99,10 @@ export async function getStaticProps() {
   await generateRssFeed()
   const metadata: Metadata = await getDataFile('src/data/metadata.json')
 
-  const posts: Array<PostInfo> = getAllPosts()
+  const posts: Array<PostInfo> = getAllPosts().map((post) => {
+    post.content = ''
+    return post
+  })
 
   return {
     props: {

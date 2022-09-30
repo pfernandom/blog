@@ -80,21 +80,6 @@ export default function ShareButtons({
 }: ShareButtonsProps) {
   const [isExpanded, setExpanded] = useState(false)
 
-  function share() {
-    if (navigator.share) {
-      navigator
-        .share({
-          title,
-          text: description,
-          url,
-        })
-        .then(() => console.log('Successful share'))
-        .catch((error) => console.log('Error sharing', error))
-    } else {
-      console.log('Share not supported on this browser, do it the old way.')
-    }
-  }
-
   return (
     <div className={`share-buttons`}>
       {/* Basic Share Links */}

@@ -5,6 +5,7 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import rePrism from './plugins/rePrism.mjs'
 import path from 'path'
+import { GenerateSW } from 'workbox-webpack-plugin'
 
 const bundle = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -37,6 +38,33 @@ const nextConfig = bundle(
       domains: ['pedromarquez.dev', 'localhost'],
       loader: 'custom',
     },
+    //   generateBuildId: () => '$Format:%H$',
+    //   webpack: (
+    //     config,
+    //     { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
+    //   ) => {
+    //     // config.plugins.push({
+    //     //   apply(compiler) {
+    //     //     compiler.hooks.compilation.tap('SWPkuin', (compilation, callback) => {
+    //     //       console.log('compile', { compilation })
+    //     //     })
+    //     //   },
+    //     // })
+    //     // Important: return the modified config
+    //     config.module.rules.push({
+    //       test: /.+sw\.ts$/,
+    //       use: [
+    //         {
+    //           loader: 'ts-loader',
+    //           options: {
+    //             transpileOnly: false,
+    //             outDir: './public/',
+    //           },
+    //         },
+    //       ],
+    //     })
+    //     return config
+    //   },
   })
 )
 

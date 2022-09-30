@@ -1,0 +1,10 @@
+{
+  "extends": "tslint:latest",
+  "linterOptions": {
+    "exclude": [
+      "bin",
+      "node_modules",
+      "src/components/blog-post/blog-post-seo.tsx"
+    ]
+  }
+}

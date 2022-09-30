@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import BlogPostActions from 'src/components/blog-post/blog-post-actions'
 import DynamicSlot from 'src/components/blog-post/blog-post-dynamic-slot'
 import BlogPostFooter from 'src/components/blog-post/blog-post-footer'
+// @ts-ignore
+// @ts-nocheck
 import BlogPostSEO from 'src/components/blog-post/blog-post-seo'
 import { getAllPosts } from 'src/helpers/page-fetcher'
 import urlGetterFactory from 'src/helpers/url-getter-factory'
@@ -20,9 +23,9 @@ export function getNextAndPrev(posts: Array<PostInfo>, currentPost: PostInfo) {
   const filtered = posts.filter((p) => p.frontmatter.published)
 
   const postIndex = filtered.findIndex((p) => p.slug === currentPost?.slug)
-  let prevIndex = postIndex - 1
+  const prevIndex = postIndex - 1
 
-  let nextIndex = postIndex + 1
+  const nextIndex = postIndex + 1
 
   const prev = prevIndex >= 0 ? filtered[prevIndex] : null
   const next = nextIndex < filtered.length ? filtered[nextIndex] : null
@@ -38,6 +41,7 @@ type BlogPlaceholderParams = {
   seriesPosts: PostInfo[]
   host: string
   content: string
+  isProd: boolean
 }
 
 const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
@@ -90,7 +94,6 @@ const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
           </Link>
         </h2>
       )}
-
       <BlogPostSEO
         url={getPageUrl(post.slug)}
         images={seoImages}
@@ -117,7 +120,10 @@ export async function getStaticProps({
 }: {
   params: BlogPlaceholderParams
 }) {
-  const posts: Array<PostInfo> = getAllPosts()
+  const posts: Array<PostInfo> = getAllPosts().map((post) => {
+    post.content = ''
+    return post
+  })
 
   const selectedPost = posts.find((post: PostInfo) => {
     return post.slug.includes(params.blog?.join('/'))
@@ -142,6 +148,7 @@ export async function getStaticProps({
       posts: posts ?? [],
       host,
       content: renderToStaticMarkup(<MDXContent />),
+      isProd: process.env.NODE_ENV === 'production',
     },
   }
 }

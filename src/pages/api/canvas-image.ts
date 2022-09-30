@@ -23,7 +23,7 @@ export default function handler(
   try {
     const body: RequestData = JSON.parse(req.body)
     console.log('Got request')
-    var regex = /^data:.+?\/(.+?);base64,(.*?)$/
+    const regex = /^data:.+?\/(.+?);base64,(.*?)$/
 
     // console.log({ body })
     if (!body.img || body.img.length == 0 || !body.fileName) {
@@ -33,12 +33,12 @@ export default function handler(
     const filePaths = body.img.map((img, i) => {
       const string = img
       console.log('Matching regex')
-      var matches = string.match(regex) ?? []
+      const matches = string.match(regex) ?? []
       console.log('Matched regex')
-      var ext = matches[1]
-      var data = matches[2]
+      const ext = matches[1]
+      const data = matches[2]
       console.log('Start parsing image')
-      var buffer = Buffer.from(data, 'base64')
+      const buffer = Buffer.from(data, 'base64')
       console.log('Ended parsing image')
 
       const saveDirPath = path.join(

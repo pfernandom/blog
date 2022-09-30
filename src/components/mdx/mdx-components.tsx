@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 // import styles from '../styles/Markdown.module.css';
 import { MDXComponents, MDXProps } from 'mdx/types'
 import { ImageProps } from 'next/image'

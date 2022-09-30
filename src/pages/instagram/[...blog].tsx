@@ -10,8 +10,6 @@ import dynamic, { LoadableComponent } from 'next/dynamic'
 import m from 'src/imports'
 
 const InstagramLink: NextPage<InstagramLinkParams> = ({
-  metadata,
-  posts,
   post,
   instagramPostConfig,
   isProd,
@@ -67,7 +65,6 @@ export async function getStaticProps({
       metadata: selectedPost?.frontmatter ?? {},
       blog: params.blog ?? [],
       post: selectedPost ?? {},
-      posts: posts ?? [],
       host,
       instagramPostConfig,
       isProd: process.env.NODE_ENV === 'production',

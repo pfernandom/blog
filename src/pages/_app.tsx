@@ -6,6 +6,8 @@ import MDXComponentsDef from 'src/components/mdx/mdx-components'
 import { ThemeContext } from './_document'
 import { DefaultSeo } from 'next-seo'
 import Head from 'next/head'
+import { useEffect } from 'react'
+import registerSW from 'src/sw/register-sw'
 
 function MyApp({
   Component,
@@ -14,6 +16,13 @@ function MyApp({
   Component: () => any
   pageProps: any
 }) {
+  useEffect(() => {
+    //ws://localhost:8000/_next/webpack-hmr
+    if ('serviceWorker' in navigator) {
+      registerSW(navigator, pageProps.isProd)
+    }
+  })
+
   return (
     <>
       <Head>

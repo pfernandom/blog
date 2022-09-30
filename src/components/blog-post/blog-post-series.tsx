@@ -31,7 +31,7 @@ export function BlogPostSeries({
   )
 }
 
-function seriesLink(post: PostInfo, selected: boolean = false, index: number) {
+function seriesLink(post: PostInfo, selected = false, index: number) {
   const Text = () => (
     <div className="series-text">
       <span className="batch">{index + 1}</span>{' '}

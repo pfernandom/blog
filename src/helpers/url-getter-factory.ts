@@ -1,10 +1,10 @@
-import path from "path";
+import path from 'path'
 
 export default function urlGetterFactory(host: string) {
-  function getPageUrl(slug: string, hasTrailingSlash: boolean = false) {
-    const fullPath = hasTrailingSlash ? slug.slice(1) : slug;
-    return new URL(fullPath, host).href;
+  function getPageUrl(slug: string, hasTrailingSlash = false) {
+    const fullPath = hasTrailingSlash ? slug.slice(1) : slug
+    return new URL(fullPath, host).href
   }
 
-  return getPageUrl;
+  return getPageUrl
 }

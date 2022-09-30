@@ -147,9 +147,9 @@ export default class CanvasManager {
   }) {
     const { ctx } = this
 
-    var words = text.split(' ')
-    var lines = []
-    var currentLine = words[0]
+    const words = text.split(' ')
+    const lines = []
+    let currentLine = words[0]
 
     const preFont = ctx.font
 
@@ -157,8 +157,8 @@ export default class CanvasManager {
       ctx.font = font.toString()
     }
 
-    for (var i = 1; i < words.length; i++) {
-      var word = words[i]
+    for (let i = 1; i < words.length; i++) {
+      const word = words[i]
       const width = ctx.measureText(currentLine + ' ' + word).width
       if (width < maxWidth) {
         currentLine += ' ' + word

@@ -27,12 +27,12 @@ export default function InstagramPostView({
   children,
 }: {
   post: PostInfo
-  pageNumber: Number
+  pageNumber: number
   currentConfig?: InstagramPost
   editConfig?: InstagramPostEditConfig
   outerRef?: RefObject<HTMLCanvasElement> | null
   containerSize?: { width: number; height: number }
-  withInstagramBackground?: Boolean
+  withInstagramBackground?: boolean
   description?: string
   children?: ReactNode
 }) {
@@ -137,7 +137,7 @@ export default function InstagramPostView({
         break
     }
 
-    let yem = canvasManager.footerTextStart
+    const yem = canvasManager.footerTextStart
 
     canvasManager.drawText({
       text: post?.frontmatter.social_footer ?? '',

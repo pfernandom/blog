@@ -1,29 +1,11 @@
 {
-  "ts-node": {
-    // these options are overrides used only by ts-node
-    // same as the --compilerOptions flag and the TS_NODE_COMPILER_OPTIONS environment variable
-    "compilerOptions": {
-      "esModuleInterop": true
-    },
-    "include": [
-      "next-env.d.ts",
-      "**/*.ts",
-      "**/*.tsx",
-      "src/**/*.tsx",
-      "scripts/gen-imports.mts"
-    ],
-    "exclude": [
-      "node_modules",
-    ]
-  },
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "outDir": "./dist2",
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -60,11 +42,13 @@
     "scripts/gen-imports.mts",
     "scripts/gen-imports.tts",
     "scripts/resize.mts",
-    "scripts/mdxToMd.mts"
+    "scripts/mdxToMd.mts",
   ],
   "exclude": [
     "node_modules",
-    "./scripts"
+    "src/sw/*.ts",
+    "./scripts",
+    "src/types"
   ],
   "rules": {
     "no-console": [

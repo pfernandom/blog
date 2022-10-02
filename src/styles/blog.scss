@@ -355,10 +355,22 @@ a.social-icon:hover {
   height: 1.5em;
 }
 
+.post-table-container {
+  overflow:scroll;
+  border-width: 3px;
+  border-style: inset;
+  max-height: 300px;
+  max-width: min-content;
+  margin: 0 auto;
+
+}
+
 .post-table {
   --border-color: rgba(190, 190, 190, 0.602);
   border-collapse: collapse;
   margin: 0 auto;
+  font-size: 0.8em;
+  word-break: normal;
 }
 
 .post-table thead {
@@ -374,14 +386,19 @@ a.social-icon:hover {
   border: 1px var(--border-color) solid;
 }
 
-.post-table td {
+.post-table td, th {
   margin: 1em 0;
-  min-width: 200px;
+  // min-width: 200px;
   flex-direction: column;
   padding: 0 0.5em;
-  display: inline-block;
+  // display: inline-block;
   font-family: Roboto, sans-serif;
   font-size: 1.1em;
+  border: 1px var(--border-color) solid;
+}
+
+.post-table th {
+  text-align: center;
 }
 
 /* CODE */

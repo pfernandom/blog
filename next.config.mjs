@@ -4,6 +4,7 @@ import remarkFrontmatter from 'remark-frontmatter'
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import rePrism from './plugins/rePrism.mjs'
+import remarkGfm from 'remark-gfm'
 
 const bundle = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -13,7 +14,7 @@ const bundle = withBundleAnalyzer({
 const withMDX = withMDXFactory({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
     rehypePlugins: [rehypeInlineCodeClassNamePlugin, rePrism],
     // remarkRehypeOptions: { allowDangerousHtml: true, languages: [dart] },
     // If you use `MDXProvider`, uncomment the following line.

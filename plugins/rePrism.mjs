@@ -16,6 +16,7 @@ import java from 'refractor/lang/java.js'
 import bash from 'refractor/lang/bash.js'
 import yaml from 'refractor/lang/yaml.js'
 import rust from 'refractor/lang/rust.js'
+import python from 'refractor/lang/python.js'
 
 refractor.register(jsx)
 refractor.register(json)
@@ -31,6 +32,7 @@ refractor.register(java)
 refractor.register(bash)
 refractor.register(yaml)
 refractor.register(rust)
+refractor.register(python)
 
 refractor.alias({ jsx: ['js'] })
 

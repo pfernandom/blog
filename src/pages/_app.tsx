@@ -3,18 +3,19 @@ import '../styles/globals.scss'
 import Layout from 'src/components/layout'
 import { MDXProvider } from '@mdx-js/react'
 import MDXComponentsDef from 'src/components/mdx/mdx-components'
-import { ThemeContext } from './_document'
 import { DefaultSeo } from 'next-seo'
 import Head from 'next/head'
-import { useEffect } from 'react'
+import  {  useEffect } from 'react'
 import registerSW from 'src/sw/register-sw'
+import { BlogPlaceholderParams } from './[...blog]'
+import React from 'react'
 
 function MyApp({
   Component,
   pageProps,
 }: {
-  Component: () => any
-  pageProps: any
+  Component: typeof React.Component
+  pageProps: BlogPlaceholderParams
 }) {
   useEffect(() => {
     //ws://localhost:8000/_next/webpack-hmr

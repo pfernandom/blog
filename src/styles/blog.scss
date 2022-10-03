@@ -237,6 +237,10 @@ a.social-icon:hover {
   /* text-align: justify; */
   word-break: break-word;
   hyphens: auto;
+
+  & iframe {
+    margin: 0 auto;
+  }
 }
 
 .blog-post-content .blog-img {

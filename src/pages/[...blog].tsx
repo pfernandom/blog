@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
 import BlogPostActions from 'src/components/blog-post/blog-post-actions'
 import DynamicSlot from 'src/components/blog-post/blog-post-dynamic-slot'
 import BlogPostFooter from 'src/components/blog-post/blog-post-footer'
@@ -33,7 +32,7 @@ export function getNextAndPrev(posts: Array<PostInfo>, currentPost: PostInfo) {
   return { prev, next }
 }
 
-type BlogPlaceholderParams = {
+export type BlogPlaceholderParams = {
   metadata: Metadata
   blog: Array<string>
   post: PostInfo
@@ -62,7 +61,7 @@ const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
     frontmatter.hero_image,
   ]
     .filter((img) => img != null)
-    .map((img) => getPageUrl(img!, true))
+    .map((img) => getPageUrl(img as string, true))
 
   const prevS =
     prevInSeries.length > 0

@@ -11,6 +11,18 @@
     },
     "items": [
         {
+            "id": "https://pedromarquez.dev/blog/2022/10/pytorch-classification",
+            "content_html": "One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use Pytorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.",
+            "url": "https://pedromarquez.dev/blog/2022/10/pytorch-classification",
+            "title": "Create a ML classification model with Pytorch",
+            "summary": "One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use Pytorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.",
+            "date_modified": "2022-10-03T05:00:00.000Z",
+            "author": {
+                "name": "Pedro Marquez",
+                "url": "https://twitter.com/pfernandom"
+            }
+        },
+        {
             "id": "https://pedromarquez.dev/blog/2022/9/rust-problems",
             "content_html": "Learn how to solve some common problems when starting learning Rust",
             "url": "https://pedromarquez.dev/blog/2022/9/rust-problems",

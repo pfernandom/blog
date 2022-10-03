@@ -18,7 +18,7 @@ describe('Main pages', () => {
     cy.get('[data-test-page-link]').should('not.be.empty')
     cy.get('[data-test-page-link]').should('have.attr', 'href')
     cy.get('[data-test-page-link]').first().click({force: true});
-    cy.url().should('include', 'blog')
+    cy.url({timeout:8000}).should('include', 'blog')
 
     cy.get('h2').should('exist')
     cy.get('.blog-series-list').should('exist').and('not.be.empty').and('contain.text', 'Code-gen in Dart & Flutter: How to create a builder to generate SQL code')

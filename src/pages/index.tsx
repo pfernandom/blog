@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'src/components/image'
 
-import React, { useContext } from 'react'
+import React from 'react'
 import Link from 'next/link'
 
 import Bio from '../components/bio'
@@ -31,7 +31,6 @@ const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
       {posts
         .filter((post) => post.frontmatter?.published)
         .map((post) => {
-          const title = post.frontmatter.title || post.slug
           const image = post.frontmatter.hero_image
 
           return (

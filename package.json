@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 8000",
-    "build": "npm run resize  && next build",
-    "deploy": "npm run resize  && next build && npm run e2e:run && next export",
-    "start": "next start",
+    "build": "npm run resize && next build",
+    "deploy": "npm run resize && next build && next export && npm run e2e:run",
+    "start": "next dev",
     "lint": "next lint",
     "resize": "npx ts-node --project ./tsconfig-scripts.json ./scripts/resize.ts ",
     "static": "sh ./scripts/static.sh",

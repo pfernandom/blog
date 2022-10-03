@@ -1,6 +1,6 @@
 ---
-title: Classification with Pytorch
-date: '2022-10-02'
+title: Create a ML classification model with Pytorch
+date: '2022-10-03'
 description:
   [
     'One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.',
@@ -8,8 +8,13 @@ description:
   ]
 hero_image: './hero.jpeg'
 hero_image_alt: 'A hero image for this post about state management'
-published: false
+key_words: pytorch, python, ML, titanic
+published: true
 ---
+
+
+import network from './network.png'
+import Image from 'src/components/image'
 
 Machine Learning (ML) is one of the topics in software development that is surrounded by a mystic aura: There is a certain feeling of magic around a piece of code that seems to be able to predict events or recognize complex patterns. This is a reason why ML keeps being confused with Artificial Intelligence.
 
@@ -35,13 +40,28 @@ The input for a neural network (at both training and prediction time) is a matri
 
 Neural Networks are composed of *layers*: Each layer transforms the data (e.g. applying a linear transformation by multiplying the matrix of data with a vector of _weights_ that are updated at each step of the training process) and passes it to the next layer for further transformations. The last layer in the network outputs the expected output (in our case, the classification result) for the model.
 
+Individual layers are composed of _neurons_, where the number of neurons corresponds to the input size of each layer. In the following image we see a network where the first layer (the input layer) has three neurons; so the size of the input layer would be `(r=Examples,c=3)`.
+
+  <Image
+    src={network}
+    width={617}
+    height={243}
+    alt="A graphic representing a neural network with its weights"
+  />
+
 At each training step, we measure the **error** for the model: How many times the prediction was wrong when compared with a labeled set of test data. The model then uses the error's value and updates the weights to _minimize_ the expected error.
 
 Each layer's weights are updated using a process called **backpropagation**: The training algorithm calculates the partial derivates of each weight to find the *direction* in the linear space (remember, weights are *vectors*) in which we need to update the weight's value for minimizing the expected error in the predictions.
 
 For instance, if the weight needs to _increase_ its value, its partial derivate will point in the opposite direction than the case in which we would need to _decrease_ its value.
 
-For a full in-depth explanation of how Neural Networks and backpropagation work, take a look at the free, online book ["Neural Networks and Deep Learning"](http://neuralnetworksanddeeplearning.com/chap2.html).
+For a full in-depth explanation of how Neural Networks and backpropagation work, take a look at the free, online book ["Neural Networks and Deep Learning"](http://neuralnetworksanddeeplearning.com/chap2.html). The following video also provides a great explanation on backpropagation:
+
+<div style={{'display': 'flex'}}>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ilg3gGewQ5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
 
 ## The task
 
@@ -73,7 +93,7 @@ This is where most of the work of a data engineer is spent. The data will contai
 ### Encode the data
 
 Pytorch models only accept numeric values as input. We must encode string or categorical columns into numeric values. For this, we have a few options:
-- *One-hot encoding*: Columns that contain categories (e.g. "Sex" contains values like "Male" or "Female") can be converted into numeric values by adding a column for each category, and set a value of 1 for those columns in that category (and 0 for those that don't).
+- *One-hot encoding*: Columns that contain categories (e.g. "Sex" contains values like "Male" or "Female") can be converted into numeric values by adding a column for each category, and setting a value of 1 for those columns in that category (and 0 for those that don't).
 - *Label encoding*: Assign direct numeric values to each category (e.g. 1 to "Female" and 2 to "Male"), and replace the string values with their numeric representation. The downside of this approach is that _it gives an implicit numeric relationship_ to the categories: The model will assume that the categories may be ordered when there is no real ordinal relationship in attributes like "Sex".
 
 ### Split data into training and test sets
@@ -148,7 +168,7 @@ We can see some examples of the dataset using Panda's `head` method:
 train.head()
 ```
 
-|    |   PassengerId |   Survived |   Pclass | Name                                                | Sex    |   Age |   SibSp |   Parch | Ticket           |    Fare | Cabin   | Embarked   | Title   | FamilyS   |
+|    |   PassengerId |   Survived |   Pclass | Name                                                | Sex    |   Age |   SibSp |   Parch | Ticket           |    Fare | Cabin   | Embarked   | Title   | FamilySize   |
 |---:|--------------:|-----------:|---------:|:----------------------------------------------------|:-------|------:|--------:|--------:|:-----------------|--------:|:--------|:-----------|:--------|:----------|
 |  0 |             1 |          0 |        3 | Braund, Mr. Owen Harris                             | male   |    22 |       1 |       0 | A/5 21171        |  7.25   | nan     | S          | Mr      | Couple    |
 |  1 |             2 |          1 |        1 | Cumings, Mrs. John Bradley (Florence Briggs Thayer) | female |    38 |       1 |       0 | PC 17599         | 71.2833 | C85     | C          | Mrs     | Couple    |
@@ -163,9 +183,9 @@ A few transformations are needed:
 - Drop columns that don't provide information for the classification. For instance, the ticket number `ticket` provides little to no information to predict if a passenger survived that cannot be found in other attributes in the data.
 - Fill empty values (e.g. fill empty `age`` values with the median of existing age records)
 - Group columns into more meaningful labels:
-  - E.g. add the values `SibSp` and `Parch` into a single category `FamilyS`.
-  - Transform `FamilyS` into a category (e.g. `single`, `couple`, `large`).
-- Drop redundant columns (e.g. `SibSp` and `Parch`, as they have been merged into `FamilyS`)
+  - E.g. add the values `SibSp` and `Parch` into a single category `FamilySize`.
+  - Transform `FamilySize` into a category (e.g. `single`, `couple`, `large`).
+- Drop redundant columns (e.g. `SibSp` and `Parch`, as they have been merged into `FamilySize`)
 
 If you imported more than one dataset (like an extra test dataset, or
 unlabeled data to predict), this cleanup needs to be done for all of
@@ -183,9 +203,9 @@ def clean_data(dataset):
   dataset['Title'].value_counts()
   dataset['Title'] = dataset['Title'].replace(['Lady', 'the Countess', 'Countess', 'Capt', 'Col', 'Don', 'Dr', 'Major', 'Rev', 'Sir', 'Jonkheer', 'Dona', 'Ms', 'Mme', 'Mlle'], 'Rare')
 
-  dataset['FamilyS'] = dataset['SibSp'] + dataset['Parch'] + 1
+  dataset['FamilySize'] = dataset['SibSp'] + dataset['Parch'] + 1
 
-  def family(x):
+  def count_family(x):
     if x < 2:
         return 'Single'
     elif x == 2:
@@ -195,7 +215,7 @@ def clean_data(dataset):
     else:
         return 'Large'
 
-  dataset['FamilyS'] = dataset['FamilyS'].apply(family)
+  dataset['FamilySize'] = dataset['FamilySize'].apply(count_family)
   dataset['Embarked'].fillna(dataset['Embarked'].mode()[0], inplace=True)
   dataset['Age'].fillna(dataset['Age'].median(), inplace=True)
   dataset = dataset.drop(['PassengerId', 'Cabin', 'Name', 'SibSp', 'Parch', 'Ticket'], axis=1)
@@ -213,7 +233,7 @@ X
 ```
 We can find some examples of the result of this data cleanup.
 
-|     | Pclass |   Sex  |  Age |   Fare  | Embarked | Title | FamilyS |
+|     | Pclass |   Sex  |  Age |   Fare  | Embarked | Title | FamilySize |
 |:---:|:------:|:------:|:----:|:-------:|:--------:|:-----:|:-------:|
 | 0   | 3      | male   | 22.0 | 7.2500  | S        | Mr    | Couple  |
 | 1   | 1      | female | 38.0 | 71.2833 | C        | Mrs   | Couple  |
@@ -242,7 +262,7 @@ for which we will try to get actual predictions out of the trained model
 
 ```python
 def encode_data(X):
-  categorical_columns = ['Pclass','Sex', 'FamilyS', 'Embarked', 'Title']
+  categorical_columns = ['Pclass','Sex', 'FamilySize', 'Embarked', 'Title']
 
   X_enc = pd.get_dummies(X, prefix=categorical_columns, columns = categorical_columns, drop_first=True)
   return X_enc
@@ -251,7 +271,7 @@ X_enc = encode_data(X)
 X_enc.head()
 ```
 
-|   | Age  | Fare    | Pclass_2 | Pclass_3 | Sex_male | FamilyS_InterM | FamilyS_Large | FamilyS_Single | Embarked_Q | Embarked_S | Title_Miss | Title_Mr | Title_Mrs | Title_Rare |
+|   | Age  | Fare    | Pclass_2 | Pclass_3 | Sex_male | FamilySize_InterM | FamilySize_Large | FamilySize_Single | Embarked_Q | Embarked_S | Title_Miss | Title_Mr | Title_Mrs | Title_Rare |
 |---|------|---------|----------|----------|----------|----------------|---------------|----------------|------------|------------|------------|----------|-----------|------------|
 | 0 | 22.0 | 7.2500  | 0        | 1        | 1        | 0              | 0             | 0              | 0          | 1          | 0          | 1        | 0         | 0          |
 | 1 | 38.0 | 71.2833 | 0        | 0        | 0        | 0              | 0             | 0              | 0          | 0          | 0          | 0        | 1         | 0          |
@@ -305,7 +325,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-class Net(nn.Module):
+class Model(nn.Module):
 
     def __init__(self):
         super(Net, self).__init__()
@@ -321,7 +341,7 @@ class Net(nn.Module):
 
         return x
 
-net = Net()
+model = Model()
 ```
 
 ## Training parameters
@@ -382,7 +402,7 @@ for epoch in range(num_epochs):
 
         # Run a training step: Pass the training data to
         # the neural network layers
-        ypred_var = net(x_var)
+        ypred_var = model(x_var)
 
         # Calculate the training loss
         loss =criterion(ypred_var, y_var)
@@ -409,7 +429,7 @@ Epoch 46
 
 We now predict the labels for our validation set `x_val`.
 
-The results of the prediction in `result = net(test_var)` will be a
+The results of the prediction in `result = model(test_var)` will be a
 matrix of where the rows are the predicted values for each validation
 row, and the columns are:
 
@@ -427,7 +447,7 @@ validation_data = Variable(torch.FloatTensor(x_val.values), requires_grad=True)
 ## this model anymore
 with torch.no_grad():
     ## get the predicted values
-    result = net(validation_data)
+    result = model(validation_data)
 
 ## Sample 5 results
 result[0:5, :]
@@ -486,6 +506,18 @@ Notice that accuracy is a kind-of misleading metric: If the model predicts all d
 Another downside of just looking at accuracy leaves out a lot of information that may be critical for evaluating a model. Going back to the example of medical applications: For a model that predicts whether a patient has some sort of disease based on their medical history, the impact of a **false negative** -predicting false when the patient does have the disease- is considerably higher than those of **false positives** -predicting a patient _may_ have the disease when they don't-.
 
 A false positive can be corrected by doctors performing more studies on the patient, while false negatives may leave a patient without the treatment they need. *Precision* and *recall* are good metrics to know -in addition to accuracy- in this case.
+
+## Conclusion
+
+In this post we created and trained a neural network for classification in Pytorch.
+
+The work for building Machine Learning models is 80% data analysis and cleanup, and 20% model configuration and coding. The model's performance will depend completely on the data we use to train it; If the data is not _clean_ (it has multiple empty values or redundant information), the model's performance will suffer.
+
+Neural Networks are a powerful tool for ML tasks, but they also have added complexity that other, more focused, tools. This example could have been solved with logistic regression, with similar performance. The added complexity of NNs can lead to over-complicated models that perform worst than simpler models.
+
+NNs also require some understanding of more complex topics like backpropagation, which can be a roadblock for people starting to work in ML.
+
+Having said that, NNs have the advantage of capturing hidden _signals_ in the dataset that would require extra effort in data engineering to get a good performance in simpler models.
 
 ## Extra material
 

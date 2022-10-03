@@ -3,7 +3,8 @@ import { parseISO, format } from 'date-fns'
 import fs from 'fs'
 import path from 'path'
 import { join } from 'path'
-import { PostInfo } from '../models/interfaces'
+import { Post, PostInfo } from '../models/interfaces'
+import { slugToPage } from './slug-management'
 
 // Add markdown files in `src/content/blog`
 const postsDirectory = join(process.cwd(), 'src', 'blog')
@@ -63,13 +64,19 @@ const getAllFiles = function (
 
 export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
   const curDirRelative = join(process.cwd(), 'src')
+
+  const postFileLocation = slugFile.filePath;
+  const postDirPath = slugFile?.dirPath;
+
+
   const fileContents = fs.readFileSync(
-    join(curDirRelative, slugFile.filePath),
+    join(curDirRelative, postFileLocation),
     'utf8'
   )
 
   const { data, content } = matter(fileContents)
-  const publicPath = join('/opt_images/', slugFile?.dirPath)
+
+  const publicPath = join('/opt_images/', postDirPath)
   if (!data.published) {
     return null
   }
@@ -107,26 +114,29 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
     ? path.join(publicPath, relativeHero)
     : ''
 
+  const frontmatter : Post = {
+    title,
+    description,
+    hero_image,
+    hero_image_blur,
+    hero_image_original,
+    hero_image_alt: hero_image_alt ?? '',
+    ...(hero_width && { hero_width }),
+    ...(hero_height && { hero_height }),
+    date,
+    key_words: parseKeyWords(key_words),
+    series: series ?? null,
+    published,
+    social_title: social_title ?? title,
+    social_subtitle: social_subtitle ?? description[0],
+    social_footer:
+      social_footer ?? 'Visit pedromarquez.dev for the full post',
+  };
+
   return {
-    slug: slugFile?.dirPath,
-    frontmatter: {
-      title,
-      description,
-      hero_image,
-      hero_image_blur,
-      hero_image_original,
-      hero_image_alt: hero_image_alt ?? '',
-      ...(hero_width && { hero_width }),
-      ...(hero_height && { hero_height }),
-      date,
-      key_words: parseKeyWords(key_words),
-      series: series ?? null,
-      published,
-      social_title: social_title ?? title,
-      social_subtitle: social_subtitle ?? description[0],
-      social_footer:
-        social_footer ?? 'Visit pedromarquez.dev for the full post',
-    },
+    slug: slugToPage(slugFile?.dirPath, new Date(frontmatter.date)),
+    postPath: slugFile?.dirPath,
+    frontmatter,
     content: content
       .replace(/\]\(.\//g, `](${publicPath}/`)
       .replace(/.gif/g, '.webp'),
@@ -154,3 +164,6 @@ export function getAllPosts() {
 function parseKeyWords(keywords: string) {
   return keywords?.split(',').filter((keyword) => keyword.trim().length) ?? []
 }
+
+
+

@@ -2,13 +2,12 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'src/components/image'
 
-import React, { useContext } from 'react'
+import React from 'react'
 import Link from 'next/link'
 
 import { useRouter } from 'next/router'
 import generateRssFeed from 'src/helpers/generate-rss-feed'
 import { Metadata, PostInfo } from 'src/models/interfaces'
-import Bio from 'src/components/bio'
 import { getDataFile } from 'src/helpers/data-fetchers'
 import { getAllPosts } from 'src/helpers/page-fetcher'
 import mapSeriesSlutToTitle from 'src/helpers/blog-series-slug'
@@ -39,6 +38,7 @@ const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
               key={post.slug}
               style={{ display: `contents` }}
               href={`/${post.slug}`}
+              data-test-page-link
             >
               <div
                 className="link-post-container link-post-a"

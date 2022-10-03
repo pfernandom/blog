@@ -4,7 +4,7 @@
         <title>Pedro's Tech Blog</title>
         <link>https://pedromarquez.dev</link>
         <description>A blog about software development: JavaScript, Java, Flutter, and everything I find out there that may be cool</description>
-        <lastBuildDate>Sun, 02 Oct 2022 22:05:34 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 03 Oct 2022 01:12:08 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -21,7 +21,7 @@
             <description><![CDATA[Learn how to solve some common problems when starting learning Rust]]></description>
             <content:encoded><![CDATA[Learn how to solve some common problems when starting learning Rust]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
-            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/9/rust-problems/hero.webp"/>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/9_rust-problems/hero.webp"/>
         </item>
         <item>
             <title><![CDATA[Code-gen in Dart & Flutter: How to create a builder to generate SQL code]]></title>
@@ -31,7 +31,7 @@
             <description><![CDATA[In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.]]></description>
             <content:encoded><![CDATA[In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
-            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/9/flutter-code-gen-2/hero.webp"/>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/8_flutter-code-gen-2/hero.webp"/>
         </item>
         <item>
             <title><![CDATA[Converting and customizing Markdown files to HTML with Unified, remark & rehype]]></title>
@@ -41,7 +41,7 @@
             <description><![CDATA[Hosting your own blog is easier on Markdown!. Many tools exist for converting Markdown to HTML, and in this post we will learn how to use some of them.]]></description>
             <content:encoded><![CDATA[Hosting your own blog is easier on Markdown!. Many tools exist for converting Markdown to HTML, and in this post we will learn how to use some of them.]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
-            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/9/markdown-to-html/hero.webp"/>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/7_markdown-to-html/hero.webp"/>
         </item>
         <item>
             <title><![CDATA[Code-gen in Dart & Flutter: Reflection and code gen]]></title>
@@ -51,7 +51,7 @@
             <description><![CDATA[Dart libraries like Mockito make heavy use of source-code generation.. In the first of this series of posts, we will explore why we need to generate Dart source code in a Flutter project and what alternatives we have.]]></description>
             <content:encoded><![CDATA[Dart libraries like Mockito make heavy use of source-code generation.. In the first of this series of posts, we will explore why we need to generate Dart source code in a Flutter project and what alternatives we have.]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
-            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/8/flutter-code-gen-1/hero.webp"/>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/6_flutter-code-gen-1/hero.webp"/>
         </item>
         <item>
             <title><![CDATA[New book: "Backend Developer in 30 Days"]]></title>
@@ -61,7 +61,7 @@
             <description><![CDATA[My first book is now for sale! You can find it in Amazon or in bpbonline.com (links in bio).. "Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization"]]></description>
             <content:encoded><![CDATA[My first book is now for sale! You can find it in Amazon or in bpbonline.com (links in bio).. "Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization"]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
-            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/8/book/book.webp"/>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/5_book/book.webp"/>
         </item>
         <item>
             <title><![CDATA[Easy parallelism and multi-threading with Java's CompletableFuture]]></title>
@@ -71,7 +71,7 @@
             <description><![CDATA[In this post, we improve application performance by making multiple parallel requests to a REST API]]></description>
             <content:encoded><![CDATA[In this post, we improve application performance by making multiple parallel requests to a REST API]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
-            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/8/java-futures/hero.webp"/>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/4_java-futures/hero.webp"/>
         </item>
         <item>
             <title><![CDATA[Building a dark-mode theme with CSS variables]]></title>
@@ -81,7 +81,7 @@
             <description><![CDATA[Native CSS variables make it really easy to build themes for a web app, including 'dark mode'. In this post we describe how to enable themes with just CSS and HTML, no dependencies needed.]]></description>
             <content:encoded><![CDATA[Native CSS variables make it really easy to build themes for a web app, including 'dark mode'. In this post we describe how to enable themes with just CSS and HTML, no dependencies needed.]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
-            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/7/dark-mode-css/hero.webp"/>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/3_dark-mode-css/hero.webp"/>
         </item>
         <item>
             <title><![CDATA[Managing state in Flutter apps with data streaming]]></title>
@@ -91,7 +91,7 @@
             <description><![CDATA[Managing state in a Flutter app using data streams and a service locator]]></description>
             <content:encoded><![CDATA[Managing state in a Flutter app using data streams and a service locator]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
-            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/7/flutter-app-state/hero.webp"/>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/1_flutter-app-state/hero.webp"/>
         </item>
         <item>
             <title><![CDATA[Weird behavior for matrix created with Array.fill()]]></title>
@@ -101,7 +101,7 @@
             <description><![CDATA[I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??]]></description>
             <content:encoded><![CDATA[I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
-            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2019/7/array-fill/hero.webp"/>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2019/2_array-fill/hero.webp"/>
         </item>
         <item>
             <title><![CDATA[Streaming HTML responses]]></title>
@@ -111,7 +111,7 @@
             <description><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></description>
             <content:encoded><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
-            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2019/6/html-chunking/hero.webp"/>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2019/1_html-chunking/hero.webp"/>
         </item>
     </channel>
 </rss>

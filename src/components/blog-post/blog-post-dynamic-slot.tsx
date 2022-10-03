@@ -5,6 +5,7 @@ import dynamic, {
 } from 'next/dynamic'
 import React, { useMemo } from 'react'
 import m from 'src/imports'
+import { PostInfo } from 'src/models/interfaces'
 
 function GhostContent() {
   return (
@@ -37,26 +38,26 @@ function GhostContent() {
 }
 
 export default function DynamicSlot({
-  chunk,
+  post,
   ssrContent,
   onLoad,
 }: {
-  chunk: string
+  post: PostInfo
   ssrContent: string
   onLoad?: () => void
 }) {
-  const DynamicBlogPost: LoadableComponent = dynamic(() => m(chunk), {
+  const DynamicBlogPost: LoadableComponent = dynamic(() => m(post.postPath), {
     ssr: false,
     loading: (loadingProps) => {
       if (!loadingProps.isLoading) {
         onLoad?.call(loadingProps)
       }
-      return <div dangerouslySetInnerHTML={{ __html: ssrContent }}></div>
+      return <div data-test-blog-content dangerouslySetInnerHTML={{ __html: ssrContent }}></div>
     },
   })
 
   return (
-    <div className="blog-post-content">
+    <div className="blog-post-content" data-test-blog-content>
       {/* <GhostContent /> */}
       <DynamicBlogPost />
     </div>

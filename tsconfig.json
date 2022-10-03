@@ -46,6 +46,7 @@
   ],
   "exclude": [
     "node_modules",
+    "cypress",
     "src/sw/*.ts",
     "./scripts",
     "src/types"

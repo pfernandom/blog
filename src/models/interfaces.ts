@@ -27,6 +27,7 @@ export interface Post {
 
 export interface PostInfo {
   slug: string
+  postPath: string,
   frontmatter: Post
   content?: string
 }

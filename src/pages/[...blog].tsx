@@ -10,7 +10,7 @@ import BlogPostSEO from 'src/components/blog-post/blog-post-seo'
 import { getAllPosts } from 'src/helpers/page-fetcher'
 import urlGetterFactory from 'src/helpers/url-getter-factory'
 import { Metadata, PostInfo } from '../models/interfaces'
-import { renderToStaticMarkup, renderToString } from 'react-dom/server'
+import { renderToStaticMarkup } from 'react-dom/server'
 import m from 'src/imports'
 import {
   BlogPostSeries,
@@ -51,15 +51,7 @@ const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
   host,
   content,
 }) => {
-  const router = useRouter()
-  const path: string[] = router.query.blog as string[]
   const getPageUrl = urlGetterFactory(host)
-  const chunk = path.join('/')
-
-  //   prevInSeries.map(p => (<li>{p.frontmatter.title}<li/>));
-
-  // nextInSeries.map(p => (<li>{p.frontmatter.title}<li/>))
-
   const prevAndNext = getNextAndPrev(posts, post)
   const { prevInSeries, nextInSeries } = getNextAndPrevSeries(post, seriesPosts)
   const { prev, next } = prevAndNext
@@ -106,7 +98,7 @@ const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
 
       <BlogPostSeries post={post} seriesPosts={seriesPosts} />
 
-      <DynamicSlot ssrContent={content} chunk={chunk} />
+      <DynamicSlot ssrContent={content} post={post} />
 
       <BlogPostFooter prev={prev} next={next} />
     </div>
@@ -120,7 +112,9 @@ export async function getStaticProps({
 }: {
   params: BlogPlaceholderParams
 }) {
-  const posts: Array<PostInfo> = getAllPosts().map((post) => {
+  const allPosts = getAllPosts();
+
+  const posts: Array<PostInfo> = allPosts.map((post) => {
     post.content = ''
     return post
   })
@@ -135,7 +129,7 @@ export async function getStaticProps({
       post.frontmatter.series === selectedPost?.frontmatter.series
   )
 
-  const content = selectedPost != null ? await m(selectedPost?.slug) : {}
+  const content = selectedPost != null ? await m(selectedPost?.postPath) : {}
   const MDXContent = content.default
 
   const host = process.env['SITE_URL']
@@ -167,3 +161,4 @@ export async function getStaticPaths() {
     fallback: false,
   }
 }
+

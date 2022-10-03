@@ -39,6 +39,7 @@ const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
               key={post.slug}
               style={{ display: `contents` }}
               href={post.slug}
+              data-test-page-link
             >
               <div
                 className="link-post-container link-post-a"

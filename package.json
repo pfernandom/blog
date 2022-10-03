@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p 8000",
     "build": "npm run resize  && next build",
-    "deploy": "npm run resize  && next build && next export",
+    "deploy": "npm run resize  && next build && npm run e2e:run && next export",
     "start": "next start",
     "lint": "next lint",
     "resize": "npx ts-node --project ./tsconfig-scripts.json ./scripts/resize.ts ",
@@ -18,7 +18,11 @@
     "analyze": "ANALYZE=true npm run build",
     "analyze-dep": "npx depcruise --output-type json --reaches 'react-color' --focus '^src' ./src > deps.json ",
     "devto": "find ./src -type f -name \"hero.*\" -print0 | xargs -0 -I {} npx ts-node --project tsconfig-scripts.json ./scripts/resize-image.ts {} --name devto.png --ext png --scaleX 1 --scaleY 0.42",
-    "sw": "npm run sw-gen && npx esbuild src/sw/sw.ts --bundle --outfile=public/sw.js --target=chrome58,firefox57,safari11,edge16"
+    "sw": "npm run sw-gen && npx esbuild src/sw/sw.ts --bundle --outfile=public/sw.js --target=chrome58,firefox57,safari11,edge16",
+    "cypress": "cypress open",
+    "cypress:run": "cypress run",
+    "e2e": "start-server-and-test start http://localhost:3000 cypress",
+    "e2e:run": "start-server-and-test start http://localhost:3000 cypress:run"
   },
   "dependencies": {
     "@mdx-js/loader": "^2.1.2",
@@ -54,6 +58,7 @@
     "sass": "^1.54.9",
     "socket.io": "^4.5.2",
     "socket.io-client": "^4.5.2",
+    "start-server-and-test": "^1.14.0",
     "typeface-merriweather": "0.0.72",
     "typeface-montserrat": "0.0.54",
     "typography": "^0.16.21",
@@ -75,6 +80,7 @@
     "@types/typography": "^0.16.4",
     "@types/yargs": "^17.0.10",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "cypress": "^10.9.0",
     "dependency-cruiser": "^11.15.0",
     "esbuild": "^0.15.5",
     "esbuild-node-externals": "^1.4.1",

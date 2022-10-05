@@ -106,10 +106,10 @@ async function main(filePath: string, opts: Options) {
   switch (ext) {
     case 'jpeg':
     case 'jpeg':
-      proc = proc.jpeg()
+      proc = proc.jpeg().flatten({ background: { r: 255, g: 255, b: 255 } })
       break
     case 'jpg':
-      proc = proc.jpeg()
+      proc = proc.jpeg().flatten({ background: { r: 255, g: 255, b: 255 } })
       break
     case 'png':
       proc = proc.png().flatten({ background: { r: 255, g: 255, b: 255 } })

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://pedromarquez.dev</id>
     <title>Pedro's Tech Blog</title>
-    <updated>2022-10-03T21:38:27.952Z</updated>
+    <updated>2022-10-05T19:00:21.498Z</updated>
     <generator>Feed for Node.js</generator>
     <author>
         <name>Pedro Marquez</name>
@@ -16,12 +16,12 @@
     <icon>https://pedromarquez.dev/favicon.png</icon>
     <rights>All rights reserved 2022</rights>
     <entry>
-        <title type="html"><![CDATA[Create a ML classification model with Pytorch]]></title>
+        <title type="html"><![CDATA[Create a ML classification model with PyTorch]]></title>
         <id>https://pedromarquez.dev/blog/2022/10/pytorch-classification</id>
         <link href="https://pedromarquez.dev/blog/2022/10/pytorch-classification"/>
         <updated>2022-10-03T05:00:00.000Z</updated>
-        <summary type="html"><![CDATA[One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use Pytorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.]]></summary>
-        <content type="html"><![CDATA[One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use Pytorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.]]></content>
+        <summary type="html"><![CDATA[One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use PyTorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.]]></summary>
+        <content type="html"><![CDATA[One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use PyTorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.]]></content>
         <author>
             <name>Pedro Marquez</name>
             <email>pfernandom@gmail.com</email>
@@ -202,6 +202,24 @@
         <updated>2019-06-21T05:00:00.000Z</updated>
         <summary type="html"><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></summary>
         <content type="html"><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></content>
+        <author>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </author>
+        <contributor>
+            <name>Pedro Marquez</name>
+            <email>pfernandom@gmail.com</email>
+            <uri>https://twitter.com/pfernandom</uri>
+        </contributor>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[This is a test post]]></title>
+        <id>https://pedromarquez.dev/blog/1988/6/test_post</id>
+        <link href="https://pedromarquez.dev/blog/1988/6/test_post"/>
+        <updated>1988-06-19T05:00:00.000Z</updated>
+        <summary type="html"><![CDATA[line 1. line 2]]></summary>
+        <content type="html"><![CDATA[line 1. line 2]]></content>
         <author>
             <name>Pedro Marquez</name>
             <email>pfernandom@gmail.com</email>

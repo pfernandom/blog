@@ -95,6 +95,7 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
     social_title,
     social_subtitle,
     social_footer,
+    test
   } = data
 
   const hero_image = relativeHero
@@ -131,6 +132,7 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
     social_subtitle: social_subtitle ?? description[0],
     social_footer:
       social_footer ?? 'Visit pedromarquez.dev for the full post',
+    test: test ?? false
   };
 
   return {
@@ -148,9 +150,17 @@ export function getAllPosts() {
   const curDirRelative = join(process.cwd(), 'src')
   const slugs = getAllFiles(curDir, /.mdx?$/gi, [], curDirRelative)
 
+  const isProd = process.env.NODE_ENV === 'production';
+
   const posts: Array<PostInfo> = slugs
     .map((slug) => getPostByFileInfo(slug))
     .filter((post) => post != null)
+    .filter(post => {
+      if (isProd && post?.frontmatter.test == true) {
+        return false;
+      } 
+      return true;
+    })
     .map((post) => post as PostInfo)
 
   posts.sort(

@@ -23,6 +23,7 @@ export interface Post {
   social_title: string
   social_subtitle: string
   social_footer: string
+  test: boolean
 }
 
 export interface PostInfo {

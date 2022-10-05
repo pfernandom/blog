@@ -12,10 +12,10 @@
     "items": [
         {
             "id": "https://pedromarquez.dev/blog/2022/10/pytorch-classification",
-            "content_html": "One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use Pytorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.",
+            "content_html": "One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use PyTorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.",
             "url": "https://pedromarquez.dev/blog/2022/10/pytorch-classification",
-            "title": "Create a ML classification model with Pytorch",
-            "summary": "One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use Pytorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.",
+            "title": "Create a ML classification model with PyTorch",
+            "summary": "One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use PyTorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.",
             "date_modified": "2022-10-03T05:00:00.000Z",
             "author": {
                 "name": "Pedro Marquez",
@@ -137,6 +137,18 @@
             "title": "Streaming HTML responses",
             "summary": "How does HTML chunking work when streaming HTML files to the browser?",
             "date_modified": "2019-06-21T05:00:00.000Z",
+            "author": {
+                "name": "Pedro Marquez",
+                "url": "https://twitter.com/pfernandom"
+            }
+        },
+        {
+            "id": "https://pedromarquez.dev/blog/1988/6/test_post",
+            "content_html": "line 1. line 2",
+            "url": "https://pedromarquez.dev/blog/1988/6/test_post",
+            "title": "This is a test post",
+            "summary": "line 1. line 2",
+            "date_modified": "1988-06-19T05:00:00.000Z",
             "author": {
                 "name": "Pedro Marquez",
                 "url": "https://twitter.com/pfernandom"

@@ -4,7 +4,7 @@
         <title>Pedro's Tech Blog</title>
         <link>https://pedromarquez.dev</link>
         <description>A blog about software development: JavaScript, Java, Flutter, and everything I find out there that may be cool</description>
-        <lastBuildDate>Mon, 03 Oct 2022 21:38:27 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 05 Oct 2022 19:00:21 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -14,12 +14,12 @@
         </image>
         <copyright>All rights reserved 2022</copyright>
         <item>
-            <title><![CDATA[Create a ML classification model with Pytorch]]></title>
+            <title><![CDATA[Create a ML classification model with PyTorch]]></title>
             <link>https://pedromarquez.dev/blog/2022/10/pytorch-classification</link>
             <guid>https://pedromarquez.dev/blog/2022/10/pytorch-classification</guid>
             <pubDate>Mon, 03 Oct 2022 05:00:00 GMT</pubDate>
-            <description><![CDATA[One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use Pytorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.]]></description>
-            <content:encoded><![CDATA[One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use Pytorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.]]></content:encoded>
+            <description><![CDATA[One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use PyTorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.]]></description>
+            <content:encoded><![CDATA[One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use PyTorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
             <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2022/10_pytorch-classification/hero.webp"/>
         </item>
@@ -122,6 +122,16 @@
             <content:encoded><![CDATA[How does HTML chunking work when streaming HTML files to the browser?]]></content:encoded>
             <author>pfernandom@gmail.com (Pedro Marquez)</author>
             <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/2019/1_html-chunking/hero.webp"/>
+        </item>
+        <item>
+            <title><![CDATA[This is a test post]]></title>
+            <link>https://pedromarquez.dev/blog/1988/6/test_post</link>
+            <guid>https://pedromarquez.dev/blog/1988/6/test_post</guid>
+            <pubDate>Sun, 19 Jun 1988 05:00:00 GMT</pubDate>
+            <description><![CDATA[line 1. line 2]]></description>
+            <content:encoded><![CDATA[line 1. line 2]]></content:encoded>
+            <author>pfernandom@gmail.com (Pedro Marquez)</author>
+            <enclosure length="0" type="image/webp" url="https://pedromarquez.dev/opt_images/blog/1988/0_test_post/hero.webp"/>
         </item>
     </channel>
 </rss>

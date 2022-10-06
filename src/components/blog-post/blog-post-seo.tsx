@@ -85,7 +85,7 @@ export default function BlogPostSEO({
         additionalMetaTags={[{ name: 'author', content: 'Pedro Marquez-Soto' }]}
       />
       <Head>
-        {images.map(image => image.replace("hero.webp", "devto.png")).map((image) => (
+        {images.map(image => image.replace("hero.webp", "devto.png")).map(image => new URL(image).pathname).map((image) => (
           <meta
             key="image"
             name="image"

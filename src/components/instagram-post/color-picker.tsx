@@ -9,7 +9,7 @@ export type ColorPickerCallbackProps = {
 export type ColorPickerProps = {
   property: string;
   color: Color;
-  onSelect: (props: ColorPickerCallbackProps) => any;
+  onSelect: (props: ColorPickerCallbackProps) => unknown;
 };
 
 export default function ColorPicker({

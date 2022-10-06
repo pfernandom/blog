@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import React from 'react'
 import { ReactNode, RefObject, useEffect, useRef, useState } from 'react'
 import Image from 'src/components/image'
 import CanvasManager from 'src/helpers/canvas/canvas-manager'
@@ -47,14 +48,17 @@ export default function InstagramPostView({
   const { isGridVisible = false, isOutlineVisible = false } = editConfig
 
   useEffect(() => {
-    const canvas = canvasRef.current!
+    if (!canvasRef.current) {
+      return;
+    }
+    const canvas = canvasRef.current
     const em = parseFloat(getComputedStyle(canvas).fontSize)
 
     const canvasManager = new CanvasManager(canvas, currentConfig)
 
     canvasManager.drawBackground()
 
-    const { title, topLink, subtitle, footer } = fonts!
+    const { title, topLink, subtitle, footer } = fonts ?? {}
 
     //drawGrid(em, "grey");
     if (isGridVisible) {
@@ -148,19 +152,7 @@ export default function InstagramPostView({
     })
 
     //canvasManager.scale();
-  }, [
-    width,
-    height,
-    fontSize,
-    post,
-    isGridVisible,
-    isOutlineVisible,
-    currentConfig,
-    fonts,
-    isImageLoaded,
-    canvasRef,
-    pageNumber,
-  ])
+  }, [width, height, fontSize, post, isGridVisible, isOutlineVisible, currentConfig, fonts, isImageLoaded, canvasRef, pageNumber, description])
 
   return (
     <>

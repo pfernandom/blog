@@ -3,14 +3,12 @@ import React from "react";
 import { NextPage } from "next";
 import { getDataFile } from "../helpers/data-fetchers";
 import { Metadata } from "../models/interfaces";
-import { useRouter } from "next/router";
 
 type ErrorParams = {
   metadata: Metadata;
 };
 
-const Error: NextPage<ErrorParams> = ({ metadata }) => {
-  const router = useRouter();
+const Error: NextPage<ErrorParams> = () => {
   return (
     <>
       <h1>Not Found</h1>

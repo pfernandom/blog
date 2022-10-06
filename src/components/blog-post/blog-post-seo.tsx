@@ -51,19 +51,6 @@ export default function BlogPostSEO({
 
   return (
     <>
-      <Head>
-        {images.map((image) => (
-          <meta
-            prefix="og: http://ogp.me/ns#"
-            key="image"
-            name="image"
-            property="og:image"
-            content={image}
-          ></meta>
-        ))}
-        <PrevLink />
-        <NextLink />
-      </Head>
       <ArticleJsonLd
         type="Blog"
         url={url}
@@ -98,7 +85,7 @@ export default function BlogPostSEO({
         additionalMetaTags={[{ name: 'author', content: 'Pedro Marquez-Soto' }]}
       />
       <Head>
-        {images.map((image) => (
+        {images.map(image => image.replace("hero.webp", "devto.png")).map((image) => (
           <meta
             key="image"
             name="image"

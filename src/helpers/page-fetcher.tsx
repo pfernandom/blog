@@ -7,24 +7,12 @@ import { Post, PostInfo } from '../models/interfaces'
 import { slugToPage } from './slug-management'
 
 // Add markdown files in `src/content/blog`
-const postsDirectory = join(process.cwd(), 'src', 'blog')
+// const postsDirectory = join(process.cwd(), 'src', 'blog')
 
 type FileInfo = {
   fileName: string
   filePath: string
   dirPath: string
-}
-
-class EmptyFileInfo implements FileInfo {
-  fileName: string
-  filePath: string
-  dirPath: string
-
-  constructor() {
-    this.fileName = ''
-    this.filePath = ''
-    this.dirPath = ''
-  }
 }
 
 const getAllFiles = function (

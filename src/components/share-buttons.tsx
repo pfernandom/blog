@@ -1,15 +1,14 @@
-import React, { MouseEventHandler, useState } from 'react'
+import React, { useState } from 'react'
+import facebook from 'react-social-icons/build/networks/facebook'
+import linkedin from 'react-social-icons/build/networks/linkedin'
+import reddit from 'react-social-icons/build/networks/reddit'
+import share from 'react-social-icons/build/networks/sharethis'
+import twitter from 'react-social-icons/build/networks/twitter'
 import {
   SocialIcon,
-  SocialIconDatabase,
+  SocialIconDatabase
 } from 'react-social-icons/build/react-social-icons-lite'
-import facebook from 'react-social-icons/build/networks/facebook'
-import twitter from 'react-social-icons/build/networks/twitter'
-import reddit from 'react-social-icons/build/networks/reddit'
-import linkedin from 'react-social-icons/build/networks/linkedin'
-import share from 'react-social-icons/build/networks/sharethis'
 
-import useMediaQuery from 'src/helpers/use-media-query'
 
 SocialIconDatabase.importNetworks([facebook, twitter, reddit, linkedin, share])
 
@@ -56,7 +55,6 @@ function IconButton({
 function ShareLink({
   className,
   href,
-  children,
 }: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   return (
     <SocialIcon
@@ -74,7 +72,6 @@ function ShareLink({
 export default function ShareButtons({
   url,
   title,
-  author,
   description,
   username = 'pfernandom',
 }: ShareButtonsProps) {

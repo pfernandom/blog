@@ -19,9 +19,9 @@ class MyDocument extends Document {
     const page = (ctx.renderPage = () =>
       originalRenderPage({
         // Useful for wrapping the whole react tree
-        enhanceApp: (App: any) => App,
+        enhanceApp: (App) => App,
         // Useful for wrapping in a per-page basis
-        enhanceComponent: (Component: any) => Component,
+        enhanceComponent: (Component) => Component,
       }))
 
     // Run the parent `getInitialProps`, it now includes the custom `renderPage`

@@ -7,7 +7,6 @@ import { getDataFile } from "src/helpers/data-fetchers";
 import { getAllPosts } from "src/helpers/page-fetcher";
 import { Metadata, PostInfo } from "src/models/interfaces";
 import { InstagramDataService } from "../api/instagram-post";
-import { InstagramDefaultConfig } from "src/models/instagram-default-config";
 
 export type InstagramLinksParams = {
   metadata: Metadata;
@@ -20,7 +19,6 @@ export type InstagramLinksParams = {
 };
 
 const InstagramLinks: NextPage<InstagramLinksParams> = ({
-  metadata,
   posts,
   isProd,
   postToConfig,

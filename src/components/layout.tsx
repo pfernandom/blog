@@ -7,11 +7,9 @@ import SocialPane from './social'
 import News from './news'
 
 function Layout({
-  location,
   title,
   children,
 }: {
-  location: string
   title: string
   children: ReactNode
 }) {

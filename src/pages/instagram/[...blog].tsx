@@ -6,8 +6,7 @@ import { InstagramPost } from 'src/models/InstagramPost'
 import { getAllPosts } from 'src/helpers/page-fetcher'
 import { InstagramLinkParams, PostInfo } from 'src/models/interfaces'
 import { InstagramDataService } from '../api/instagram-post'
-import dynamic, { LoadableComponent } from 'next/dynamic'
-import m from 'src/imports'
+import dynamic from 'next/dynamic'
 
 const InstagramLink: NextPage<InstagramLinkParams> = ({
   post,
@@ -25,7 +24,7 @@ const InstagramLink: NextPage<InstagramLinkParams> = ({
     () => import('src/components/instagram-post/edit-tools'),
     {
       ssr: false,
-      loading: (loadingProps) => {
+      loading: () => {
         return <div>Loading</div>
         // return <GhostContent />
       },

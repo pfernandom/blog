@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-types */
 // import styles from '../styles/Markdown.module.css';
-import { MDXComponents, MDXProps } from 'mdx/types'
+import { MDXComponents } from 'mdx/types'
 import { ImageProps } from 'next/image'
+import React from 'react'
 import { ReactElement } from 'react'
 
 import Image from 'src/components/image'
-
-type Props = MDXProps
 
 const MDXComponentsDef: MDXComponents = {
   p: (props: {}): ReactElement => <p {...props} />,
@@ -14,6 +13,7 @@ const MDXComponentsDef: MDXComponents = {
   h1: (props): ReactElement => <h1 {...props} />,
   img: (props): ReactElement => {
     return (
+      // eslint-disable-next-line jsx-a11y/alt-text
       <Image {...(props as ImageProps)} layout="fill" placeholder="empty" />
     )
   },

@@ -1,4 +1,5 @@
-import dynamic, { LoadableComponent } from 'next/dynamic'
+import dynamic from 'next/dynamic'
+import React from 'react'
 import { useRef, useState } from 'react'
 import { InstagramDefaultConfig } from 'src/models/instagram-default-config'
 import { InstagramPost } from 'src/models/InstagramPost'
@@ -78,7 +79,7 @@ export default function InstagramEditTools({
 
   const ColorPicker = dynamic(() => import('./color-picker'), {
     ssr: false,
-    loading: (loadingProps) => {
+    loading: () => {
       return <div></div>
       // return <GhostContent />
     },
@@ -118,7 +119,7 @@ export default function InstagramEditTools({
                 color={colorProp.color}
                 onSelect={(props) => {
                   const newConfig = new InstagramPost(currentConfig)
-                  const fonts = newConfig.fonts!
+                  const fonts = newConfig.fonts ?? {}
                   fonts[props.property].color = props.color
 
                   setConfig(newConfig)
@@ -136,7 +137,7 @@ export default function InstagramEditTools({
                   defaultValue={font.family}
                   onChange={(props) => {
                     const newConfig = new InstagramPost(currentConfig)
-                    const fonts = newConfig.fonts!
+                    const fonts = newConfig.fonts ?? {}
                     fonts[property].family = props.target.value
 
                     setConfig(newConfig)
@@ -160,7 +161,7 @@ export default function InstagramEditTools({
                   style={{ width: '100%' }}
                   onChange={(props) => {
                     const newConfig = new InstagramPost(currentConfig)
-                    const fonts = newConfig.fonts!
+                    const fonts = newConfig.fonts ?? {}
                     fonts[property].size = props.target.value
 
                     setConfig(newConfig)

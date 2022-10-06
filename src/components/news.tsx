@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function News(props: any) {
+export default function News() {
   return (
     <div className="news">
       My latest book <i>&quot;Backend Developer in 30 Days&quot;</i> is out! You

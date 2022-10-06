@@ -12,9 +12,6 @@ function hslToString(color: RGBColor | string): string {
   return `rgba(${r}, ${g}, ${b}, ${a})`
 }
 
-function toPx(size: number) {
-  return `${size}`
-}
 function getImageSize(
   canvasWidth: number,
   canvasHeight: number,
@@ -42,6 +39,7 @@ export default class CanvasManager {
 
   constructor(canvas: HTMLCanvasElement, currentConfig: InstagramPost) {
     this.canvas = canvas
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.ctx = canvas.getContext('2d')!
     this.em = parseFloat(getComputedStyle(canvas).fontSize)
     this.currentConfig = currentConfig
@@ -258,7 +256,7 @@ export default class CanvasManager {
     const xem = (width - imgW) / 2
     ctx.beginPath()
     if (imgRef) {
-      ctx.drawImage(imgRef!, xem, yem * em, imgWidth ?? imgW, imgHeight ?? imgH)
+      ctx.drawImage(imgRef, xem, yem * em, imgWidth ?? imgW, imgHeight ?? imgH)
     }
     ctx.closePath()
     return yem + imgH / em
@@ -289,7 +287,7 @@ export default class CanvasManager {
   }
 
   getScaledSize() {
-    const { ctx, currentConfig } = this
+    const { currentConfig } = this
     const { width, height } = currentConfig
 
     // if (window.devicePixelRatio) {
@@ -308,12 +306,5 @@ export default class CanvasManager {
       styleWidth: width,
       styleHeight: height,
     }
-  }
-
-  scale() {
-    const { width, height } = this.getScaledSize()
-    //this.canvas.setAttribute("width", toPx(width));
-    //this.canvas.setAttribute("height", toPx(height));
-    //this.ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
   }
 }

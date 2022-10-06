@@ -32,7 +32,7 @@
       "models": [
         "./src/models"
       ]
-    },
+    }
   },
   "include": [
     "next-env.d.ts",
@@ -42,7 +42,7 @@
     "scripts/gen-imports.mts",
     "scripts/gen-imports.tts",
     "scripts/resize.mts",
-    "scripts/mdxToMd.mts",
+    "scripts/mdxToMd.mts"
   ],
   "exclude": [
     "node_modules",

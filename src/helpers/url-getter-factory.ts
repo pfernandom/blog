@@ -1,4 +1,3 @@
-import path from 'path'
 
 export default function urlGetterFactory(host: string) {
   function getPageUrl(slug: string, hasTrailingSlash = false) {

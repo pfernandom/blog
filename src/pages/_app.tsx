@@ -80,7 +80,7 @@ function MyApp({
             ],
           }}
         />
-        <Layout location="/" title={pageProps?.metadata?.title ?? 'Blog entry'}>
+        <Layout title={pageProps?.metadata?.title ?? 'Blog entry'}>
           <Component {...pageProps} />
         </Layout>
         {/* </HelmetProvider> */}

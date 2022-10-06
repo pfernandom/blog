@@ -1,5 +1,5 @@
 import { ArticleJsonLd, NextSeo } from 'next-seo'
-import { HTML5MetaTag } from 'next-seo/lib/types'
+import { HTML5MetaTag, MetaTag } from 'next-seo/lib/types'
 import Head from 'next/head'
 import Script from 'next/script'
 import React from 'react'
@@ -36,6 +36,14 @@ export default function BlogPostSEO({
 
   const [prevSeries, nextSeries] = seriesPosts
 
+  const metaImages : MetaTag[] = images.map((image) => (
+    {
+      name:"image",
+      // property:"og:image",
+      content:image,
+    }
+))
+
   const PrevLink = () =>
     prevSeries ? (
       <link rel="prev" href={prevSeries} />
@@ -52,15 +60,6 @@ export default function BlogPostSEO({
   return (
     <>
       <Head>
-        {images.map((image) => (
-          <meta
-            prefix="og: http://ogp.me/ns#"
-            key="image"
-            name="image"
-            property="og:image"
-            content={image}
-          ></meta>
-        ))}
         <PrevLink />
         <NextLink />
       </Head>
@@ -95,7 +94,7 @@ export default function BlogPostSEO({
           { rel: 'prev', href: prevSeries ?? '' },
           { rel: 'next', href: nextSeries ?? '' },
         ].filter((link) => link.href.length > 0)}
-        additionalMetaTags={[{ name: 'author', content: 'Pedro Marquez-Soto' }]}
+        additionalMetaTags={[{ name: 'author', content: 'Pedro Marquez-Soto' }, ...metaImages]}
       />
     </>
   )

@@ -35,19 +35,17 @@ class MyDocument extends Document {
       <Html lang="en-US">
         <Head>
           {/* Global Site Tag (gtag.js) - Google Analytics */}
-          <Script
-            src="https://www.googletagmanager.com/gtag/js?id=G-KEN0F81YMH"
-            strategy="afterInteractive"
+          <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css"
           />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-XV91RNV97M');
-        `}
-          </Script>
+          <Script
+            src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.1/cookieconsent.min.js"
+            data-cfasync="false"
+            strategy="afterInteractive"
+          ></Script>
+          <Script src="/cookieconsent.js" strategy="afterInteractive"></Script>
 
           <Script
             src="https://www.googleoptimize.com/optimize.js?id=OPT-TV9C6H7"

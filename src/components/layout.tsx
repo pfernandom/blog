@@ -6,13 +6,7 @@ import { useRouter } from 'next/router'
 import SocialPane from './social'
 import News from './news'
 
-function Layout({
-  title,
-  children,
-}: {
-  title: string
-  children: ReactNode
-}) {
+function Layout({ title, children }: { title: string; children: ReactNode }) {
   // eslint-disable-next-line no-undef
   let header
   const router = useRouter()

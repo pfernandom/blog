@@ -6,7 +6,6 @@ import React from 'react'
 import Link from 'next/link'
 
 import { useRouter } from 'next/router'
-import generateRssFeed from 'src/helpers/generate-rss-feed'
 import { Metadata, PostInfo } from 'src/models/interfaces'
 import { getDataFile } from 'src/helpers/data-fetchers'
 import { getAllPosts } from 'src/helpers/page-fetcher'
@@ -100,7 +99,6 @@ export async function getStaticProps({
 }: {
   params: { series: string }
 }) {
-  await generateRssFeed()
   const metadata: Metadata = await getDataFile('src/data/metadata.json')
 
   const posts: Array<PostInfo> = getAllPosts().filter(

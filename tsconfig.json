@@ -1,4 +1,17 @@
 {
+  "ts-node": {
+    "esm": true,
+    "moduleTypes": {
+      "*.mjs": "mts"
+    },
+    "compilerOptions": {
+      "target": "esnext",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+    },
+    "transpileOnly": true,
+  },
   "compilerOptions": {
     "target": "es6",
     "lib": [
@@ -40,7 +53,7 @@
     "**/*.tsx",
     "src/**/*.tsx",
     "scripts/gen-imports.mts",
-    "scripts/gen-imports.tts",
+    "scripts/*.ts",
     "scripts/resize.mts",
     "scripts/mdxToMd.mts"
   ],
@@ -48,7 +61,6 @@
     "node_modules",
     "cypress",
     "src/sw/*.ts",
-    "./scripts",
     "src/types"
   ],
   "rules": {

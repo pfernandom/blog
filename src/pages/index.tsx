@@ -10,7 +10,6 @@ import { getDataFile } from '../helpers/data-fetchers'
 import { getAllPosts } from '../helpers/page-fetcher'
 import { Metadata, PostInfo } from '../models/interfaces'
 import { useRouter } from 'next/router'
-import generateRssFeed from 'src/helpers/generate-rss-feed'
 
 type HomeParams = {
   metadata: Metadata
@@ -96,7 +95,6 @@ const Home: NextPage<HomeParams> = ({ metadata, posts }) => {
 export default Home
 
 export async function getStaticProps() {
-  await generateRssFeed()
   const metadata: Metadata = await getDataFile('src/data/metadata.json')
 
   const posts: Array<PostInfo> = getAllPosts().map((post) => {

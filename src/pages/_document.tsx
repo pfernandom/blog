@@ -48,6 +48,8 @@ class MyDocument extends Document {
           gtag('config', 'G-XV91RNV97M');
         `}
           </Script>
+
+          <Script src="https://www.googleoptimize.com/optimize.js?id=OPT-TV9C6H7"></Script>
         </Head>
         <ThemeContext.Provider value="dark">
           <Main />

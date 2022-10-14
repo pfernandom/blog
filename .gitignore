@@ -40,3 +40,6 @@ public/opt_images
 */node_modules
 
 puremd
+
+*.ts.mp4
+cypress/screenshots

@@ -49,7 +49,10 @@ class MyDocument extends Document {
         `}
           </Script>
 
-          <Script src="https://www.googleoptimize.com/optimize.js?id=OPT-TV9C6H7"></Script>
+          <Script
+            src="https://www.googleoptimize.com/optimize.js?id=OPT-TV9C6H7"
+            strategy="afterInteractive"
+          ></Script>
         </Head>
         <ThemeContext.Provider value="dark">
           <Main />

@@ -5,6 +5,9 @@
 [context.production]
   environment = { NODE_VERSION = "16.13.0" }
 
+[context.branch-deploy]
+  environment = { NODE_VERSION = "16.13.0" }
+
 [[headers]]
     for = "/*"
     [headers.values]

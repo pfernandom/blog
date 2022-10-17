@@ -21,6 +21,9 @@ function main() {
     'opt_images',
     'blog'
   )
+  fs.mkdirSync(saveDirPathBase, {
+    recursive: true,
+  })
 
   const optimizedRegex = /\.(webp)$/gi
   const optimizedImages = getAllFiles(postsDirectory, optimizedRegex, [])

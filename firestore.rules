@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function validateString(str) {
+      return str is string && str.size() < 500 && str.size() >= 2;
+    }
+
+    function validateTimestamp(times) {
+      return times is timestamp;
+    }
+
+    function validate(comment) {
+      return comment.keys().hasOnly(["name", "content", "created", "slug", "parent", "photoUrl"]) && 
+      comment.keys().hasAll(["name", "content", "created", "slug"]) && validateString(comment.name) && validateString(comment.content) && validateTimestamp(comment.created);
+    }
+    match /blog/{slug}/comments/{comment=**} {
+      allow list, read: if true;
+    }
+
+    match /blog/{slug}/comments/{comment} {
+      allow write: if request.auth != null && validate(request.resource.data);
+    }
+
+    match /blog/users/{user} {
+      allow list, read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}

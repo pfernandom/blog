@@ -5,6 +5,8 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import rePrism from './plugins/rePrism.mjs'
 import remarkGfm from 'remark-gfm'
+import { withSentryConfig } from '@sentry/nextjs'
+import withPlugins from 'next-compose-plugins'
 
 const bundle = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -22,20 +24,108 @@ const withMDX = withMDXFactory({
   },
 })
 
-const nextConfig = bundle(
-  withMDX({
-    experimental: {
-      newNextLinkBehavior: true,
-    },
-    productionBrowserSourceMaps: false,
-    reactStrictMode: true,
-    swcMinify: true,
-    pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
-    images: {
-      domains: ['pedromarquez.dev', 'localhost'],
-      loader: 'custom',
-    },
-  })
+const moduleExports = {
+  // Your existing module.exports
+  ...bundle(
+    withMDX({
+      experimental: {
+        newNextLinkBehavior: true,
+      },
+      productionBrowserSourceMaps: false,
+      reactStrictMode: true,
+      swcMinify: true,
+      pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+      images: {
+        domains: ['pedromarquez.dev', 'localhost'],
+        loader: 'custom',
+      },
+    })
+  ),
+
+  sentry: {
+    // Use `hidden-source-map` rather than `source-map` as the Webpack `devtool`
+    // for client-side builds. (This will be the default starting in
+    // `@sentry/nextjs` version 8.0.0.) See
+    // https://webpack.js.org/configuration/devtool/ and
+    // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#use-hidden-source-map
+    // for more information.
+    hideSourceMaps: true,
+  },
+}
+
+const sentryWebpackPluginOptions = {
+  // Additional config options for the Sentry Webpack plugin. Keep in mind that
+  // the following options are set automatically, and overriding them is not
+  // recommended:
+  //   release, url, org, project, authToken, configFile, stripPrefix,
+  //   urlPrefix, include, ignore
+
+  silent: true, // Suppresses all logs
+  // For all available options, see:
+  // https://github.com/getsentry/sentry-webpack-plugin#options.
+}
+
+export default withSentryConfig(
+  bundle(
+    withMDX({
+      experimental: {
+        newNextLinkBehavior: true,
+      },
+      productionBrowserSourceMaps: false,
+      reactStrictMode: true,
+      swcMinify: true,
+      pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+      images: {
+        domains: ['pedromarquez.dev', 'localhost'],
+        loader: 'custom',
+      },
+      sentry: {
+        // Use `hidden-source-map` rather than `source-map` as the Webpack `devtool`
+        // for client-side builds. (This will be the default starting in
+        // `@sentry/nextjs` version 8.0.0.) See
+        // https://webpack.js.org/configuration/devtool/ and
+        // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#use-hidden-source-map
+        // for more information.
+        hideSourceMaps: true,
+      },
+    })
+  ),
+  sentryWebpackPluginOptions
 )
 
-export default nextConfig
+// const nextConfig = withPlugins(
+//   [
+//     withBundleAnalyzer({
+//       enabled: process.env.ANALYZE === 'true',
+//     }),
+
+//     withMDXFactory({
+//       extension: /\.mdx?$/,
+//       options: {
+//         remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
+//         rehypePlugins: [rehypeInlineCodeClassNamePlugin, rePrism],
+//         // remarkRehypeOptions: { allowDangerousHtml: true, languages: [dart] },
+//         // If you use `MDXProvider`, uncomment the following line.
+//         providerImportSource: '@mdx-js/react',
+//       },
+//     }),
+//     [withSentryConfig, { sentry: { hideSourceMaps: true } }],
+//   ],
+//   {
+//     experimental: {
+//       newNextLinkBehavior: true,
+//     },
+//     productionBrowserSourceMaps: false,
+//     reactStrictMode: true,
+//     swcMinify: true,
+//     pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+//     images: {
+//       domains: ['pedromarquez.dev', 'localhost'],
+//       loader: 'custom',
+//     },
+//   }
+// )
+
+// console.log({ nextConfig })
+
+// export default nextConfig

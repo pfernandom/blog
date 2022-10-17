@@ -10,6 +10,7 @@ import linkedin from 'react-social-icons/build/networks/linkedin'
 import instagram from 'react-social-icons/build/networks/instagram'
 import medium from 'react-social-icons/build/networks/medium'
 import rss from 'react-social-icons/build/networks/rss'
+import useScrollPosition from 'src/helpers/use-scroll-position'
 
 SocialIconDatabase.importNetworks([
   facebook,
@@ -22,8 +23,11 @@ SocialIconDatabase.importNetworks([
 ])
 
 export default function SocialPane({}) {
+  const scrollPosition = useScrollPosition()
+  const opacity = 1 - Math.min(scrollPosition * 100, 0.9)
+
   return (
-    <div className="social-icons-section">
+    <div className="social-icons-section" style={{ opacity }}>
       <SocialIcon
         url="https://www.instagram.com/pedro.marquez.soto/"
         fgColor="white"

@@ -7,6 +7,39 @@
         {
             "name": "Launch via NPM",
             "request": "launch",
+            "runtimeArgs": [
+                "run-script",
+                "test"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+
+        {
+            "args": [
+                "-u",
+                "tdd",
+                "--timeout",
+                "999999",
+                "--colors",
+                "${workspaceFolder}/tests"
+            ],
+            "env": {"TS_NODE_PROJECT":"tsconfig-scripts.json"},
+            "internalConsoleOptions": "openOnSessionStart",
+            "name": "Mocha Tests",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
+            "name": "Launch via NPM",
+            "request": "launch",
             "cwd": "${workspaceFolder}/md-plugin",
             "runtimeArgs": [
                 "run",

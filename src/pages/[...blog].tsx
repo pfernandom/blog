@@ -1,22 +1,31 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import { FirebaseApp } from 'firebase/app'
+import { Firestore } from 'firebase/firestore'
 import { NextPage } from 'next'
+import BlogPostComments from 'src/components/blog-post/blog-comments/blog-post-comments'
 import BlogPostActions from 'src/components/blog-post/blog-post-actions'
 import DynamicSlot from 'src/components/blog-post/blog-post-dynamic-slot'
 import BlogPostFooter from 'src/components/blog-post/blog-post-footer'
+
 // @ts-ignore
 // @ts-nocheck
-import BlogPostSEO from 'src/components/blog-post/blog-post-seo'
-import { getAllPosts } from 'src/helpers/page-fetcher'
-import urlGetterFactory from 'src/helpers/url-getter-factory'
-import { Metadata, PostInfo } from '../models/interfaces'
+import { FirebaseOptions } from 'firebase/app'
+import Link from 'next/link'
+import React, { useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import m from 'src/imports'
+import BlogPostSEO from 'src/components/blog-post/blog-post-seo'
 import {
   BlogPostSeries,
   getNextAndPrevSeries,
 } from 'src/components/blog-post/blog-post-series'
+import { getFirebase } from 'src/firebase'
 import mapSeriesSlutToTitle from 'src/helpers/blog-series-slug'
-import Link from 'next/link'
+import { getAllPosts } from 'src/helpers/page-fetcher'
+import urlGetterFactory from 'src/helpers/url-getter-factory'
+import m from 'src/imports'
+import { Metadata, PostInfo } from '../models/interfaces'
+import AuthContextProvider from 'src/components/auth/auth-context-provider'
+import ErrorBoundary from 'src/components/error-boundary'
 
 export function getNextAndPrev(posts: Array<PostInfo>, currentPost: PostInfo) {
   const filtered = posts.filter((p) => p.frontmatter.published)
@@ -41,7 +50,13 @@ export type BlogPlaceholderParams = {
   host: string
   content: string
   isProd: boolean
+  firebaseConfig: FirebaseOptions
 }
+
+export const FirebaseContext = React.createContext<{
+  app?: FirebaseApp
+  db?: Firestore
+}>({})
 
 const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
   post,
@@ -49,6 +64,7 @@ const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
   seriesPosts,
   host,
   content,
+  firebaseConfig,
 }) => {
   const getPageUrl = urlGetterFactory(host)
   const prevAndNext = getNextAndPrev(posts, post)
@@ -71,6 +87,8 @@ const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
     nextInSeries.length > 0 ? getPageUrl(nextInSeries[0].slug) : null
 
   const isPartOfSeries = seriesPosts.length > 1
+
+  const [firebase] = useState(getFirebase(firebaseConfig))
 
   return (
     <div>
@@ -99,6 +117,14 @@ const BlogPlaceholder: NextPage<BlogPlaceholderParams> = ({
 
       <DynamicSlot ssrContent={content} post={post} />
 
+      <ErrorBoundary fallbackComponent={<></>}>
+        <FirebaseContext.Provider value={firebase}>
+          <AuthContextProvider>
+            <BlogPostComments slug={post.slug} />
+          </AuthContextProvider>
+        </FirebaseContext.Provider>
+      </ErrorBoundary>
+
       <BlogPostFooter prev={prev} next={next} />
     </div>
   )
@@ -111,7 +137,7 @@ export async function getStaticProps({
 }: {
   params: BlogPlaceholderParams
 }) {
-  const allPosts = getAllPosts();
+  const allPosts = getAllPosts()
 
   const posts: Array<PostInfo> = allPosts.map((post) => {
     post.content = ''
@@ -131,6 +157,26 @@ export async function getStaticProps({
   const content = selectedPost != null ? await m(selectedPost?.postPath) : {}
   const MDXContent = content.default
 
+  const {
+    F_API_KEY,
+    F_AUTH_DOMAIN,
+    F_PROJECT_ID,
+    F_STORAGE_BUCKET,
+    F_MESSAGING_SENDER_ID,
+    F_APP_ID,
+    F_MEASUREMENT_ID,
+  } = process.env
+
+  const firebaseConfig: FirebaseOptions = {
+    apiKey: F_API_KEY,
+    authDomain: F_AUTH_DOMAIN,
+    projectId: F_PROJECT_ID,
+    storageBucket: F_STORAGE_BUCKET,
+    messagingSenderId: F_MESSAGING_SENDER_ID,
+    appId: F_APP_ID,
+    measurementId: F_MEASUREMENT_ID,
+  }
+
   const host = process.env['SITE_URL']
   return {
     props: {
@@ -142,6 +188,7 @@ export async function getStaticProps({
       host,
       content: renderToStaticMarkup(<MDXContent />),
       isProd: process.env.NODE_ENV === 'production',
+      firebaseConfig: firebaseConfig ?? {},
     },
   }
 }
@@ -160,4 +207,3 @@ export async function getStaticPaths() {
     fallback: false,
   }
 }
-

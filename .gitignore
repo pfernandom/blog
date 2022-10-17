@@ -43,3 +43,5 @@ puremd
 
 *.ts.mp4
 cypress/screenshots
+# Sentry
+.sentryclirc

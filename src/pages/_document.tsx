@@ -45,12 +45,8 @@ class MyDocument extends Document {
             data-cfasync="false"
             strategy="afterInteractive"
           ></Script>
+          <Script src="/rollbar.js" strategy="beforeInteractive"></Script>
           <Script src="/cookieconsent.js" strategy="afterInteractive"></Script>
-
-          <Script
-            src="https://www.googleoptimize.com/optimize.js?id=OPT-TV9C6H7"
-            strategy="afterInteractive"
-          ></Script>
         </Head>
         <ThemeContext.Provider value="dark">
           <Main />

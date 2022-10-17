@@ -1,0 +1,7 @@
+{
+    "require": "./node_modules/ts-node/register",
+    "extensions": ["ts", "tsx"],
+    "spec": [
+        "tests/**/*.spec.*"
+    ]
+  }

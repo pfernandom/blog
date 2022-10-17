@@ -25,7 +25,6 @@ export const getAllFiles = function (
       arrayOfFiles = getAllFiles(dirPath + "/" + file, regex, arrayOfFiles);
     } else {
       if (regex.test(file)) {
-        console.log(file);
         const relativePath = path.relative(
           postsDirectory,
           path.join(dirPath, "/")

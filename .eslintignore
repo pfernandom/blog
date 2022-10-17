@@ -1,2 +1,3 @@
 node_modules/**/*
 src/components/blog-post/blog-post-seo.tsx
+**/**/*.mp4

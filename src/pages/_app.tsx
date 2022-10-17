@@ -5,10 +5,11 @@ import { MDXProvider } from '@mdx-js/react'
 import MDXComponentsDef from 'src/components/mdx/mdx-components'
 import { DefaultSeo } from 'next-seo'
 import Head from 'next/head'
-import  {  useEffect } from 'react'
+import { useEffect } from 'react'
 import registerSW from 'src/sw/register-sw'
 import { BlogPlaceholderParams } from './[...blog]'
 import React from 'react'
+import ErrorBoundary from 'src/components/error-boundary'
 
 function MyApp({
   Component,
@@ -80,9 +81,11 @@ function MyApp({
             ],
           }}
         />
-        <Layout title={pageProps?.metadata?.title ?? 'Blog entry'}>
-          <Component {...pageProps} />
-        </Layout>
+        <ErrorBoundary>
+          <Layout title={pageProps?.metadata?.title ?? 'Blog entry'}>
+            <Component {...pageProps} />
+          </Layout>
+        </ErrorBoundary>
         {/* </HelmetProvider> */}
       </MDXProvider>
     </>

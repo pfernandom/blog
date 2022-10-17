@@ -6,9 +6,8 @@ import share from 'react-social-icons/build/networks/sharethis'
 import twitter from 'react-social-icons/build/networks/twitter'
 import {
   SocialIcon,
-  SocialIconDatabase
+  SocialIconDatabase,
 } from 'react-social-icons/build/react-social-icons-lite'
-
 
 SocialIconDatabase.importNetworks([facebook, twitter, reddit, linkedin, share])
 

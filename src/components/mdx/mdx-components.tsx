@@ -17,11 +17,13 @@ const MDXComponentsDef: MDXComponents = {
       <Image {...(props as ImageProps)} layout="fill" placeholder="empty" />
     )
   },
-  table: ({children}): ReactElement => {
-    console.log({children})
-
-    return (<div className='post-table-container'><table className='post-table'>{children}</table></div>)
-  }
+  table: ({ children }): ReactElement => {
+    return (
+      <div className="post-table-container">
+        <table className="post-table">{children}</table>
+      </div>
+    )
+  },
   // code: Code,
 }
 

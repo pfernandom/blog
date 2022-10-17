@@ -9,6 +9,10 @@ const BLOG_POST_IMG_HEIGHT = 220
 function main() {
   console.log('Optimizing images...')
   const regexExt = /\.(jpeg|jpg|png|gif)$/gi
+  fs.mkdirSync(postsDirectory, {
+    recursive: true,
+  })
+
   const files = getAllFiles(postsDirectory, regexExt, [])
 
   const saveDirPathBase = path.join(
@@ -23,7 +27,11 @@ function main() {
   const optimizedRegex2 = /\.(jpeg|jpg|png|gif|webp)$/gi
   const optimizeImages2 = getAllFiles(saveDirPathBase, optimizedRegex2, [])
 
-  const opt_set = new Set(optimizeImages2.map(({filePath}) => filePath.replace('../../public/opt_images/blog/', '')))
+  const opt_set = new Set(
+    optimizeImages2.map(({ filePath }) =>
+      filePath.replace('../../public/opt_images/blog/', '')
+    )
+  )
 
   // console.log('Already optimized:', opt_set)
   // console.log('To optimize:', files.map(({filePath}) => filePath))
@@ -33,8 +41,8 @@ function main() {
   optimizedImages.forEach(
     ({ fileName, filePath: fileRelativePath, dirPath }) => {
       const filePath = path.join(postsDirectory, fileRelativePath)
-      if(opt_set.has(filePath)) {
-        return;
+      if (opt_set.has(filePath)) {
+        return
       }
       const saveDirPath = path.join(
         process.cwd(),
@@ -66,8 +74,8 @@ function main() {
   )
 
   files.forEach(({ fileName, filePath: fileRelativePath, dirPath }) => {
-    if(opt_set.has(fileRelativePath)) {
-      return;
+    if (opt_set.has(fileRelativePath)) {
+      return
     }
     const filePath = path.join(postsDirectory, fileRelativePath)
     const saveDirPath = path.join(

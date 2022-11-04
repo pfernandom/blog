@@ -45,3 +45,6 @@ puremd
 cypress/screenshots
 # Sentry
 .sentryclirc
+
+# Sentry
+.sentryclirc

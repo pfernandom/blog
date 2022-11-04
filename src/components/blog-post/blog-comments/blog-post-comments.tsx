@@ -58,14 +58,17 @@ export default function BlogPostComments({ slug }: { slug: string }) {
     const observer = new IntersectionObserver((data) => {
       const isInterSecting = data.filter((obs) => obs.isIntersecting).length > 0
       if (isInterSecting) {
-        manager?.fetchComments(page).then((commentData) => {
-          commentData.sort(
-            (a, b) => b.created.toMillis() - a.created.toMillis()
-          )
-          setTimeout(() => setComments(commentData))
-          setTimeout(() => setIsLoading(false))
-          clearTimeout(timer)
-        })
+        manager
+          ?.fetchComments(page)
+          .then((commentData) => {
+            commentData.sort(
+              (a, b) => b.created.toMillis() - a.created.toMillis()
+            )
+            setTimeout(() => setComments(commentData))
+            setTimeout(() => setIsLoading(false))
+            clearTimeout(timer)
+          })
+          .catch((err) => console.error(err))
       }
     }, options)
 

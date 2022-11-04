@@ -10,8 +10,8 @@ hero_image: './hero.png'
 hero_image_alt: 'A hero image for this post about state management'
 key_words: pytorch, python, ML, titanic
 published: true
+test: true
 ---
-
 
 import network from './network.png'
 import Image from 'src/components/image'
@@ -38,30 +38,37 @@ Before reading further in this section let me give you a warning: If this is the
 
 The input for a neural network (at both training and prediction time) is a matrix of data of size `(r,c)`, where each row `r` is a data example and each column `c` is an attribute. The output depends on the layer structure of the NN, but typically is another matrix of size `(r, t)`, where `r` is the same number of examples as the input, and `t` is the number of columns used to represent the result of our model.
 
-Neural Networks are composed of *layers*: Each layer transforms the data (e.g. applying a linear transformation by multiplying the matrix of data with a vector of _weights_ that are updated at each step of the training process) and passes it to the next layer for further transformations. The last layer in the network outputs the expected output (in our case, the classification result) for the model.
+Neural Networks are composed of _layers_: Each layer transforms the data (e.g. applying a linear transformation by multiplying the matrix of data with a vector of _weights_ that are updated at each step of the training process) and passes it to the next layer for further transformations. The last layer in the network outputs the expected output (in our case, the classification result) for the model.
 
 Individual layers are composed of _neurons_, where the number of neurons corresponds to the input size of each layer. In the following image we see a network where the first layer (the input layer) has three neurons; so the size of the input layer would be `(r=Examples,c=3)`.
 
-  <Image
-    src={network}
-    width={617}
-    height={243}
-    alt="A graphic representing a neural network with its weights"
-  />
+{' '}
+<Image
+  src={network}
+  width={617}
+  height={243}
+  alt="A graphic representing a neural network with its weights"
+/>
 
 At each training step, we measure the **error** for the model: How many times the prediction was wrong when compared with a labeled set of test data. The model then uses the error's value and updates the weights to _minimize_ the expected error.
 
-Each layer's weights are updated using a process called **backpropagation**: The training algorithm calculates the partial derivates of each weight to find the *direction* in the linear space (remember, weights are *vectors*) in which we need to update the weight's value for minimizing the expected error in the predictions.
+Each layer's weights are updated using a process called **backpropagation**: The training algorithm calculates the partial derivates of each weight to find the _direction_ in the linear space (remember, weights are _vectors_) in which we need to update the weight's value for minimizing the expected error in the predictions.
 
 For instance, if the weight needs to _increase_ its value, its partial derivate will point in the opposite direction than the case in which we would need to _decrease_ its value.
 
 For a full in-depth explanation of how Neural Networks and backpropagation work, take a look at the free, online book ["Neural Networks and Deep Learning"](http://neuralnetworksanddeeplearning.com/chap2.html). The following video also provides a great explanation on backpropagation:
 
-<div style={{'display': 'flex'}}>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Ilg3gGewQ5U" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+<div style={{ display: 'flex' }}>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/Ilg3gGewQ5U"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
 </div>
-
-
 
 ## The task
 
@@ -84,17 +91,19 @@ The steps to construct ML models may vary depending on the task at hand. However
 
 The data needs to be _labeled_: A set of multiple examples of the data we plan to use for our predictions, along the label, which in our case is "Survived" -with a value of 1 if the passenger survived, and a value of 0 otherwise. Each **column** in the data is an attribute, while each **row** is an instance or example of the data.
 
-### Load and clean the data 
+### Load and clean the data
 
 This is where most of the work of a data engineer is spent. The data will contain multiple undesirable characteristics that would prevent our model from successfully training and predicting:
-  - Empty attributes. Most of the time, we fill empty attributes with the mean or the mode of the other attributes that do have value. Other times, we might just drop the column or the row.
-  - Redundant data. For instance, some columns are a direct function of others and don't provide any extra information to the model. We can safely drop these columns.
+
+- Empty attributes. Most of the time, we fill empty attributes with the mean or the mode of the other attributes that do have value. Other times, we might just drop the column or the row.
+- Redundant data. For instance, some columns are a direct function of others and don't provide any extra information to the model. We can safely drop these columns.
 
 ### Encode the data
 
 PyTorch models only accept numeric values as input. We must encode string or categorical columns into numeric values. For this, we have a few options:
-- *One-hot encoding*: Columns that contain categories (e.g. "Sex" contains values like "Male" or "Female") can be converted into numeric values by adding a column for each category, and setting a value of 1 for those columns in that category (and 0 for those that don't).
-- *Label encoding*: Assign direct numeric values to each category (e.g. 1 to "Female" and 2 to "Male"), and replace the string values with their numeric representation. The downside of this approach is that _it gives an implicit numeric relationship_ to the categories: The model will assume that the categories may be ordered when there is no real ordinal relationship in attributes like "Sex".
+
+- _One-hot encoding_: Columns that contain categories (e.g. "Sex" contains values like "Male" or "Female") can be converted into numeric values by adding a column for each category, and setting a value of 1 for those columns in that category (and 0 for those that don't).
+- _Label encoding_: Assign direct numeric values to each category (e.g. 1 to "Female" and 2 to "Male"), and replace the string values with their numeric representation. The downside of this approach is that _it gives an implicit numeric relationship_ to the categories: The model will assume that the categories may be ordered when there is no real ordinal relationship in attributes like "Sex".
 
 ### Split data into training and test sets
 
@@ -104,7 +113,7 @@ At each step of the training process, we want to evaluate our model to see how w
 
 To avoid **overfitting**, we take these evaluation examples from a set of data that wasn't used for training (otherwise our model would be "cheating", as it would know the "answer" for those examples). For that, we reserve a part of our dataset and leave it out of the training dataset. To this held out data, we call it **test set** and the process of using this set during training is called **cross-validation**.
 
-_Note: To keep things simple we will not use cross-validation for our example, so we will only split our data into `training` and `validation` (90%-10%).
+\_Note: To keep things simple we will not use cross-validation for our example, so we will only split our data into `training` and `validation` (90%-10%).
 
 Then, once we complete the training of our model, we need to do the last evaluation of the model's performance. For this, we will use the **validation set**. Keeping the validations set out of the training process will provide a more accurate measure of the model's performance, for the same reason we keep the _test_ set out of the training data.
 
@@ -125,6 +134,7 @@ Finally, we use our trained model to make predictions on our validation data set
 You can find all the code used in this example in [this Google Collab](https://colab.research.google.com/drive/1ytXT4ab2gZXZEjohKWyNnArCjUBS6zyh?usp=sharing) notebook. This whole example is written in Python, so we will use Python libraries for ML.
 
 In this example, we will use:
+
 - [Pandas](https://pandas.pydata.org/) to load and manipulate our dataset.
 - [numpy](https://numpy.org/) for matrix and vector operations.
 - [scikit-learn](https://scikit-learn.org/stable/) for splitting our dataset
@@ -138,23 +148,22 @@ from sklearn.model_selection import train_test_split
 
 ## Read the data from the CVS files
 
-We download the `train.csv` dataset from [Kaggle](https://www.kaggle.com/competitions/titanic/data) and put it in the same directory as our Python code. 
+We download the `train.csv` dataset from [Kaggle](https://www.kaggle.com/competitions/titanic/data) and put it in the same directory as our Python code.
 
 The following is a table with the description of each attribute in the data:
 
-| Variable | Definition                                 | Key                                                |
-|----------|--------------------------------------------|----------------------------------------------------|
-| survival | Survival                                   | 0 = No<br/>1 = Yes                                  |
+| Variable | Definition                                 | Key                                                  |
+| -------- | ------------------------------------------ | ---------------------------------------------------- |
+| survival | Survival                                   | 0 = No<br/>1 = Yes                                   |
 | pclass   | Ticket class                               | 1 = 1st<br/>2 = 2nd<br/>3 = 3rd                      |
-| sex      | Sex                                        |                                                    |
-| Age      | Age in years                               |                                                    |
-| sibsp    | # of siblings / spouses aboard the Titanic |                                                    |
-| parch    | # of parents / children aboard the Titanic |                                                    |
-| ticket   | Ticket number                              |                                                    |
-| fare     | Passenger fare                             |                                                    |
-| cabin    | Cabin number                               |                                                    |
+| sex      | Sex                                        |                                                      |
+| Age      | Age in years                               |                                                      |
+| sibsp    | # of siblings / spouses aboard the Titanic |                                                      |
+| parch    | # of parents / children aboard the Titanic |                                                      |
+| ticket   | Ticket number                              |                                                      |
+| fare     | Passenger fare                             |                                                      |
+| cabin    | Cabin number                               |                                                      |
 | embarked | Port of Embarkation                        | C = Cherbourg<br/>Q = Queenstown<br/>S = Southampton |
-
 
 We then load our data into memory using Pandas:
 
@@ -168,13 +177,13 @@ We can see some examples of the dataset using Panda's `head` method:
 train.head()
 ```
 
-|    |   PassengerId |   Survived |   Pclass | Name                                                | Sex    |   Age |   SibSp |   Parch | Ticket           |    Fare | Cabin   | Embarked   | Title   | FamilySize   |
-|---:|--------------:|-----------:|---------:|:----------------------------------------------------|:-------|------:|--------:|--------:|:-----------------|--------:|:--------|:-----------|:--------|:----------|
-|  0 |             1 |          0 |        3 | Braund, Mr. Owen Harris                             | male   |    22 |       1 |       0 | A/5 21171        |  7.25   | nan     | S          | Mr      | Couple    |
-|  1 |             2 |          1 |        1 | Cumings, Mrs. John Bradley (Florence Briggs Thayer) | female |    38 |       1 |       0 | PC 17599         | 71.2833 | C85     | C          | Mrs     | Couple    |
-|  2 |             3 |          1 |        3 | Heikkinen, Miss. Laina                              | female |    26 |       0 |       0 | STON/O2. 3101282 |  7.925  | nan     | S          | Miss    | Single    |
-|  3 |             4 |          1 |        1 | Futrelle, Mrs. Jacques Heath (Lily May Peel)        | female |    35 |       1 |       0 | 113803           | 53.1    | C123    | S          | Mrs     | Couple    |
-|  4 |             5 |          0 |        3 | Allen, Mr. William Henry                            | male   |    35 |       0 |       0 | 373450           |  8.05   | nan     | S          | Mr      | Single    |
+|     | PassengerId | Survived | Pclass | Name                                                | Sex    | Age | SibSp | Parch | Ticket           |    Fare | Cabin | Embarked | Title | FamilySize |
+| --: | ----------: | -------: | -----: | :-------------------------------------------------- | :----- | --: | ----: | ----: | :--------------- | ------: | :---- | :------- | :---- | :--------- |
+|   0 |           1 |        0 |      3 | Braund, Mr. Owen Harris                             | male   |  22 |     1 |     0 | A/5 21171        |    7.25 | nan   | S        | Mr    | Couple     |
+|   1 |           2 |        1 |      1 | Cumings, Mrs. John Bradley (Florence Briggs Thayer) | female |  38 |     1 |     0 | PC 17599         | 71.2833 | C85   | C        | Mrs   | Couple     |
+|   2 |           3 |        1 |      3 | Heikkinen, Miss. Laina                              | female |  26 |     0 |     0 | STON/O2. 3101282 |   7.925 | nan   | S        | Miss  | Single     |
+|   3 |           4 |        1 |      1 | Futrelle, Mrs. Jacques Heath (Lily May Peel)        | female |  35 |     1 |     0 | 113803           |    53.1 | C123  | S        | Mrs   | Couple     |
+|   4 |           5 |        0 |      3 | Allen, Mr. William Henry                            | male   |  35 |     0 |     0 | 373450           |    8.05 | nan   | S        | Mr    | Single     |
 
 ## Clean the data
 
@@ -231,21 +240,22 @@ y = train_clean.iloc[:, 0]
 
 X
 ```
+
 We can find some examples of the result of this data cleanup.
 
-|     | Pclass |   Sex  |  Age |   Fare  | Embarked | Title | FamilySize |
-|:---:|:------:|:------:|:----:|:-------:|:--------:|:-----:|:-------:|
-| 0   | 3      | male   | 22.0 | 7.2500  | S        | Mr    | Couple  |
-| 1   | 1      | female | 38.0 | 71.2833 | C        | Mrs   | Couple  |
-| 2   | 3      | female | 26.0 | 7.9250  | S        | Miss  | Single  |
-| 3   | 1      | female | 35.0 | 53.1000 | S        | Mrs   | Couple  |
-| 4   | 3      | male   | 35.0 | 8.0500  | S        | Mr    | Single  |
-| ... | ...    | ...    | ...  | ...     | ...      | ...   | ...     |
-| 886 | 2      | male   | 27.0 | 13.0000 | S        | Rare  | Single  |
-| 887 | 1      | female | 19.0 | 30.0000 | S        | Miss  | Single  |
-| 888 | 3      | female | 28.0 | 23.4500 | S        | Miss  | InterM  |
-| 889 | 1      | male   | 26.0 | 30.0000 | C        | Mr    | Single  |
-| 890 | 3      | male   | 32.0 | 7.7500  | Q        | Mr    | Single  |
+|     | Pclass |  Sex   | Age  |  Fare   | Embarked | Title | FamilySize |
+| :-: | :----: | :----: | :--: | :-----: | :------: | :---: | :--------: |
+|  0  |   3    |  male  | 22.0 | 7.2500  |    S     |  Mr   |   Couple   |
+|  1  |   1    | female | 38.0 | 71.2833 |    C     |  Mrs  |   Couple   |
+|  2  |   3    | female | 26.0 | 7.9250  |    S     | Miss  |   Single   |
+|  3  |   1    | female | 35.0 | 53.1000 |    S     |  Mrs  |   Couple   |
+|  4  |   3    |  male  | 35.0 | 8.0500  |    S     |  Mr   |   Single   |
+| ... |  ...   |  ...   | ...  |   ...   |   ...    |  ...  |    ...     |
+| 886 |   2    |  male  | 27.0 | 13.0000 |    S     | Rare  |   Single   |
+| 887 |   1    | female | 19.0 | 30.0000 |    S     | Miss  |   Single   |
+| 888 |   3    | female | 28.0 | 23.4500 |    S     | Miss  |   InterM   |
+| 889 |   1    |  male  | 26.0 | 30.0000 |    C     |  Mr   |   Single   |
+| 890 |   3    |  male  | 32.0 | 7.7500  |    Q     |  Mr   |   Single   |
 
 ## Encode data
 
@@ -271,13 +281,13 @@ X_enc = encode_data(X)
 X_enc.head()
 ```
 
-|   | Age  | Fare    | Pclass_2 | Pclass_3 | Sex_male | FamilySize_InterM | FamilySize_Large | FamilySize_Single | Embarked_Q | Embarked_S | Title_Miss | Title_Mr | Title_Mrs | Title_Rare |
-|---|------|---------|----------|----------|----------|----------------|---------------|----------------|------------|------------|------------|----------|-----------|------------|
-| 0 | 22.0 | 7.2500  | 0        | 1        | 1        | 0              | 0             | 0              | 0          | 1          | 0          | 1        | 0         | 0          |
-| 1 | 38.0 | 71.2833 | 0        | 0        | 0        | 0              | 0             | 0              | 0          | 0          | 0          | 0        | 1         | 0          |
-| 2 | 26.0 | 7.9250  | 0        | 1        | 0        | 0              | 0             | 1              | 0          | 1          | 1          | 0        | 0         | 0          |
-| 3 | 35.0 | 53.1000 | 0        | 0        | 0        | 0              | 0             | 0              | 0          | 1          | 0          | 0        | 1         | 0          |
-| 4 | 35.0 | 8.0500  | 0        | 1        | 1        | 0              | 0             | 1              | 0          | 1          | 0          | 1        | 0         | 0          |
+|     | Age  | Fare    | Pclass_2 | Pclass_3 | Sex_male | FamilySize_InterM | FamilySize_Large | FamilySize_Single | Embarked_Q | Embarked_S | Title_Miss | Title_Mr | Title_Mrs | Title_Rare |
+| --- | ---- | ------- | -------- | -------- | -------- | ----------------- | ---------------- | ----------------- | ---------- | ---------- | ---------- | -------- | --------- | ---------- |
+| 0   | 22.0 | 7.2500  | 0        | 1        | 1        | 0                 | 0                | 0                 | 0          | 1          | 0          | 1        | 0         | 0          |
+| 1   | 38.0 | 71.2833 | 0        | 0        | 0        | 0                 | 0                | 0                 | 0          | 0          | 0          | 0        | 1         | 0          |
+| 2   | 26.0 | 7.9250  | 0        | 1        | 0        | 0                 | 0                | 1                 | 0          | 1          | 1          | 0        | 0         | 0          |
+| 3   | 35.0 | 53.1000 | 0        | 0        | 0        | 0                 | 0                | 0                 | 0          | 1          | 0          | 0        | 1         | 0          |
+| 4   | 35.0 | 8.0500  | 0        | 1        | 1        | 0                 | 0                | 1                 | 0          | 1          | 0          | 1        | 0         | 0          |
 
 ## Split test data into train and validation datasets
 
@@ -352,7 +362,7 @@ The following are the hyperparameters we will set into our model:
 - We train the model for 50 epochs/iterations, to iteratively train the model.
 - We train the model with a learning rate of 0.01
 - To calculate the error during training (which will allow the model to update weights through backpropagation), we use the Cross entropy loss function (commonly used for binary
-classification).
+  classification).
 - We use the Adam optimizer for finding the gradients.
 
 Some more information on cross-entropy loss can be found in [this article](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html
@@ -412,7 +422,7 @@ for epoch in range(num_epochs):
         optimizer.step()
 ```
 
-````
+```
 Epoch 1
 Epoch 6
 Epoch 11
@@ -423,7 +433,7 @@ Epoch 31
 Epoch 36
 Epoch 41
 Epoch 46
-````
+```
 
 # Measure the model's performance
 
@@ -453,13 +463,13 @@ with torch.no_grad():
 result[0:5, :]
 ```
 
-````
+```
 tensor([[1.0000e+00, 1.0036e-13],
         [9.9993e-01, 5.8530e-14],
-        [1.0000e+00, 1.0000e+00],   
+        [1.0000e+00, 1.0000e+00],
         [1.0000e+00, 1.0000e+00],
         [9.9999e-01, 5.0890e-12]])
-````
+```
 
 Since we want a binary classification (survived/didn't survive), we get
 the result with the highest percentage of confidence (1=survived,
@@ -471,14 +481,14 @@ values, labels = torch.max(result, 1)
 labels[0:5]
 ```
 
-````
+```
 tensor([0, 0, 0, 0, 0])
-````
+```
 
 For measuring the model's performance, we calculate a simple percentage of **accuracy**:
 
 - `num_right` = the number of rows where the prediction matched the actual
-value in the validation set
+  value in the validation set
 - `all_rows` = the total number of rows
 - `accuracy` = `num_right` / `all_rows`
 
@@ -491,6 +501,7 @@ print('Accuracy {:.2f}'.format(num_right / all_rows))
 ```
 Accuracy 0.78
 ```
+
 As the number of correctly predicted examples increases, the accuracy will also increase. In theory, a perfect model would achieve an accuracy of `1.0`, and the worst classifier -which is smart enough to beat the probability of getting a result right by accident, and always chooses the wrong prediction- would achieve an accuracy of `0.0`.
 
 Performance is an extremely subjective concept. An accuracy of `0.78` is really good for this problem, but when we are dealing with problems that have a critical impact on people's lives (medical and finance-related problems), `0.78` may not be good enough for considering a model as performant.
@@ -505,7 +516,7 @@ Notice that accuracy is a kind-of misleading metric: If the model predicts all d
 
 Another downside of just looking at accuracy leaves out a lot of information that may be critical for evaluating a model. Going back to the example of medical applications: For a model that predicts whether a patient has some sort of disease based on their medical history, the impact of a **false negative** -predicting false when the patient does have the disease- is considerably higher than those of **false positives** -predicting a patient _may_ have the disease when they don't-.
 
-A false positive can be corrected by doctors performing more studies on the patient, while false negatives may leave a patient without the treatment they need. *Precision* and *recall* are good metrics to know -in addition to accuracy- in this case.
+A false positive can be corrected by doctors performing more studies on the patient, while false negatives may leave a patient without the treatment they need. _Precision_ and _recall_ are good metrics to know -in addition to accuracy- in this case.
 
 ## Conclusion
 

@@ -17,7 +17,7 @@
     "prepare": "husky install",
     "analyze": "ANALYZE=true npm run build",
     "analyze-dep": "npx depcruise --output-type json --reaches 'react-color' --focus '^src' ./src > deps.json ",
-    "devto": "find ./src -type f -name \"hero.*\" -print0 | xargs -0 -I {} npx ts-node --project tsconfig-scripts.json ./scripts/resize-image.ts {} --name devto.png --ext png --scaleX 1 --scaleY 0.42",
+    "devto": "find ./src -type f -name \"hero.*\" -print0 | xargs -0 -I {} npx ts-node ./scripts/resize-image.ts {} --name devto.png --ext png --scaleX 1 --scaleY 0.42 &",
     "sw": "npm run sw-gen && npx esbuild src/sw/sw.ts --bundle --outfile=public/sw.js --target=chrome58,firefox57,safari11,edge16",
     "cypress": "cypress open",
     "cypress:run": "cypress run",

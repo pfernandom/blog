@@ -1,7 +1,7 @@
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { AuthContext } from 'src/components/auth/auth-context-provider'
 import { Comment, CommentsManager } from 'src/helpers/comment-manager'
-import { FirebaseContext } from 'src/pages/[...blog]'
+import { FirebaseContext } from 'src/pages/blog/[...blog]'
 import SignInScreen from '../../auth/sign-in'
 import CommentCard from './blog-comment-card'
 import CommentForm from './blog-comment-form'

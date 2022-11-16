@@ -11,15 +11,29 @@ import { getAllPosts } from '../helpers/page-fetcher'
 import { Metadata, PostInfo } from '../models/interfaces'
 import { useRouter } from 'next/router'
 import HomePagination from 'src/components/home-pagination'
-import { getTotalPages, POSTS_PER_PAGE } from './[page]'
 
 type HomeParams = {
   metadata: Metadata
   posts: Array<PostInfo>
+  page: number
   totalPages: number
 }
 
-const Home: NextPage<HomeParams> = ({ metadata, posts, totalPages }) => {
+export const POSTS_PER_PAGE = 5
+
+export function getTotalPages(postsCount: number) {
+  return (
+    Math.floor(postsCount / POSTS_PER_PAGE) +
+    (postsCount % POSTS_PER_PAGE > 0 ? 1 : 0)
+  )
+}
+
+const HomePage: NextPage<HomeParams> = ({
+  metadata,
+  posts,
+  page,
+  totalPages,
+}) => {
   const router = useRouter()
 
   return (
@@ -91,33 +105,50 @@ const Home: NextPage<HomeParams> = ({ metadata, posts, totalPages }) => {
             </Link>
           )
         })}
-
-      <HomePagination page={1} totalPages={totalPages} />
+      <HomePagination page={page} totalPages={totalPages} />
     </>
   )
 }
 
-export default Home
+export default HomePage
 
-export async function getStaticProps() {
-  const metadata: Metadata = await getDataFile('src/data/metadata.json')
-
+export async function getStaticProps({ params }: { params: { page: string } }) {
+  const { page } = params
   const allPosts = getAllPosts()
   const postsCount = getAllPosts().length
   const totalPages = getTotalPages(postsCount)
 
-  const posts: Array<PostInfo> = allPosts
-    .slice(0, POSTS_PER_PAGE)
-    .map((post) => {
-      post.content = ''
-      return post
-    })
+  const start = (parseInt(page) - 1) * POSTS_PER_PAGE
+  const end = start + POSTS_PER_PAGE
+
+  const metadata: Metadata = await getDataFile('src/data/metadata.json')
+
+  const posts: Array<PostInfo> = allPosts.slice(start, end).map((post) => {
+    post.content = ''
+    return post
+  })
 
   return {
     props: {
       posts,
       metadata,
-      totalPages,
+      page: parseInt(page),
+      totalPages: totalPages,
     },
   }
+}
+
+export async function getStaticPaths() {
+  const postsCount = getAllPosts().length
+  const total = getTotalPages(postsCount)
+
+  const paths = Array(total)
+    .fill(0)
+    .map((el, index) => ({
+      params: {
+        page: (index + 2).toString(),
+      },
+    }))
+
+  return { paths, fallback: false }
 }

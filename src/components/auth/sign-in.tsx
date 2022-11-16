@@ -18,7 +18,7 @@ import {
 } from 'firebase/auth'
 import { useContext, useState } from 'react'
 import Image from 'src/components/image'
-import { FirebaseContext } from 'src/pages/[...blog]'
+import { FirebaseContext } from 'src/pages/blog/[...blog]'
 import { ButtonIcon } from '../common/icon'
 import { AuthContext } from './auth-context-provider'
 import MergeAccountsAction from './merge-accounts-action'

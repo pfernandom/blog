@@ -7,7 +7,7 @@ import { DefaultSeo } from 'next-seo'
 import Head from 'next/head'
 import { useEffect } from 'react'
 import registerSW from 'src/sw/register-sw'
-import { BlogPlaceholderParams } from './[...blog]'
+import { BlogPlaceholderParams } from './blog/[...blog]'
 import React from 'react'
 import ErrorBoundary from 'src/components/error-boundary'
 

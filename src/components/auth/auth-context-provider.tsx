@@ -6,7 +6,7 @@ import {
   User,
 } from 'firebase/auth'
 import React, { ReactElement, useContext, useEffect, useState } from 'react'
-import { FirebaseContext } from 'src/pages/[...blog]'
+import { FirebaseContext } from 'src/pages/blog/[...blog]'
 
 export class UserState {
   user: User | null

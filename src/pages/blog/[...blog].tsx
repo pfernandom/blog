@@ -23,7 +23,7 @@ import mapSeriesSlutToTitle from 'src/helpers/blog-series-slug'
 import { getAllPosts } from 'src/helpers/page-fetcher'
 import urlGetterFactory from 'src/helpers/url-getter-factory'
 import m from 'src/imports'
-import { Metadata, PostInfo } from '../models/interfaces'
+import { Metadata, PostInfo } from '../../models/interfaces'
 import AuthContextProvider from 'src/components/auth/auth-context-provider'
 import ErrorBoundary from 'src/components/error-boundary'
 
@@ -200,7 +200,7 @@ export async function getStaticPaths() {
     paths: posts.map((post) => {
       return {
         params: {
-          blog: ['blog', ...post.slug.split('/').slice(1)],
+          blog: [...post.slug.split('/').slice(1)],
         },
       }
     }),

@@ -7,7 +7,7 @@ import {
   UserCredential,
 } from 'firebase/auth'
 import { useContext } from 'react'
-import { FirebaseContext } from 'src/pages/[...blog]'
+import { FirebaseContext } from 'src/pages/blog/[...blog]'
 import { AuthProviderFn } from './sign-in'
 
 export interface MergeAccountsProps {

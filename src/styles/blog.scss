@@ -16,6 +16,15 @@
   }
 }
 
+.home-pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 2em;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
 img {
   padding: 10px;
   background-color: #ecebeb;

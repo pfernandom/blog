@@ -53,9 +53,8 @@ const getAllFiles = function (
 export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
   const curDirRelative = join(process.cwd(), 'src')
 
-  const postFileLocation = slugFile.filePath;
-  const postDirPath = slugFile?.dirPath;
-
+  const postFileLocation = slugFile.filePath
+  const postDirPath = slugFile?.dirPath
 
   const fileContents = fs.readFileSync(
     join(curDirRelative, postFileLocation),
@@ -83,7 +82,7 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
     social_title,
     social_subtitle,
     social_footer,
-    test
+    test,
   } = data
 
   const hero_image = relativeHero
@@ -103,7 +102,7 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
     ? path.join(publicPath, relativeHero)
     : ''
 
-  const frontmatter : Post = {
+  const frontmatter: Post = {
     title,
     description,
     hero_image,
@@ -118,10 +117,9 @@ export function getPostByFileInfo(slugFile: FileInfo): PostInfo | null {
     published,
     social_title: social_title ?? title,
     social_subtitle: social_subtitle ?? description[0],
-    social_footer:
-      social_footer ?? 'Visit pedromarquez.dev for the full post',
-    test: test ?? false
-  };
+    social_footer: social_footer ?? 'Visit pedromarquez.dev for the full post',
+    test: test ?? false,
+  }
 
   return {
     slug: slugToPage(slugFile?.dirPath, new Date(frontmatter.date)),
@@ -138,16 +136,16 @@ export function getAllPosts() {
   const curDirRelative = join(process.cwd(), 'src')
   const slugs = getAllFiles(curDir, /.mdx?$/gi, [], curDirRelative)
 
-  const isProd = process.env.NODE_ENV === 'production';
+  const isProd = process.env.NODE_ENV === 'production'
 
   const posts: Array<PostInfo> = slugs
     .map((slug) => getPostByFileInfo(slug))
     .filter((post) => post != null)
-    .filter(post => {
+    .filter((post) => {
       if (isProd && post?.frontmatter.test == true) {
-        return false;
-      } 
-      return true;
+        return false
+      }
+      return true
     })
     .map((post) => post as PostInfo)
 
@@ -159,9 +157,9 @@ export function getAllPosts() {
   return posts
 }
 
-function parseKeyWords(keywords: string) {
+function parseKeyWords(keywords: string | string[]) {
+  if (Array.isArray(keywords)) {
+    return keywords
+  }
   return keywords?.split(',').filter((keyword) => keyword.trim().length) ?? []
 }
-
-
-

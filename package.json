@@ -24,7 +24,9 @@
     "e2e": "start-server-and-test start http://localhost:3000 cypress",
     "e2e:run": "start-server-and-test start http://localhost:3000 cypress:run",
     "test": "TS_NODE_PROJECT='tsconfig.json' npx mocha --exit",
-    "emulator": "firebase emulators:start --export-on-exit=./test_data"
+    "emulator": "firebase emulators:start --export-on-exit=./test_data",
+    "new-post": "ts-node ./scripts/new-post.ts",
+    "publish-post": "ts-node ./scripts/publish-post.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "^2.1.2",

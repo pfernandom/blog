@@ -16,15 +16,6 @@
   }
 }
 
-.home-pagination {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  height: 2em;
-  margin-top: 2em;
-  margin-bottom: 1em;
-}
-
 img {
   padding: 10px;
   background-color: #ecebeb;
@@ -113,13 +104,14 @@ a.social-icon:hover {
 }
 
 .link-post-a {
-  padding: 1em;
+  padding: 1em 1em 0.5em 1em;
   box-shadow: 1px 1px 2px 1px rgb(0 0 0 / 20%);
   border-radius: 0.2em;
   background-color: var(---background-color);
   cursor: pointer;
   animation-name: endHover;
   animation-duration: 0.5s;
+  text-align: center;
 }
 
 .link-post-a:hover {
@@ -129,20 +121,47 @@ a.social-icon:hover {
 }
 
 .link-post-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  grid-template-rows: max-content;
   margin: 1em 2em;
   align-items: center;
   justify-items: center;
   justify-content: center;
   word-break: break-word;
   hyphens: auto;
+  align-items: stretch;
 }
 
-@media screen and (max-width: 400px) {
+.link-post-tag-list {
+  grid-column-end: 3;
+}
+
+@media screen and (max-width: 500px) {
   .link-post-container {
-    flex-wrap: wrap;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content min-content 1fr;
     margin: 0;
     margin-bottom: 1em;
+  }
+
+  .post-list-image-link {
+    grid-row-start: 1;
+  }
+
+  .link-content {
+    grid-row-start: 2;
+    text-decoration: none;
+  }
+
+  .link-post-tag-list {
+    grid-column-end: 1;
+    grid-row-start: 3;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 10px;
+    font-size: 0.8em;
   }
 
   .bio-image {
@@ -163,16 +182,20 @@ a.social-icon:hover {
 .link-content {
   color: var(---text-color);
   width: 100%;
+  text-align: start;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
-.link-post-keywords {
-  margin-left: 1em;
-  background-color: #ecebeb;
-  color: black;
-  padding: 0.2em 0.5em;
-  border-radius: 0.2em;
-  margin: 0.2em;
+.link-post-keyword.btn {
   display: inline-block;
+  user-select: none;
+  background-color: #f4f3f3;
+  color: var(---heading-color);
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -530,6 +553,8 @@ th {
 }
 
 @import './blog/series.scss';
+@import './blog/comments.scss';
+@import './blog/pagination.scss';
 
 .button-icon {
   background-color: rgba(255, 255, 255, 0);

@@ -159,7 +159,12 @@ export function getAllPosts() {
 
 function parseKeyWords(keywords: string | string[]) {
   if (Array.isArray(keywords)) {
-    return keywords
+    return keywords.map((keyword) => keyword.trim())
   }
-  return keywords?.split(',').filter((keyword) => keyword.trim().length) ?? []
+  return (
+    keywords
+      ?.split(',')
+      .map((el) => el.trim())
+      .filter((keyword) => keyword.length) ?? []
+  )
 }

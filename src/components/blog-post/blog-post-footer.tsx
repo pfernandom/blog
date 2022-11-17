@@ -1,38 +1,30 @@
-import Link from "next/link";
-import React from "react";
-import { PostInfo } from "src/models/interfaces";
+import Link from 'next/link'
+import React from 'react'
+import { PostInfo } from 'src/models/interfaces'
 
 type BlogPostFooter = {
-  prev?: PostInfo | null;
-  next?: PostInfo | null;
-};
+  prev?: PostInfo | null
+  next?: PostInfo | null
+}
 
 export default function BlogPostFooter({ prev, next }: BlogPostFooter) {
   return (
-    <ul
-      style={{
-        display: `flex`,
-        flexWrap: `wrap`,
-        justifyContent: `space-between`,
-        listStyle: `none`,
-        marginTop: "3em",
-        padding: 0,
-      }}
-    >
-      <li style={{ flexBasis: "40%" }}>
-        {prev && (
-          <Link href={prev.slug}>
+    <ul className="home-pagination">
+      {prev && (
+        <li className="home-pagination__btn btn home-pagination__btn--left">
+          <Link href={`/${prev.slug}`}>
             <span> ← {prev.frontmatter.title} </span>
           </Link>
-        )}
-      </li>
-      <li style={{ flexBasis: "40%" }}>
-        {next && (
-          <Link href={next.slug}>
+        </li>
+      )}
+      <span className="home-pagination__btn home-pagination__btn--center"></span>
+      {next && (
+        <li className="home-pagination__btn btn home-pagination__btn--right">
+          <Link href={`/${next.slug}`}>
             <span>{next.frontmatter.title} →</span>
           </Link>
-        )}
-      </li>
+        </li>
+      )}
     </ul>
-  );
+  )
 }

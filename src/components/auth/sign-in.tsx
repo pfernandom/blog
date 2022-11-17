@@ -123,8 +123,6 @@ export default function SignInScreen({
           return signInWithPopup(auth, provider, browserPopupRedirectResolver)
             .then((result) => {
               const userInfo = getAdditionalUserInfo(result)
-              console.log({ user: result.user, userInfo })
-
               //   if (result.user && userInfo) {
               //     addUser(result.user, userInfo)
               //   }
@@ -205,7 +203,7 @@ export default function SignInScreen({
         const { user } = userState
         if (!user) {
           return (
-            <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div className="signin-icons">
               <span style={{ display: 'flex', alignItems: 'center' }}>
                 <span>Please sign-in to comment:</span>
                 <ButtonIcon

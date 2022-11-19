@@ -44,7 +44,7 @@ function seriesLink(post: PostInfo, selected = false, index: number) {
       {selected ? (
         <Text />
       ) : (
-        <Link href={post.slug} title={`Posted on ${post.frontmatter.date}`}>
+        <Link href={`/${post.slug}`} title={`Posted on ${post.frontmatter.date}`}>
           <Text />
         </Link>
       )}

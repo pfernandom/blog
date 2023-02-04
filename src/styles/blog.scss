@@ -4,6 +4,7 @@
   ---color-highlight: #f2f5ff;
   ---text-color: black;
   ---subtitle-color: hsl(51, 100%, 17%);
+  ---btn-background-color: #f4f3f3
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,6 +14,7 @@
     ---color-highlight: hsl(204, 19%, 19%);
     ---text-color: #f2f5ff;
     ---subtitle-color: rgb(255, 245, 190);
+    ---btn-background-color: hsl(204, 20%, 25%);
   }
 }
 
@@ -191,7 +193,7 @@ a.social-icon:hover {
 .link-post-keyword.btn {
   display: inline-block;
   user-select: none;
-  background-color: #f4f3f3;
+  background-color: var(---btn-background-color);
   color: var(---heading-color);
   &:hover {
     text-decoration: none;

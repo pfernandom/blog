@@ -6,7 +6,6 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
 import rePrism from './plugins/rePrism.mjs'
 import remarkGfm from 'remark-gfm'
 import { withSentryConfig } from '@sentry/nextjs'
-import withPlugins from 'next-compose-plugins'
 
 const bundle = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -23,37 +22,6 @@ const withMDX = withMDXFactory({
     providerImportSource: '@mdx-js/react',
   },
 })
-
-const moduleExports = {
-  // Your existing module.exports
-  ...bundle(
-    withMDX({
-      experimental: {
-        newNextLinkBehavior: true,
-      },
-      productionBrowserSourceMaps: false,
-      reactStrictMode: true,
-      swcMinify: true,
-      pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
-      images: {
-        domains: ['pedromarquez.dev', 'localhost'],
-        loader: 'custom',
-      },
-    })
-  ),
-
-  sentry: {
-    // Use `hidden-source-map` rather than `source-map` as the Webpack `devtool`
-    // for client-side builds. (This will be the default starting in
-    // `@sentry/nextjs` version 8.0.0.) See
-    // https://webpack.js.org/configuration/devtool/ and
-    // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#use-hidden-source-map
-    // for more information.
-    hideSourceMaps: true,
-  },
-}
-
-console.log({ APP_ENV: process.env.APP_ENV })
 
 const sentryWebpackPluginOptions = {
   // Additional config options for the Sentry Webpack plugin. Keep in mind that
@@ -96,40 +64,3 @@ export default withSentryConfig(
   ),
   sentryWebpackPluginOptions
 )
-
-// const nextConfig = withPlugins(
-//   [
-//     withBundleAnalyzer({
-//       enabled: process.env.ANALYZE === 'true',
-//     }),
-
-//     withMDXFactory({
-//       extension: /\.mdx?$/,
-//       options: {
-//         remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
-//         rehypePlugins: [rehypeInlineCodeClassNamePlugin, rePrism],
-//         // remarkRehypeOptions: { allowDangerousHtml: true, languages: [dart] },
-//         // If you use `MDXProvider`, uncomment the following line.
-//         providerImportSource: '@mdx-js/react',
-//       },
-//     }),
-//     [withSentryConfig, { sentry: { hideSourceMaps: true } }],
-//   ],
-//   {
-//     experimental: {
-//       newNextLinkBehavior: true,
-//     },
-//     productionBrowserSourceMaps: false,
-//     reactStrictMode: true,
-//     swcMinify: true,
-//     pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
-//     images: {
-//       domains: ['pedromarquez.dev', 'localhost'],
-//       loader: 'custom',
-//     },
-//   }
-// )
-
-// console.log({ nextConfig })
-
-// export default nextConfig

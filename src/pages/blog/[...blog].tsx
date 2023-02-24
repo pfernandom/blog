@@ -145,7 +145,7 @@ export async function getStaticProps({
   })
 
   const selectedPost = posts.find((post: PostInfo) => {
-    return post.slug.includes(params.blog?.join('/'))
+    return post.slug.endsWith(params.blog?.join('/'))
   })
 
   const seriesPosts = posts.filter(
@@ -195,15 +195,16 @@ export async function getStaticProps({
 
 export async function getStaticPaths() {
   const posts = getAllPosts()
+  const paths = posts.map((post) => {
+    return {
+      params: {
+        blog: [...post.slug.split('/').slice(1)],
+      },
+    }
+  })
 
   return {
-    paths: posts.map((post) => {
-      return {
-        params: {
-          blog: [...post.slug.split('/').slice(1)],
-        },
-      }
-    }),
+    paths,
     fallback: false,
   }
 }

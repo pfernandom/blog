@@ -1,18 +1,13 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'src/components/image'
 
 import React from 'react'
-import Link from 'next/link'
 
 import Bio from '../components/bio'
 import { getDataFile } from '../helpers/data-fetchers'
 import { getAllPosts } from '../helpers/page-fetcher'
 import { Metadata, PostInfo } from '../models/interfaces'
-import { useRouter } from 'next/router'
 import HomePagination from 'src/components/home-pagination'
-import { props } from 'cypress/types/bluebird'
-import { post } from 'cypress/types/jquery'
 import PostsList from 'src/components/home/posts-list'
 
 type HomeParams = {
@@ -37,8 +32,6 @@ const HomePage: NextPage<HomeParams> = ({
   page,
   totalPages,
 }) => {
-  const router = useRouter()
-
   return (
     <>
       <Head>

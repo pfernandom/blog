@@ -33,6 +33,9 @@
   }
 
   ul {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+
     width: 100%;
     list-style: none;
     padding-left: 0;
@@ -54,6 +57,7 @@
     align-items: center;
     box-sizing: border-box;
     padding: 0.25em 1em;
+    height: 100%;
 
     .text {
       line-height: 1.5em;
@@ -62,6 +66,10 @@
 
   li.selected {
     @include bold;
+
+    .batch {
+      background-color: gray;
+    }
   }
 
   li a {
@@ -72,9 +80,6 @@
     &:hover {
       background-color: rgb(203, 203, 203);
       color: black;
-    }
-    .batch {
-      background-color: gray;
     }
     a {
       &:hover {

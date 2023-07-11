@@ -1,12 +1,12 @@
 import { Feed } from 'feed'
 import fs from 'fs'
-import { Metadata } from '../src/models/interfaces'
-import { getDataFile } from '../src/helpers/data-fetchers'
-import { getAllPosts } from '../src/helpers/page-fetcher'
+import { Metadata } from '../app/models/interfaces'
+import { getDataFile } from '../app/helpers/data-fetchers'
+import { getAllPosts } from '../app/helpers/page-fetcher'
 
 const generateRssFeed = async () => {
   const posts = await getAllPosts()
-  const metadata: Metadata = await getDataFile('src/data/metadata.json')
+  const metadata: Metadata = await getDataFile('app/data/metadata.json')
   const siteURL = 'https://pedromarquez.dev'
   const date = new Date()
   const author = {

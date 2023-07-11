@@ -15,7 +15,7 @@ function create(
   const slug = slugIn.replace('_', '-')
   const description = descriptionIn.split('.')
   const contents = matter.stringify(
-    `import Image from 'src/components/image'
+    `import Image from 'app/_components/image'
     
     Welcome
     `,

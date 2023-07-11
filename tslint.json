@@ -4,7 +4,7 @@
     "exclude": [
       "bin",
       "node_modules",
-      "src/components/blog-post/blog-post-seo.tsx"
+      "app/_components/blog-post/blog-post-seo.tsx"
     ]
   }
 }

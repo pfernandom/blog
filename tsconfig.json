@@ -1,16 +1,16 @@
 {
   "ts-node": {
-    "esm": true,
-    "moduleTypes": {
-      "*.mjs": "mts"
-    },
+    // "esm": true,
+    // "moduleTypes": {
+    //   "*.mjs": "mts"
+    // },
     "compilerOptions": {
       "target": "esnext",
       "module": "commonjs",
       "moduleResolution": "node",
-      "esModuleInterop": true,
+      "esModuleInterop": true
     },
-    "transpileOnly": true,
+    "transpileOnly": true
   },
   "compilerOptions": {
     "target": "es6",
@@ -32,41 +32,35 @@
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": ".",
-    "paths": {
-      "components": [
-        "./src/components"
-      ],
-      "pages": [
-        "./src/pages"
-      ],
-      "helpers": [
-        "./src/helpers"
-      ],
-      "models": [
-        "./src/models"
-      ]
-    }
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/**/*.tsx",
+    "app/**/*.tsx",
+    "app/**/*.ts",
     "scripts/gen-imports.mts",
     "scripts/*.ts",
     "scripts/resize.mts",
-    "scripts/mdxToMd.mts"
+    "scripts/mdxToMd.mts",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     "cypress",
-    "src/sw/*.ts",
-    "src/types"
+    "app/sw/*.ts",
+    "app/types",
+    "cypress.config.ts"
   ],
   "rules": {
     "no-console": [
       true,
       "warning"
     ]
-  },
+  }
 }

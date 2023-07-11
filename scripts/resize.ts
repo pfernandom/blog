@@ -19,7 +19,8 @@ function main() {
     process.cwd(),
     'public',
     'opt_images',
-    'blog'
+    'content',
+    'software'
   )
   fs.mkdirSync(saveDirPathBase, {
     recursive: true,
@@ -32,7 +33,7 @@ function main() {
 
   const opt_set = new Set(
     optimizeImages2.map(({ filePath }) =>
-      filePath.replace('../../public/opt_images/blog/', '')
+      filePath.replace('../../public/opt_images/content/software/', '')
     )
   )
 
@@ -51,7 +52,8 @@ function main() {
         process.cwd(),
         'public',
         'opt_images',
-        'blog',
+        'content',
+        'software',
         dirPath
       )
       fs.mkdirSync(saveDirPath, {
@@ -85,7 +87,8 @@ function main() {
       process.cwd(),
       'public',
       'opt_images',
-      'blog',
+      'content',
+      'software',
       dirPath
     )
     fs.mkdirSync(saveDirPath, {

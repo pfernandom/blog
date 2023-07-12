@@ -1,0 +1,14 @@
+.signin-icons {
+  display: grid;
+
+  align-items: center;
+  grid-template-rows: 100%;
+  grid-template-columns: 50% 1fr;
+}
+
+@media screen and (max-width: 500px) {
+  .signin-icons {
+    grid-template-rows: 3em 3em;
+    grid-template-columns: 1fr;
+  }
+}

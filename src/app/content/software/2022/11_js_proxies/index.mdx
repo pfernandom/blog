@@ -1,0 +1,53 @@
+---
+title: A practical case for JavaScript Proxies"
+date: '2022-10-21'
+description:
+  [
+    'The Proxy class is a powerful tool to hook in the behavior of JS objects.',
+    'In this post, we examine a practical use case for using JS Proxies to create the animation of a stack data structure',
+  ]
+hero_image: './hero.png'
+hero_image_alt: A hero image for this post
+key_words: javascript, animation, CSS, proxy
+published: false
+---
+
+JavaScript is an extremely flexible language. Sometimes _too_ flexible.
+
+The built-in classes and objects like `Array`, `Map`, `window` and `document` can be modified and extended: We can add properties and functions and even override the existing ones. Take arrays, for instance. We can add new methods to them:
+
+```js
+const list = []
+list.doSomething = function () {
+  console.log('Something')
+}
+list.doSomething()
+
+// output: "Something"
+```
+
+We can also override and modify existing methods, like `Array.prototype.push`:
+
+```js
+const list = []
+const old = list.push
+list.push = function () {
+  console.log('Something')
+}
+list.push(3)
+// output: "Something"
+```
+
+But, as this example illustrates, this flexibility comes with a risk: If we're not careful, we can break the correct behavior of these classes. In the example above, the `push` method for the variable `list` will stop working as expected (e.g. appending elements to the array).
+
+There is an even more dangerous approach to this override:
+
+```js
+Array.prototype.push = function () {
+  console.log('Something')
+}
+
+const list = []
+list.push(3)
+// output: "Something", and the list is empty!
+```

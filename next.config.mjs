@@ -42,6 +42,7 @@ export default withSentryConfig(
     withMDX({
       experimental: {
         newNextLinkBehavior: true,
+        mdxRs: true,
       },
       productionBrowserSourceMaps: false,
       reactStrictMode: true,

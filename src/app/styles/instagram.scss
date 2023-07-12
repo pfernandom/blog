@@ -1,0 +1,48 @@
+.instagram-posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 350px);
+  margin-bottom: 2em;
+  align-items: center;
+  justify-content: center;
+}
+
+.instagram-post-tile {
+  text-align: center;
+}
+
+.instagram-canvas {
+  height: fit-content;
+}
+
+.edit-tools {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.edit-tools > * {
+  width: 30px;
+  flex-basis: 130px;
+  margin: 1em;
+  display: flex;
+  flex-flow: column;
+}
+
+.edit-tools > * > button {
+  margin: 0.5em;
+}
+
+.editor-render {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+details {
+  justify-content: center;
+  align-items: center;
+}
+
+details > summary {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}

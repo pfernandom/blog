@@ -13,7 +13,7 @@ import {
   Timestamp,
 } from 'firebase/firestore'
 import fs from 'fs'
-import { CommentsManager, Comment } from '../app/helpers/comment-manager'
+import { CommentsManager, Comment } from 'app/helpers/comment-manager'
 
 const DB_NAME = 'blog'
 const COMMENTS_COLLECTION = 'comments'

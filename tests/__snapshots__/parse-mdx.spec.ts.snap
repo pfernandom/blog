@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parseMDX it works correctly 1`] = `
+{
+  "date": "June 19, 1988",
+  "description": [
+    "line 1",
+    "line 2",
+  ],
+  "hero_image": "public/opt_images/content/software/1988/0_test_post/hero.webp",
+  "hero_image_alt": "A hero image for this post about state management",
+  "hero_image_blur": "public/opt_images/content/software/1988/0_test_post/blur_hero.webp",
+  "hero_image_original": "public/opt_images/content/software/1988/0_test_post/hero.jpeg",
+  "key_words": [
+    "test",
+    "post",
+  ],
+  "legacy": true,
+  "published": true,
+  "series": null,
+  "social_footer": "Visit pedromarquez.dev for the full post",
+  "social_subtitle": "line 1",
+  "social_title": "This is a test post",
+  "test": true,
+  "title": "This is a test post",
+}
+`;
+
+exports[`parseMDX it works correctly 2`] = `
+"
+import heroImage from './demo.webp'
+
+# Test post
+
+This is only a test
+
+<Image src={heroImage} alt="Gif showing the server running" />
+"
+`;

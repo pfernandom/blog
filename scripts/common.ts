@@ -8,7 +8,13 @@ export type FileInfo = {
   dirPath: string
 }
 
-export const postsDirectory = join(process.cwd(), 'app', 'content', 'software')
+export const postsDirectory = join(
+  process.cwd(),
+  'src',
+  'app',
+  'content',
+  'software'
+)
 
 export const getAllFiles = function (
   dirPath: string,

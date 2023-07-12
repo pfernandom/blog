@@ -1,29 +1,29 @@
-import { LocalContentManager } from '../app/content-manager/manager'
-import assert from 'assert'
+import { LocalContentManager } from 'app/content-manager/manager'
+import { describe, expect, test } from '@jest/globals'
+import fs from 'fs'
 import path from 'path'
 
 describe('Content Manager', function () {
-  beforeEach(async function () {
-    console.log('')
-  })
-
-  it('Fetches all subblogs', async function () {
-    const contentDir = path.join(process.cwd(), 'app', 'content')
-    const contentManager = new LocalContentManager(contentDir)
+  test('Fetches all subblogs', async function () {
+    const contentManager = new LocalContentManager()
 
     const subblogs = await contentManager.findSubBlogs()
 
-    assert.ok(subblogs.length > 0)
+    expect(subblogs).toMatchSnapshot()
   })
 
-  it('Fetches all posts', async function () {
-    const contentDir = path.join(process.cwd(), 'app', 'content')
-    const contentManager = new LocalContentManager(contentDir)
+  test('Fetches all posts for a subblog', async function () {
+    const contentManager = new LocalContentManager()
 
-    const subblogs = await contentManager.findSubBlogs()
-    const posts = await contentManager.fetchAll(subblogs[0])
-    console.log({ posts: posts.map(({ content, ...rest }) => rest) })
+    const posts = await contentManager.fetchAll()
 
-    assert.ok(posts.length > 0)
+    expect(posts.map((post) => post.slug)).toMatchSnapshot()
+    expect(posts.map((post) => post.postPath)).toMatchSnapshot()
+    const heroImage = path.join('public', posts[0].frontmatter.hero_image)
+    try {
+      expect(fs.existsSync(heroImage)).toBe(true)
+    } catch (err) {
+      throw new Error(`${heroImage} does not exist:\n ${err}`)
+    }
   })
 })

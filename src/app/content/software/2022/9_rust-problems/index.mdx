@@ -1,0 +1,567 @@
+---
+title: 'Common Rust problems for beginners: Ownership & mutability'
+date: '2022-09-26'
+description:
+  ['Learn how to solve some common problems when starting learning Rust']
+hero_image: ./hero.jpeg
+hero_image_alt: 'A hero image for this post about Rust'
+published: true
+legacy: true
+key_words: rust, beginners
+series: rust-for-beginners
+---
+
+Learning how to code in [Rust](https://www.rust-lang.org/) can feel like a daunting task. While it is a very powerful language it is not precisely known for being a simple language.
+
+The same concepts that make Rust such a great language are the same that may cause problems for newcomers: [ownership](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html), [lifetimes](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html), among others.
+
+It is not that these concepts are inherently difficult, it's just that they provide safety checks that other languages don't; these safety checks can become an obstacle to people who is familiar with other, more forgiving, languages.
+
+This is why, when someone is writing their first lines of Rust and tries to do simple tasks like passing an object to a function, the compiler will stop them with errors.
+
+Rust compiler relies heavily on static code analysis to find memory errors. While other languages like C or Java allow developers to write code that may result in undesired states (e.g. `NullPointerException` and stack overflows) -which then need to be handled during runtime with error handling and exceptions-, Rust will not allow such code to compile.
+
+In this post, we will focus on common problems that any beginner will find when they start their journey into the world of Rust.
+
+## Trying to modify immutable variables
+
+In the following example, we create an instance of a `struct` called `Book`, and we try to assign a different value to its `title` property:
+
+```rust
+struct Book {
+    title: String
+}
+
+fn main() {
+    let book = Book {
+        title: String::from("The Rust Programming Language")
+    };
+
+    book.title = String::from("Another book")
+}
+```
+
+If we try to compile this code, we will get the following error:
+
+```bash
+error[E0594]: cannot assign to `book.title`, as `book` is not declared as mutable
+```
+
+### Solution
+
+This first problem is easy to spot. By default, all Rust variables are declared as immutable (read-only/constant). The goal of this decision is for developers to be explicit when they expect a variable to change values.
+
+If we want to make `book` mutable, we must declare it as `rust^let mut book`:
+
+```rust
+struct Book {
+    title: String
+}
+
+fn main() {
+    let mut book = Book {
+        title: String::from("The Rust Programming Language")
+    };
+
+    book.title = String::from("Another book")
+}
+```
+
+Another flavor of this same error can be found in the following example:
+
+```rust
+let x = 1;
+x = 2;
+```
+
+```bash
+error[E0384]: cannot assign twice to immutable variable `x`
+```
+
+The same solution applies: Use `let mut x = 1` to allow future assignments to `x`.
+
+## Trying to use a "moved" variable
+
+Following the previous example, we now define two functions that receive an instance of `Book` and try to do something with it (e.g. printing its title):
+
+```rust
+fn print_book(book: Book) {
+    println!("Book: {}", book.title);
+}
+
+fn do_something_else(book: Book) {
+    println!("Again: {}", book.title);
+}
+
+fn main() {
+    let book = Book {
+        title: String::from("The Rust Programming Language")
+    };
+
+    print_book(book);
+    do_something_else(book);
+}
+```
+
+If we try to compile this code, we will find the following error:
+
+```bash
+error[E0382]: use of moved value: `book`
+  --> src/main.rs:19:23
+   |
+14 |     let book = Book {
+   |         ---- move occurs because `book` has type `Book`,
+   |               which does not implement the `Copy` trait
+...
+18 |     print_book(book);
+   |                ---- value moved here
+19 |     do_something_else(book);
+   |                       ^^^^ value used here after move
+```
+
+### Solutions
+
+This problem is caused by Rust's [ownership rules around data references](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#ways-variables-and-data-interact-move).
+
+Rust has no garbage collector like Java, nor it requires developers to manually "destroy" variable references to free the allocated memory. Instead, [it uses ownership to define when to clear the memory referred by a variable](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#memory-and-allocation): When execution reaches the end of a function, all variables owned by that function will go out of scope and their memory will be released.
+
+When the program starts, the `main` function has ownership of the `book` variable. Then, when we call `print_book(book)`, the function `print_book` now owns `book`. When execution reaches the end of `print_book`, `book` will be out of scope and its data is cleared.
+
+There are multiple solutions to this:
+
+- Change `print_book` to return ownership of `book` to `main`.
+- Change `print_book` to receive a _borrowed reference_ of book.
+
+#### Solution 1: Returning ownership
+
+The following code will compile correctly:
+
+```rust
+fn print_book(book: Book) -> Book {
+    println!("Book: {}", book.title);
+    book
+}
+
+fn do_something_else(book: Book) {
+    println!("Again: {}", book.title);
+}
+
+fn main() {
+    let mut book = Book {
+        title: String::from("The Rust Programming Language")
+    };
+
+    book = print_book(book);
+    do_something_else(book);
+}
+```
+
+Notice that we changed `book`'s declaration to make it mutable, so we can re-assign its value. Also, we updated `print_book` to return `Book` once it's done with it.
+
+I'm not a big fan of this approach, as I find it verbose and difficult to deal with if `print_book` is expected to return something else.
+
+#### Solution 2: Use a borrowed reference
+
+The following code will compile correctly:
+
+```rust
+fn print_book(book: &Book) {
+    println!("Book: {}", book.title);
+}
+
+fn do_something_else(book: Book) {
+    println!("Again: {}", book.title);
+}
+
+fn main() {
+    let book = Book {
+        title: String::from("The Rust Programming Language")
+    };
+
+    print_book(&book);
+    do_something_else(book);
+}
+```
+
+Notice we updated `print_book` to receive an instance of `&Book`, which is an _immutable_ reference to an instance of `Book`. This is called **borrowing**. We also changed `print_book(book)` to `print_book(&book)`, to send a reference of `book` to the function.
+
+Now, `print_book` never gets ownership of `book`: It will receive the read-only reference. When execution reaches the end of `print_book`, `book` will not go out of scope, as `main` still owns it.
+
+Just keep in mind that, in this example, `do_something_else` **does** get ownership of `book`, which is perfectly legal.
+
+Another solution is to follow the compiler's advice and implement the `Copy` trait for `Book`, which then would create copies of `book` when passed to other functions. But then we would be using different instances of `book`, which has some downsides:
+
+- Extra memory allocation. If `book` is large and we copy it every time we pass it to a function, we are needlessly consuming memory.
+- Doesn't play well with mutations. If one of the functions is expected to change `book`'s contents, then we must return the copy so the next functions can have access to `book`'s updated values. This results in the same flow as returning ownership, but with extra steps.
+
+## Trying to borrow as both mutable and immutable in the same scope
+
+Now, we will modify the book's title using a new function, and print it with another one. The following code will compile correctly:
+
+```rust
+fn rename_book(book: &mut Book) {
+    book.title = String::from("Something else");
+}
+
+fn print_title(book: &Book) {
+    println!("Book: {}", book.title);
+}
+
+fn main() {
+    let mut book = Book {
+        title: String::from("The Rust Programming Language")
+    };
+
+    rename_book(&mut book);
+    print_title(&book);
+}
+```
+
+However, you will find that doing the following -which seems like it's practically doing the same thing- does not compile:
+
+```rust
+fn rename_book(book: &mut Book) {
+    book.title = String::from("Something else");
+}
+
+fn print_title(book: &Book) {
+    println!("Book: {}", book.title);
+}
+
+fn main() {
+    let mut book = Book {
+        title: String::from("The Rust Programming Language")
+    };
+
+    let mut book1 = &mut book;
+    let book2 = &book;
+
+    rename_book(&mut book1);
+    print_title(&book2);
+}
+```
+
+```bash
+error[E0502]: cannot borrow `book` as immutable because it is also borrowed as mutable
+  --> src/main.rs:20:17
+   |
+19 |     let mut book1 = &mut book;
+   |                     --------- mutable borrow occurs here
+20 |     let book2 = &book;
+   |                 ^^^^^ immutable borrow occurs here
+21 |
+22 |     rename_book(&mut book1);
+   |                 ---------- mutable borrow later used here
+```
+
+Aren't we also borrowing as both mutable and immutable in the first example? Not really.
+
+### Solution
+
+Rust will not allow us to create mutable and immutable references of an object _in the same scope_.
+
+In the first example, the actual borrow happens once execution reaches each function `rename_book` and `print_title`, so there is only one borrowed reference at a time.
+
+While the most obvious solution to this problem would be to use the first example where everything compiles correctly, let us explore a more contrived solution, which will shed some light on the ownership rules:
+
+```rust
+fn main() {
+    let mut book = Book {
+        title: String::from("The Rust Programming Language")
+    };
+
+    {
+        let mut book1 = &mut book;
+        rename_book(&mut book1);
+    }
+
+    let book2 = &book;
+    print_title(&book2);
+}
+```
+
+This little workaround makes our code compilable again. When we wrap the borrowed instance of `book1` and `rename_book` with a block `{}`, we are creating a new scope for them. Any variable declared inside the block will go out of scope once execution reaches the block's end. Then, by the time execution reaches `let book2`, `book1` will not exist anymore and we will only have a single borrow.
+
+## Trying to keep a reference to a struct value
+
+Coming from other languages, it's not uncommon for us to try to keep a reference for an object's attribute:
+
+```rust
+fn main() {
+    let mut book = Book {
+        title: String::from("The Rust Programming Language")
+    };
+
+    let title = book.title;
+
+    rename_book(&mut book);
+
+    println!("Title: {}", title);
+}
+```
+
+While this is correct in other languages, Rust will complain:
+
+```bash
+error[E0382]: borrow of partially moved value: `book`
+  --> src/main.rs:20:17
+   |
+18 |     let title = book.title;
+   |                 ---------- value partially moved here
+19 |
+20 |     rename_book(&mut book);
+   |                 ^^^^^^^^^ value borrowed here after partial move
+```
+
+### Solution
+
+When we do `let title = book.title`, we are passing ownership of the `title` attribute from `book` to the `main` function, which means we cannot use `book` in `rename_book`. We could give `title`'s ownership back to `book`, but that would prevent us from using the `title` variable by itself.
+
+To fix this problem, we could _clone_ the title as `let title = book.title.clone()`. However, this approach only works if one, `title` implements the `Clone` trait (which strings do by default), and two, whatever we use `title` for doesn't expect to get the actual value of `book.title`:
+
+```rust
+fn rename_book(book: &mut Book) {
+    book.title = String::from("Something else");
+}
+
+fn print_title(book: &Book) {
+    println!("Title: {}", book.title);
+}
+
+fn main() {
+    let mut book = Book {
+        title: String::from("The Rust Programming Language")
+    };
+
+    let title = book.title.clone();
+
+    rename_book(&mut book);
+
+    println!("Title: {}", title);
+    print_title(&book);
+}
+```
+
+```bash
+Title: The Rust Programming Language
+Title: Something else
+```
+
+If we wanted to keep a real reference to `book.title`, we must borrow a reference to it, being careful of not creating immutable and mutable borrows in the same scope:
+
+```rust
+fn main() {
+    let mut book = Book {
+        title: String::from("The Rust Programming Language")
+    };
+
+    {
+        rename_book(&mut book);
+    }
+
+    let title = &book.title;
+
+    println!("Title: {}", title);
+    print_title(&book);
+}
+```
+
+```bash
+Title: Something else
+Title: Something else
+```
+
+Of course, this is a very self-contained example that will not work in other cases. For instance, what if we want to keep a reference to `book.title` -independent from `book`- and return it from a function?
+
+```rust
+fn create_book() -> (Book, &String) {
+    let book = Book {
+        title: String::from("The Rust Programming Language")
+    };
+
+    return (book, &book.title);
+}
+
+fn main() {
+    let (mut book, title) = create_book();
+    rename_book(&mut book);
+    println!("{}", &title);
+}
+```
+
+The first problem we will find is the following:
+
+```bash
+error[E0106]: missing lifetime specifier
+  --> src/main.rs:16:28
+   |
+16 | fn create_book() -> (Book, &String) {
+   |                            ^ expected named lifetime parameter
+   |
+   = help: this function's return type contains a borrowed value,
+    but there is no value for it to be borrowed from
+help: consider using the `'static` lifetime
+```
+
+We will not go in-depth on the topic of lifetimes, but what Rust is saying is that, since we're returning a borrowed reference to a `String`, the developer needs to add a lifetime to the return type declaration to let Rust know how long is that reference expected to live.
+
+We can try -_spoiler-alert_, unsuccessfully- to follow Rust's compiler advice and annotate `&String` with a `'static` lifetime:
+
+```rust
+fn create_book() -> (Book, &'static String) {
+    let book = Book {
+        title: String::from("The Rust Programming Language")
+    };
+
+    return (book, &book.title);
+}
+```
+
+```bash
+error[E0382]: borrow of moved value: `book`
+  --> src/main.rs:21:19
+   |
+17 |     let book = Book {
+   |         ---- move occurs because `book` has type `Book`, which does not implement the `Copy` trait
+...
+21 |     return (book, &book.title);
+   |             ----  ^^^^^^^^^^^ value borrowed here after move
+   |             |
+   |             value moved here
+```
+
+By the end of the `create_book` function, `book` is moved out of the function, and ownership is passed to the caller (`main()`); because of this, we cannot borrow `book.title` (this is the same problem we found in the first example of this post).
+
+Even if we try to store the book title's borrowed reference, we cannot just return a borrowed reference to `book.title`:
+
+```rust
+fn create_book() -> (Book, &'static String) {
+    let book = Book {
+        title: String::from("The Rust Programming Language")
+    };
+
+    let title = &book.title;
+
+    return (book, title);
+}
+```
+
+```bash
+error[E0515]: cannot return value referencing local data `book.title`
+  --> src/main.rs:23:12
+   |
+21 |     let title = &book.title;
+   |                 ----------- `book.title` is borrowed here
+22 |
+23 |     return (book, title);
+   |            ^^^^^^^^^^^^^ returns a value referencing data owned by the current function
+```
+
+Even if it _looks_ like we're passing the ownership of `title` to `main()`, in reality, we are trying to return a reference to a variable owned by `create_book`; such variable will also go out of scope at the end of `create_book`.
+
+What options do we have here?
+
+### Using Rc to create immutable references
+
+Basic ownership rules work well in simpler applications. However, larger, more complex code will inevitably require getting multiple references to a single object and passing it across functions. For those cases, `std::rc::Rc` -[Reference Counter](https://doc.rust-lang.org/std/rc/struct.Rc.html)- is a handy tool.
+
+Reference counters allow us to create multiple immutable references to a single object. These references can be safely passed from one function to another:
+
+```rust
+use std::rc::Rc;
+
+struct Book {
+    title: Rc<String>
+}
+
+fn create_book() -> (Book, Rc<String>) {
+    let book = Book {
+        title: Rc::new(String::from("The Rust Programming Language"))
+    };
+
+    let title = Rc::clone(&book.title);
+
+    return (book, title);
+}
+
+fn main() {
+    let (book, title) = create_book();
+
+    println!("{}", book.title);
+    println!("{}", title);
+}
+```
+
+```bash
+The Rust Programming Language
+The Rust Programming Language
+```
+
+Under the hood, `Rc` keeps a count of the number of references that have been created. Once all references go out of scope, the object they were pointing at will be removed from memory. In a way, `Rc` works as a very simplified Garbage Collector.
+
+This example is a bit misleading, as it looks like we're cloning `book.title`'s value, when we're cloning a _reference_ to it. This difference is clearer if we update `book.title`'s value.
+
+### Using Rc and RefCell to create mutable references
+
+Reference counting by default is immutable. If we want to update `book.title` we must introduce [`RefCell`](https://doc.rust-lang.org/std/cell/struct.RefCell.html) to make `title` a mutable reference:
+
+```rust
+use std::rc::Rc;
+use std::cell::RefCell;
+
+struct Book {
+    title: Rc<RefCell<String>>
+}
+
+fn create_book() -> (Book, Rc<RefCell<String>>) {
+    let book = Book {
+        title: Rc::new(RefCell::new(String::from("The Rust Programming Language")))
+    };
+
+    let title = Rc::clone(&book.title);
+
+    return (book, title);
+}
+
+fn rename_book(book: &Book) {
+    book.title.replace(String::from("Something else"));
+}
+
+fn main() {
+    let (book, title) = create_book();
+
+    rename_book(&book);
+    println!("{}", book.title.borrow());
+    println!("{}", title.borrow());
+}
+```
+
+This code will print:
+
+```bash
+Something else
+Something else
+```
+
+With this example, we demonstrate two points:
+
+- The `Rc::clone(&book.title)` returns a clone of the reference to `book.title`, not a clone of `book.title`'s value. Otherwise, `println!("{}", title.borrow())` would print the old value `"The Rust Programming Language"`.
+- Using an `Rc<RefCell<String>>` variable type for `book.title` allows us to create copies of its reference _and_ mutate its value.
+
+### A warning on Rc and RefCell
+
+While `Rc` and `RefCell` allow us to create a more complex workflow, they also increase the complexity within your application. Just from the ergonomics point of view, having to pass around variables with `<Rc<RefCell<T>>` gets very verbose quickly.
+
+Also, using reference counters when it's not needed increases the risk of memory leaks: If we keep a reference copy for too long, the underlying memory it points to may not be released. In cases where we implement things like HTTP servers using Rust, we might accumulate reference copies to objects that are not used, increasing the amount of consumed memory. This is a common problem in languages like Java, where keeping references to unused variables also lead to memory leaks that the Garbage Collector cannot fix.
+
+When possible, we must avoid overusing these tools and try to work with the basic rules of ownership.
+
+With this last example, we reached the end of this post. However, in future posts we will explore more potential difficulties that beginners find when learning Rust.
+
+## Conclusion
+
+Rust ownership and mutability rules are completely different from the way other languages enforce memory safety. While these tools can make it difficult for newcomers to ramp up in their learning journey, they are the reason why Rust is so safe and lightweight.
+
+Not only Ownership allows Rust to operate without tools like Garbage Collectors, but it also forces developers to think deeper into how memory is allocated, used and released in their applications. Languages like `C` and `C++` offer this level of control too, but without the safeguards that Rust's compiler enforces.
+
+While it seems like the Rust compiler throws _too many_ errors, it is for our own good. It's better to catch these problems during compilation than to try to debug them on execution time, many times in production environments.

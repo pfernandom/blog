@@ -1,0 +1,368 @@
+---
+title: 'Software Design Patterns: The builder pattern'
+date: '2022-11-16'
+description:
+  - The builder design pattern makes it easier to create objects with multiple
+    parameters
+  - In this post, we will explore how to leverage this extremely useful design pattern
+hero_image: ./hero.jpeg
+hero_image_alt: A hero image for this post
+key_words:
+  - design patterns
+  - builder pattern
+  - java
+  - javascript
+published: true
+legacy: true
+---
+
+import Image from 'app/_components/image'
+
+Design patterns in software development exist to make our lives easier. Patterns are not "how things are supposed to be", but well-defined recipes that solve common challenges while writing software. Today, we will explore one common design pattern: The **builder pattern**.
+
+## Challenge: Too many parameters or attributes
+
+When we build production software, it is common to reach a point where our code is becoming really verbose. For instance, imagine we want to create a Java class that contains a lot of information in it:
+
+```java
+class Product {
+  private String id;
+  private String name;
+  private String shortDescription;
+  private String longDescription;
+  private float price;
+  private List<String> specifications;
+  // ...
+}
+```
+
+Now, many if not all of these attributes are required, so we find ourselves writing a huge constructor function for the class:
+
+```java
+public Product(
+    String id,
+    String name,
+    String shortDescription,
+    String longDescription,
+    float price,
+    List<String> specifications
+    ) {
+      // set the attributes
+}
+```
+
+Now, imagine we have three types of products:
+
+- Products that only have a short description
+- Products that only have a long description
+- Products that have both
+
+Let us assume that our app requires us to handle all three cases separately. This will lead us to call this constructor in three different ways:
+
+```java
+Product product = new Product("p1", "Some product", "Short description", null, price, specs);
+//...
+Product product = new Product("p1", "Some product", null, "Long description", price, specs);
+//...
+Product product = new Product("p1", "Some product", "Short description",
+                                "Long description", price, specs);
+//...
+```
+
+Notice how we have to fill those unnecessary values with `null` to make up for the missing values.
+
+Of course, we can create a new constructor for each case:
+
+```java
+class Product {
+  // both short and long descriptions
+  public Product(
+    String id,
+    String name,
+    String shortDescription,
+    String longDescription,
+    float price,
+    List<String> specifications
+    ) {
+      // set the attributes
+  }
+
+  // only long description
+  public Product(
+    String id,
+    String name,
+    String longDescription,
+    float price,
+    List<String> specifications
+    ) {
+      // set the attributes
+  }
+
+  // only a short description
+  public Product(
+    String id,
+    String name,
+    String shortDescription,
+    float price,
+    List<String> specifications
+    ) {
+      // set the attributes
+  }
+
+}
+```
+
+That's a lot of new lines! And, the more variations we get, the worst it gets. Every time we find a new variation or combination of required and missing fields, we would have to write a new constructor.
+
+All this extra code is _boilerplate code_: It has no value for the business case and no custom logic.
+
+_Note: Languages like Python work around this issue by allowing us to make parameters optional using named parameters. Something like `Product(id, name, shortDescription="something", price)` using only one constructor is perfectly legal! Java also has recently introduced the concept of [records](https://docs.oracle.com/en/java/javase/14/language/records.html), which considerably reduces the amount of boilerplate code needed for POJOs_
+
+Wouldn't it be nice if we could just set the parameters that we _actually_ need?
+
+### Why not just use setters?
+
+Of course, we could add setter methods for each attribute and only make required fields shared by all use cases (e.g. `id` and `name`) part of the constructor. This would allow us to just set the fields we need.
+
+The problem here is that there is no guarantee that nothing is preventing us from creating objects **missing required fields**. If the expectation is that at least one of `shortDescription` or `longDescription` is present, there is no way to validate that one of those fields is always present in this class alone. We would depend on whichever class using `Product` to validate that all required fields are present.
+
+So, it would be nice if we could set only the attributes we need _and_ validate that all required fields are present. Enter the builder pattern.
+
+## ProductBuilder
+
+The builder pattern is an Object-Oriented pattern that separates the construction of an object from its representation. It is implemented by creating a `Builder` class (notice builder is not a special class or interface we must extend) that has two main properties:
+
+- It has methods to take each attribute independently.
+  - Optionally, each method returns `this`, to allow for chaining setter methods.
+- It has a single method to build an instance of the class we want to create.
+
+Let us look at an example of a builder for the `Product` class:
+
+```java
+class ProductBuilder {
+  String id,
+  String name,
+  String shortDescription,
+  String longDescription,
+  float price,
+  List<String> specifications
+
+  // required fields in the constructor
+  public ProductBuilder(String id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+
+  public ProductBuilder withShortDescription(String shortDescription) {
+    this.shortDescription = shortDescription;
+    return this;
+  }
+
+  public ProductBuilder withLongDescription(String longDescription) {
+    this.longDescription = longDescription;
+    return this;
+  }
+
+  public ProductBuilder withPrice(float price) {
+    this.price = price;
+    return this;
+  }
+
+  public ProductBuilder withSpecifications(List<String> specifications) {
+    this.specifications = specifications;
+    return this;
+  }
+
+  public void validateAllRequiredFieldsArePresent() {
+    // check if all fields are present.
+    // e.g. one of shortDescription or longDescription should be present
+    // if the validation fails, throw an exception.
+  }
+
+  public Product build() {
+    this.validateAllRequiredFieldsArePresent();
+    return new Product(
+      this.id,
+      this.name,
+      this.shortDescription,
+      this.longDescription,
+      this.price,
+      this.specifications
+    )
+  }
+}
+```
+
+It's easy to miss how creating a whole new class is better than having multiple constructors, at least in terms of the number of lines. It will be clear soon what the advantages are.
+
+Rhe following code snippet is an example of how to create a `Product` instance for each of our three use cases:
+
+```java
+Product p1 = new ProductBuilder("p1", "Some product")
+  .withLongDescription("Long description")
+  .withPrice(12.99)
+  .withSpecifications(specs)
+  .build()
+
+Product p1 = new ProductBuilder("p1", "Some product")
+  .withShortDescription("Short description")
+  .withPrice(12.99)
+  .withSpecifications(specs)
+  .build()
+
+Product p1 = new ProductBuilder("p1", "Some product")
+  .withShortDescription("Short description")
+  .withLongDescription("Long description")
+  .withPrice(12.99)
+  .withSpecifications(specs)
+  .build()
+```
+
+Now, the builder pattern has given us a lot of benefits:
+
+- We only set the attributes we need.
+- We can set the attributes in any order. We can use `withPrice` before `withShortDescription`, and things still work.
+- We don't need to write new code when we define new combinations of attributes. We just set the needed attributes in the builder.
+
+The key to this magic lies in the way we create our setter methods:
+
+```java
+public ProductBuilder withLongDescription(String longDescription) {
+  this.longDescription = longDescription;
+  return this;
+}
+```
+
+Notice how the method signature returns an instance of `ProductBuilder`; the method itself returns `this`. This simple pattern allows us to chain multiple setters like we saw in the example:
+
+```java
+// chained:
+new ProductBuilder("p1", "Some product")
+  .withShortDescription("Short description")
+  .withPrice(12.99);
+
+// line by line:
+ProductBuilder builder = new ProductBuilder("p1", "Some product");
+builder = builder.withShortDescription("Short description");
+builder = builder.withPrice(12.99);
+```
+
+Chaining setter methods give our builder a higher level of expressiveness: It is easy to read and understand what attributes we're setting, and we do so in a very compact way.
+
+The builder pattern also allows us to add expressiveness to more complex configurations of data. For instance, we can create setter methods for `specifications` that better capture cases like when a product has no specifications:
+
+```java
+public ProductBuilder withEmptySpecifications() {
+  this.specifications = new ArrayList<String>();
+  return this;
+}
+
+new ProductBuilder("p1", "Some product")
+  .withEmptySpecifications()
+  .build();
+```
+
+Using `withEmptySpecifications()` is more developer-friendly than having to do:
+
+```java
+withSpecifications(new ArrayList<String>())
+```
+
+The added benefit of the builder pattern over adding required fields through setters likes in the `build` method. Here, we can do all sorts of validations and transformations on the added attributes, right before returning a built instance of `Product`.
+
+The method `validateAllRequiredFieldsArePresent` can check **before creating an instance of `Product`** that the product has at least one of the description fields, or throw an exception if not.
+
+The builder pattern helps us guarantee that each instance of `Product` will be valid, and still get the benefits of simple getters.
+
+## More benefits: Stubbing
+
+When we write unit tests, we build `stub` objects that emulate the behavior of real services. The builder pattern is extremely useful here, as it allows us to create builders for configuring a stub object.
+
+Imagine we have a service that saves instances of a class `Record` into a database. The real service implements an interface called `DatabaseService`. For our unit tests, we create a class called `StubPrintService` which implements the same interface.
+
+In our example, `StubPrintService.record()` will always return success.
+
+```java
+interface DatabaseService {
+  CompletableFuture<boolean> saveRecord(Record record);
+}
+
+class StubPrintService implements DatabaseService{
+  @override
+  CompletableFuture<boolean> saveRecord(Record record) {
+    return CompletableFuture.supplyAsync(
+      () -> {
+        return true;
+      }
+    );
+  }
+}
+```
+
+Now, we want to test the case where the `saveRecord` service returns `false`. We could pass the expected value through a constructor to the stub service:
+
+```java
+class StubPrintService implements DatabaseService{
+  private boolean expectedResult;
+  public StubPrintService(boolean expectedResult) {
+    this.expectedResult = expectedResult;
+  }
+
+  @override
+  CompletableFuture<boolean> saveRecord(Record record) {
+    return CompletableFuture.supplyAsync(
+      () -> {
+        return this.expectedResult;
+      }
+    );
+  }
+}
+```
+
+But, just as in our previous example, as we need to add more variants to our test, adding more constructors becomes verbose. This can easily be fixed with creating a builder for defining test cases:
+
+```java
+class StubPrintServiceBuilder() {
+  boolean expectedResult;
+
+  public StubPrintServiceBuilder withSuccess() {
+    this.expectedResult = true;
+    return this;
+  }
+
+  public StubPrintServiceBuilder withFailure() {
+    this.expectedResult = false;
+    return this;
+  }
+
+  public void PrintService build() {
+    return new StubPrintService(this.expectedResult);
+  }
+}
+```
+
+Now, each test case we write will be easy to understand:
+
+```java
+PrintService stubPrintService = new StubPrintServiceBuilder()
+                                .withSuccess()
+                                .build();
+
+PrintService stubPrintService = new StubPrintServiceBuilder()
+                                .withFailure()
+                                .build();
+```
+
+We can look at each test and _know_ what exactly we're testing. Additionally, if the `PrintService` depends on other classes internally, `StubPrintServiceBuilder` can take care of creating the right instances for the test case.
+
+In a way, the builder defines a configuration: The developer writes _what_ the object should be or _how_ it should behave, and the builder takes care of _how_ to put things together to achieve the expected behavior.
+
+## Conclusion
+
+When we deal with classes with tons of attributes, the builder pattern reduces the amount of boilerplate code we must write to create objects that have different combinations of those attributes.
+
+The builder separates the logic necessary to create an object from the object itself, allowing the original class to be compact and only contain code that provides "business" value for the application.
+
+The builder pattern gives us flexibility on what attributes and in which order we must set to create an object, without losing any assurance that the created objects are valid and contain all required fields.
+
+The only trade-off we could find is that creating builders for simple POJO classes may be overkill. As with any useful tool, use it when it is actually needed. Don't use an industrial hammer to hang a picture in your wall.

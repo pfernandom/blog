@@ -14,11 +14,7 @@
   },
   "compilerOptions": {
     "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -31,19 +27,21 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "plugins": [
       {
         "name": "next"
       }
     ]
   },
+  "paths": {
+    "app/*": ["./src/app/*"]
+  },
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "app/**/*.tsx",
-    "app/**/*.ts",
+    "src/app/**/*.tsx",
+    "src/app/**/*.ts",
+    "tests/**/*.ts",
     "scripts/gen-imports.mts",
     "scripts/*.ts",
     "scripts/resize.mts",
@@ -53,14 +51,11 @@
   "exclude": [
     "node_modules",
     "cypress",
-    "app/sw/*.ts",
-    "app/types",
+    "src/app/sw/*.ts",
+    "src/app/types",
     "cypress.config.ts"
   ],
   "rules": {
-    "no-console": [
-      true,
-      "warning"
-    ]
+    "no-console": [true, "warning"]
   }
 }

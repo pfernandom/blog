@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Legacy posts Legacy routes snapshots 1`] = `
+[
+  "blog/2023/2/node_golang_wasm_p2",
+  "blog/2023/2/node_golang_wasm",
+  "blog/2022/11/qb-dropout-in-cnn",
+  "blog/2022/11/builder-design-pattern",
+  "blog/2022/11/building-a-heap",
+  "blog/2022/10/pytorch-classification",
+  "blog/2022/9/rust-problems",
+  "blog/2022/9/flutter-code-gen-2",
+  "blog/2022/9/markdown-to-html",
+  "blog/2022/8/flutter-code-gen-1",
+  "blog/2022/8/book",
+  "blog/2022/8/java-futures",
+  "blog/2022/7/dark-mode-css",
+  "blog/2022/7/flutter-app-state",
+  "blog/2019/7/array-fill",
+  "blog/2019/6/html-chunking",
+  "blog/1988/6/test_post",
+]
+`;

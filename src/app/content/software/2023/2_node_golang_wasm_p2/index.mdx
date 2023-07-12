@@ -1,0 +1,307 @@
+---
+title: 'Running Go code inside a NodeJS app with WASM (Part 2/2, 2023)'
+date: '2023-02-24'
+description:
+  - In the second part of two posts, we will explore how to import a compiled WASM module inside a NodeJS application.
+hero_image: ./hero.jpg
+hero_image_alt: The Golang and NodeJS logos
+key_words:
+  - nodejs
+  - golang
+  - WASM
+  - WebAssembly
+published: true
+legacy: true
+series: running-go-in-nodejs
+---
+
+import Image from 'app/_components/image'
+import cmd2 from './cmd2.gif'
+
+In our previous post, we explored the benefits of using WebAssembly (WASM) modules as a way to build interoperable modules written in different coding languages. We used Golang to write a WASM module that lazily reads new entries to a text-based log file, parses them and sends them to a callback function.
+
+In this post we will define the second part of this mini-project: Take the compiled WASM module, `app.wasm` and import it inside a NodeJS application.
+
+## Brief disclaimer
+
+The example explained in this post -as most WebAssmebly-specific libraries are at this point in time- is based on some **experiment** libraries, which are subject to changes in the future. This doesn't mean you cannot use them in production, but you should be aware that the APIs of these libraries are not guaranteed to be backward compatible in future releases and extra refactoring work may be needed when updating versions of Go or NodeJS.
+
+The updates described below to `wasm_exec.js` are not officially supported by the Golang team and could break with future changes.
+
+## Using WebAssembly in NodeJS
+
+[NodeJS follows the JavaScript specification for API module `WebAssemly`](https://nodejs.dev/en/learn/nodejs-with-webassembly/), which has the methods `instantiate` and `instantiateStreaming`. The former, ss mentioned in the [specs documentation](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate), is not the most performant method:
+
+> Warning: This method is not the most efficient way of fetching and instantiating wasm modules. If at all possible, you should use the newer WebAssembly.instantiateStreaming() method instead, which fetches, compiles, and instantiates a module all in one step, directly from the raw bytecode, so doesn't require conversion to an ArrayBuffer.
+
+This makes sense, as the most common use of WASM is in browsers where the WASM module needs to be reloaded every time the page loads. In that case, loading speed is critical to keep page load time down.
+
+Thankfully, `instantiate` works well enough for our example: We will only instantiate the module once when the NodeJS application starts, which reduces the criticality of the time needed for loading the module and parsing its contents from an array buffer.
+
+The example displayed in JavaScript documentation looks like the following:
+
+```js
+const importObject = {
+  imports: {
+    imported_func(arg) {
+      console.log(arg)
+    },
+  },
+}
+
+fetch('simple.wasm')
+  .then((response) => response.arrayBuffer())
+  .then((bytes) => WebAssembly.instantiate(bytes, importObject))
+  .then((result) => result.instance.exports.exported_func())
+```
+
+Here, we fetch the WASM module from the current path in the browser, parse it from the array buffer (along with the set of functions we can import in the WASM module) and pass the result to `WebAssembly.instantiate(bytes, importObject)`, which in turn returns a promise containing the instantiated module.
+
+However, as we mentioned in our previous post, WASM modules built with the native Golang compiler options require some extra "glue" to connect the WASM module to the JavaScript code. This glue is provided in a JavaScript file named [`wasm_exec.js`](https://github.com/golang/go/blob/master/misc/wasm/wasm_exec.js), and it's meant to be used in browsers like follows:
+
+```html
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="wasm_exec.js"></script>
+    <script>
+      const go = new Go()
+      WebAssembly.instantiateStreaming(fetch('app.wasm'), go.importObject).then(
+        (result) => {
+          go.run(result.instance)
+        }
+      )
+    </script>
+  </head>
+  <body></body>
+</html>
+```
+
+A more robust version of this example can be found in [this link](https://github.com/golang/go/blob/master/misc/wasm/wasm_exec.html).
+
+When we import `wasm_exect.js`, a JavaScript class `Go` is created in the global scope. This class has the `run` method, which executes the `func main()` function defined in the Go code for the WASM module.
+
+Currently, there is no official supported way for importing Go-compiled WASM modules in NodeJS without extra tooling. However, if we look at the [implementation of `wasm_exec.js`](https://github.com/golang/go/blob/master/misc/wasm/wasm_exec.js), we can see that it is easily modifiable to support a NodeJS execution environment.
+
+## Modifying wasm_exec.js for NodeJS execution
+
+By looking at the implementation of `wasm_exec.js`, lines of code like the following jump to our attention:
+
+```js
+if (!globalThis.fs) { // ...
+if (!globalThis.process) { // ...
+if (!globalThis.crypto) { // ...
+```
+
+Remember that most JavaScript APIs are linked to the global scope `this` -or its alias, `globalThis`-, which means that `wasm_exec.js` expects modules like `fs` or `crypto` to be registered in the global scope in order to enable specific functionality (e.g. `fs` for reading files).
+
+Fortunately, these modules are also available in NodeJS, and we can ensure they are available in `globalThis` by adding a few extra lines at the top of `wasm_exec.js`:
+
+```js
+const fs = require('fs')
+const { performance } = require('perf_hooks')
+
+globalThis.fs = fs
+globalThis.performance = performance
+```
+
+The only conflict I found -which is probably caused by my current version of NodeJS- was that `getRandomValues` was not available in the `crypto` package. To work around this, I added polyfilled it like follows:
+
+```js
+const crypto = require('crypto')
+
+globalThis.crypto = {
+  getRandomValues(array) {
+    if (!ArrayBuffer.isView(array)) {
+      throw new TypeError(
+        "Failed to execute 'getRandomValues' on 'Crypto': parameter 1 is not of type 'ArrayBufferView'"
+      )
+    }
+    const buffer = Buffer.from(array.buffer, array.byteOffset, array.byteLength)
+    crypto.randomFillSync(buffer)
+    return array
+  },
+}
+```
+
+And that's it! You can find the complete updated version in [my Github repo](https://github.com/pfernandom/nodejs-go-wasm/blob/main/node/wasm_exec.js).
+
+With these changes, I can import my updated version of `wasm_exec.js` in NodeJS as usual:
+
+```js
+require('./wasm_exec')
+```
+
+Notice that, since `./wasm_exec` updates `globalThis` directly, there are no exported members in that module. We coud make more changes to `wasm_exec.js` to actually export things like the `Go` class, and make sure we only add them to `globalThis` when needed (remember that usually defining things in the global scope is not the best pattern).
+
+## Importing the WASM module
+
+In the last post, we created the file `app.wasm` by running `go build` in the Go module. Now, we need to make sure that file is accessible to our NodeJS project. In [my example project](https://github.com/pfernandom/nodejs-go-wasm), I put the NodeJS code inside the Go module, which helped my code to always import the most up-to-date version of `app.wasm`, but you're free to create a more complex flow using separate repositories.
+
+We create a JavaScript file called `wasm.js` (it can be any name, there are no restrictions here), and we import our modified version of `wasm_exec.js`, along with the `util` and `fs` modules:
+
+```js
+const util = require('util')
+const fs = require('fs')
+require('./wasm_exec')
+```
+
+We use the `fs` module to read the contents of `app.wasm`:
+
+```js
+var source = fs.readFileSync('./app.wasm')
+```
+
+And following the example from `wasm_exec.js` docs, we parse and instantiate the module:
+
+```js
+const go = new globalThis.Go()
+var typedArray = new Uint8Array(source)
+
+WebAssembly.instantiate(typedArray.buffer, go.importObject)
+  .then((result) => {
+    console.log(util.inspect(result, true, 0))
+    return go.run(result.instance)
+  })
+  .catch((e) => {
+    console.log(e)
+  })
+```
+
+To convert the bytes defined in `source` to the `ArrayBuffer` that `WebAssembly.instantiate` expects as a parameter, we use `Uint8Array`, which has the `buffer` attribute. The call to `go.run(result.instance)` will execute the `main` function defined in the Go WASM Module.
+
+Now, in our previous post, we defined that, in order to communicate with the NodeJS host, the WASM module expects a function named `logCallback` to be available in the JavaScript global scope:
+
+```go
+func ModuleOutput(parsedLogs ParsedLogs) {
+	logCallback := js.Global().Get("logCallback")
+	logCallback.Invoke(parsedLogs)
+}
+```
+
+This function needs to be defined _before_ we start the WASM module:
+
+```js
+const go = new globalThis.Go()
+var typedArray = new Uint8Array(source)
+
+globalThis.logCallback = // define your function here
+  WebAssembly.instantiate(typedArray.buffer, go.importObject)
+    .then((result) => {
+      console.log(util.inspect(result, true, 0))
+      return go.run(result.instance)
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+```
+
+To better isolate the logic needed to instantiate the WASM module from the rest of the NodeJS code, we will encapsulate all this code in a single function, that will be exported out of `wasm.js`:
+
+```js
+const util = require('util')
+const fs = require('fs')
+require('./wasm_exec')
+
+function importWasm(callback = () => {}) {
+  var source = fs.readFileSync('./app.wasm')
+
+  const go = new globalThis.Go()
+  var typedArray = new Uint8Array(source)
+
+  globalThis.logCallback = callback
+
+  WebAssembly.instantiate(typedArray.buffer, go.importObject)
+    .then((result) => {
+      console.log(util.inspect(result, true, 0))
+      return go.run(result.instance)
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+}
+
+module.exports.importWasm = importWasm
+```
+
+Notice that, instead of hardcoding the implementation of `globalThis.logCallback`, we pass a function as a parameter to `importWasm`. This decouples the configuration and instantiation of the WASM module from the actual logic that will be executed every time a new entry is added to the log file.
+
+Finally, we can use this function in another NodeJS script called `index.js` like follows:
+
+```js
+const { importWasm } = require('./wasm.js')
+
+importWasm((log) => {
+  console.log({ log })
+})
+```
+
+And we're done. We can start the whole thing by running `node index.js`. For convenience, I added the following script definitions to my `package.js` to make everything easier to run:
+
+```js
+"scripts": {
+    "buildWasm": "GOOS=js GOARCH=wasm go build -o app.wasm",
+    "logger": "npx nodemon node/logger.js",
+    "start": "npx nodemon node/index.js",
+    "serve": "npm run buildWasm && npm run start",
+    "all": "npm run logger & npm run serve"
+  },
+```
+
+- `npm run buildWasm` calls `go build` with the right environment variables to compile `app.wasm` (remember I'm using the same repository for both the Go and NodeJS modules).
+- `npm run logger` starts `logger.js` to simulate a process appending to the log file at variable rates. I'm using `nodemon` to enable hot-reload while making changes to any part of the project.
+- `npm start` executes `index.js`, the main entry point to the NodeJS project
+- `npm run serve` compiles the WASM module and starts `index.js`
+- `npm run all` starts `logger.js`, compiles the WASM module and starts `index.js`.
+
+Testing the whole flow is as easy as calling `npm run all`:
+
+<Image
+  className="post-image"
+  src={cmd2}
+  alt={'The console prints log entries as they are appended to the file'}
+/>
+
+Notice that at the beginning, the WASM module will read the full contents of the file. Once it reaches the end, as `logger.js` appends to `test.log`, the WASM module will read the entry, parse it and send it back to NodeJS where we are just printing it to the console.
+
+Now, if we look at the output in the console, we would find that each entry is rendered like this:
+
+```bash
+{ log: { msg: 'Log number 6531', level: 'ERROR' } }
+```
+
+If we look back to our previous post, we see that this matches the structure we defined in our Go code:
+
+```go
+type Log struct {
+	Level string
+	Msg   string
+}
+
+func (l Log) ToMap() ParsedLogs {
+	m := make(map[string]interface{})
+	m["level"] = l.Level
+	m["msg"] = l.Msg
+	return m
+}
+
+// Inside Execute:
+l := parse(str)
+callbackFn(l.ToMap())
+```
+
+The `map[string]interface{}` we passed to the JavaScript callback is interpreted as a JSON object in NodeJS. The output we see in the console confirms that we were able to pass a complex object back to JavaScript.
+
+In this example, we are merely printing the parsed logs passed to the callback, but this example can easily be extended to do more work like sending them to another service for aggregation, or directly to the browser through [websockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) if we wanted to render the logs in a web page.
+
+## Looking at the future
+
+In these couple of posts, I wanted to show you that WebAssembly can be leveraged in certain tasks where interoperability is needed to perform tasks that would not be as memory-efficient in a language like JavaScript.
+
+However, there is still a lot of work to be done to standardize the way WebAssembly is integrated into multiple environments. The critical feature that will fully release the potential of WASM will be the [WebAssembly System Interface (WASI)](https://wasi.dev/), which will stabilize and normalize the "glue" that allows integration of WASM modules.
+
+Projects like [`wasmer-go`](https://github.com/wasmerio/wasmer-go) are already using WASI, and we might extend this example in future posts to highlight how WASI would work.
+
+# Conclusion
+
+We successfully integrated code written in Go with NodeJS using WebAssembly; we achieve this using just the out-of-the-box features provided by the Golang compiler -with some glue provided by the Go team- and the JavaScript specification. This is proof that WebAssembly has progressed a lot in the past couple of years and it's slowly becoming a tool that will open a lot of doors to building better software applications.

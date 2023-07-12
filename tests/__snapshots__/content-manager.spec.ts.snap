@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Content Manager Fetches all posts for a subblog 1`] = `
+[
+  "blog/2023/2/node_golang_wasm_p2",
+  "blog/2023/2/node_golang_wasm",
+  "blog/2022/11/qb-dropout-in-cnn",
+  "blog/2022/11/builder-design-pattern",
+  "blog/2022/11/building-a-heap",
+  "blog/2022/10/pytorch-classification",
+  "blog/2022/9/rust-problems",
+  "blog/2022/9/flutter-code-gen-2",
+  "blog/2022/9/markdown-to-html",
+  "blog/2022/8/flutter-code-gen-1",
+  "blog/2022/8/book",
+  "blog/2022/8/java-futures",
+  "blog/2022/7/dark-mode-css",
+  "blog/2022/7/flutter-app-state",
+  "blog/2019/7/array-fill",
+  "blog/2019/6/html-chunking",
+  "blog/1988/6/test_post",
+]
+`;
+
+exports[`Content Manager Fetches all posts for a subblog 2`] = `
+[
+  "src/app/content/software/2023/2_node_golang_wasm_p2/index.mdx",
+  "src/app/content/software/2023/1_node_golang_wasm/index.mdx",
+  "src/app/content/software/2022/13_qb-dropout-in-cnn/index.mdx",
+  "src/app/content/software/2022/12_builder-design-pattern/index.mdx",
+  "src/app/content/software/2022/11_building-a-heap/index.mdx",
+  "src/app/content/software/2022/10_pytorch-classification/index.mdx",
+  "src/app/content/software/2022/9_rust-problems/index.mdx",
+  "src/app/content/software/2022/8_flutter-code-gen-2/index.mdx",
+  "src/app/content/software/2022/7_markdown-to-html/index.mdx",
+  "src/app/content/software/2022/6_flutter-code-gen-1/index.mdx",
+  "src/app/content/software/2022/5_book/index.mdx",
+  "src/app/content/software/2022/4_java-futures/index.mdx",
+  "src/app/content/software/2022/3_dark-mode-css/index.mdx",
+  "src/app/content/software/2022/1_flutter-app-state/index.mdx",
+  "src/app/content/software/2019/2_array-fill/index.mdx",
+  "src/app/content/software/2019/1_html-chunking/index.mdx",
+  "src/app/content/software/1988/0_test_post/index.mdx",
+]
+`;
+
+exports[`Content Manager Fetches all subblogs 1`] = `
+[
+  {
+    "basename": "src/app/content",
+    "metadata": {
+      "description": "A blog about coding and all things software-development",
+      "title": "Software development blog",
+    },
+    "path": "src/app/content/software",
+    "slug": "software",
+  },
+]
+`;

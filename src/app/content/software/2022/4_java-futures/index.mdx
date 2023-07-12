@@ -1,0 +1,334 @@
+---
+title: "Easy parallelism and multi-threading with Java's CompletableFuture"
+date: '2022-08-06'
+description:
+  [
+    'In this post, we improve application performance by making multiple parallel requests to a REST API',
+  ]
+hero_image: ./hero.png
+hero_image_alt: 'A hero image for this post about Java Futures.'
+published: true
+legacy: true
+key_words: java, Java Future, CompletableFuture, future, threads, multi-threading
+---
+
+import Image from 'app/_components/image'
+
+Modern applications (especially those based on [microservices](https://microservices.io/) architectures) heavily rely on fetching data from
+remote servers. However, if not done correctly, the overhead added by these requests can seriously
+reduce your application's performance.
+
+In this blog post, we will explore ways to parallelize these requests using
+Java's CompletableFuture.
+
+## Background
+
+Long lost are the old days when Java developers had to use the `Thread` or `Runnable` classes
+for simple tasks like making requests to remote servers.
+
+In Java 8, the Concurrency API was updated to include `CompletableFuture`, a class that does a great
+job abstracting out the complexity of running tasks in multiple Threads.
+This interface, in addition to [lambda](https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html) functions,
+makes up for a very intuitive way of running tasks in parallel in separate threads.
+
+For instance, imagine we want to make two requests to a REST API hosted on a remote server:
+One to fetch a list of _books_ and one to fetch a list of _authors_:
+
+```bash
+.../api/authors
+# Returns:
+[
+  {
+    "firstName": "Pedro",
+    "lastName": "Marquez-Soto"
+  }
+]
+.../api/books
+# Returns:
+[
+  {
+    "type": "Book",
+    "name": "Amazing book"
+  }
+]
+```
+
+Unfortunately, these endpoints are extremely slow: The books endpoint takes 2.5 seconds to complete
+and the authors endpoint takes 1.5 seconds.
+
+## Making HTTP requests in Java
+
+A simple way to make HTTP requests to remote servers is through the `java.net.http.HttpClient` class:
+
+The following code snippet displays an example of making a `GET` request to the address stored in the string variable `url`:
+
+```java
+var client = HttpClient.newHttpClient();
+
+// create a request
+var request = HttpRequest
+    .newBuilder(URI.create(url))
+    .header("accept", "application/json")
+    .build();
+
+// use the client to send the request
+final var response = client.send(request, BodyHandlers.ofString());
+```
+
+The variable response will contain the string representation of the server response.
+
+Now, we can parse the JSON string into a class object using Jackson's [ObjectMapper](https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html) as follows:
+
+```java
+private static <T> List<T> parseJSON(String textResponse) {
+    final ObjectMapper objectMapper = new ObjectMapper();
+    List<T> objects = new ArrayList<>();
+    try {
+      objects =
+        objectMapper.readValue(textResponse, new TypeReference<List<T>>() {});
+    } catch (JsonMappingException e) {
+      // TODO: Do something with the error
+    } catch (JsonProcessingException e) {
+      // TODO: Do something with the error
+      e.printStackTrace();
+    }
+    return objects;
+  }
+```
+
+Notice that this function is using a generic type, so we can reuse this function to parse JSON strings
+into many different classes:
+
+```java
+List<Book> books = App.<Book>parseJSON();
+List<Author> books = App.<Author>parseJSON();
+```
+
+The classes `Book` and `Author` are plain Java objects with empty constructors, getters, and setters:
+
+```java
+public class Author {
+
+  private String firstName;
+  private String lastName;
+
+  public Author() {}
+
+  public String getFirstName() {
+    return firstName;
+  }
+  // the rest of getters and setters
+}
+```
+
+Putting it all together, we can create a function to request the data from each endpoint:
+
+```java
+private static <T> List<T> fetchSync(String url) {
+    var client = HttpClient.newHttpClient();
+
+    var request = HttpRequest
+        .newBuilder(URI.create(url))
+        .header("accept", "application/json")
+        .build();
+
+    // you may need to handle the checked exception in "send"
+    final var response = client.send(request, BodyHandlers.ofString());
+    return App.<T>parseJSON(response.body());
+}
+```
+
+And we can use this function to make the two requests we need. Also, we will measure the time
+it takes for both requests to complete:
+
+```java
+long start = System.nanoTime();
+// Fetch the data:
+List<Book> bookList = fetchSync("https://[your-api-here]/api/books");
+List<Book> authorList = fetchSync("https://[your-api-here]/api/authors");
+
+System.out.println(
+    "Sync calls processed in " +
+    Duration.ofNanos(System.nanoTime() - start).toSeconds() +
+    " sec\n\n"
+    );
+```
+
+If we execute this code (and the REST APIs are also up and running), we would see a message like follows:
+
+```text
+Sync calls processed in 4 sec
+```
+
+The time both requests took to complete is consistent with the knowledge we have about the endpoints' performance:
+
+```bash
+[Books_API_request] = 2.5 sec
+[Authors_API_request] = 1.5 sec
+[Books_API_request] + [Authors_API_request] = 4 sec
+```
+
+Here, we are making _sequential and blocking_, requests. The second request for
+`authorList` will not start until the first request for `bookList` completes. However, both requests are not dependent on each other:
+We could do both simultaneously and still receive the same results.
+
+## Multi-threading with CompletableFuture
+
+The `java.net.http.HttpClient` has a non-blocking version of its `send` method: [sendAsync](<https://docs.oracle.com/en/java/javase/12/docs/api/java.net.http/java/net/http/HttpClient.html#sendAsync(java.net.http.HttpRequest,java.net.http.HttpResponse.BodyHandler)>).
+
+```java
+public abstract <T> CompletableFuture<HttpResponse<T>> sendAsync​(
+  HttpRequest request,
+  HttpResponse.BodyHandler<T> responseBodyHandler)
+```
+
+Instead of returning a string response directly, this method returns a `CompletableFuture`.
+The [CompletableFuture](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html) class is a
+wrapper for the result of an operation that may or may not have finished yet.
+
+When using the synchronous method `HttpResponse.send`, once execution reaches `client.send(...)`, the main application thread will pause and block every other action until the server returns a response (or the request fails). However, `HttpResponse.sendAsync` will not block execution; it will immediately return the `CompletableFuture` instance and continue execution to the next line.
+
+The request may or may not have been completed, so`CompletableFuture` could be in a _loading_ state. If we want to do something with the result once the request completes, we can register a listener function to the Future with `Future.thenApply`:
+
+```java
+CompletableFuture<String> response = client
+  .sendAsync(request, BodyHandlers.ofString())
+  .thenApply((httpResponse) -> httpResponse.body());
+
+// of using the static method representation:
+
+CompletableFuture<String> response = client
+  .sendAsync(request, BodyHandlers.ofString())
+  .thenApply(HttpResponse::body);
+
+```
+
+The method `thenApply` works similarly to Java Stream's [map](https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html#map-java.util.function.Function-): Chain a function that will be executed with the result of the previous operation as a parameter; that function then transforms the data and returns something else (in our example, the function transforms the `HttpResponse` to a `String`).
+
+While this may be confusing, let us continue with our example to make things more transparent.
+
+The following function is an asynchronous version of the `fetchSync` function we wrote before:
+
+```java
+private static <T> CompletableFuture<List<T>> fetchAsync(String url) {
+    // create a client
+    var client = HttpClient.newHttpClient();
+
+    // create a request
+    var request = HttpRequest
+      .newBuilder(URI.create(url))
+      .header("accept", "application/json")
+      .build();
+
+    // use the client to send the request
+    final var response = client
+      .sendAsync(request, BodyHandlers.ofString())
+      .thenApply(HttpResponse::body)
+      .thenApply(App::<T>parseJSON);
+
+    // the response:
+    return response;
+  }
+```
+
+This function then can be called as follows:
+
+```java
+CompletableFuture<List<Book>> booksFuture = fetchAsync(
+  "https://[your-api-here]/api/books"
+);
+CompletableFuture<List<Author>> authorsFuture = fetchAsync(
+  "https://[your-api-here]/api/authors"
+);
+```
+
+Here, Java automatically detects the types of the `booksFuture` and `authorsFuture` variables and passes the correct class type to the generic function.
+
+If we were to execute these functions as they are, we would see no results at all. This is because the application won't wait for the server responses to complete. To block execution and wait for a `CompletableFuture` to finish, we can use the following code:
+
+```java
+CompletableFuture<List<Book>> booksFuture = fetchAsync(
+  "https://[your-api-here]/api/books"
+);
+CompletableFuture<List<Author>> authorsFuture = fetchAsync(
+  "https://[your-api-here]/api/authors"
+);
+booksFuture.get();
+authorsFuture.get();
+```
+
+We now measure the time this code snippet takes. The following is the measurement result:
+
+```text
+Async calls processed in 2 sec
+```
+
+Both requests took 2 seconds. That is half the time it took to make both requests with blocking requests!
+
+Let us convert the time to milliseconds to better assess what is happening here:
+
+```bash
+# Making just the book request:
+Calls processed in 2503 sec
+# Making just the author request:
+Calls processed in 1505 sec
+
+# Both as synchronous calls:
+Calls processed in 4343 sec
+
+# Both as asynchronous calls:
+Calls processed in 2504 sec
+```
+
+When we run both requests in parallel, we can see that the total time it takes to complete both tasks is equal to the time it takes to complete the longest of them (in this case, the books request, which takes 2.5 seconds).
+
+This is a significant improvement over the synchronous/blocking calls, whose total time equals the sum of the time it takes to make each request one after the other.
+
+## Long operations
+
+Java's `CompletableFuture` is not just a good way to handle network requests. Any function that may take a long time is a good candidate for being handled through Futures: Reading and writing files, and memory-intensive operations.
+
+For instance, we can simulate a long-running operation with the following function:
+
+```java
+static CompletableFuture<String> longRunningOperation() {
+    return CompletableFuture.supplyAsync(
+      () -> {
+        sleep(5000);
+        return "Success";
+      }
+    );
+  }
+
+  static void sleep(long milliseconds) {
+    try {
+      Thread.sleep(milliseconds);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  // ....
+
+  var futureResult = longRunningOperation();
+  System.out.println("Getting result of long running operation:");
+  System.out.println(futureResult.get());
+
+  /*
+  > "Getting result of long running operation:"
+  > "Success"
+  */
+```
+
+The method `CompletableFuture.supplyAsync` gets a thread from ` ForkJoinPool#commonPool()`, and executes the lambda function in that thread.
+
+## Conclusion
+
+`CompletableFuture` is a robust tool that should be in any Java developer's toolset.
+
+It provides a native way to schedule work in parallel threads, which is particularly useful for making network requests to remote servers. Its API provides many practical methods to orchestrate asynchronous calls better, giving developers control to improve their application's performance.
+
+Other languages have interfaces similar to `CompletableFuture`. For instance, JavaScript has [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), which is a concept almost identical to Java's Futures.
+
+If we don't need to share resources between threads, Java Futures and the Concurrency API can be a simpler alternative to classic classes and interfaces like `Thread` and `Runnable`. However, For more low-level tasks requiring synchronization and memory handling across all threads, `Thread` is still a powerful tool.

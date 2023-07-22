@@ -3,8 +3,9 @@ import mapSeriesSlutToTitle from 'app/helpers/blog-series-slug'
 import { getAllPosts } from 'app/helpers/page-fetcher'
 import { PostInfo } from 'app/models/interfaces'
 import Link from 'next/link'
+import { DynamicPageParams, StaticParams } from 'blog_constants'
 
-const Home = async ({ params }: { params: { series: string } }) => {
+const Home = async ({ params }: DynamicPageParams<'series'>) => {
   const posts: Array<PostInfo> = getAllPosts().filter(
     (post) => post.frontmatter.series === params.series
   )
@@ -27,20 +28,18 @@ const Home = async ({ params }: { params: { series: string } }) => {
 
 export default Home
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): StaticParams<'series'> {
   const posts = getAllPosts()
 
   const postsWithSeries = new Set(
     posts
       .filter((post) => post.frontmatter.series)
-      .map((post) => post.frontmatter.series)
+      .map((post) => post.frontmatter.series) as string[]
   )
 
   return Array.from(postsWithSeries).map((series) => {
     return {
-      params: {
-        series,
-      },
+      series,
     }
   })
 }

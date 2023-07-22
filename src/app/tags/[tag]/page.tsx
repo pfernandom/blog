@@ -5,17 +5,9 @@ import Bio from '../../_components/bio'
 import { getDataFile } from '../../helpers/data-fetchers'
 import { getAllPosts } from '../../helpers/page-fetcher'
 import { Metadata, PostInfo } from '../../models/interfaces'
+import { DynamicPageParams, StaticParams } from 'blog_constants'
 
-const POSTS_PER_PAGE = 5
-
-function getTotalPages(postsCount: number) {
-  return (
-    Math.floor(postsCount / POSTS_PER_PAGE) +
-    (postsCount % POSTS_PER_PAGE > 0 ? 1 : 0)
-  )
-}
-
-const TagHomePage = async ({ params }: { params: { tag: string } }) => {
+const TagHomePage = async ({ params }: DynamicPageParams<'tag'>) => {
   const allPosts = getAllPosts().filter((post) =>
     post.frontmatter.key_words.includes(params.tag)
   )
@@ -45,7 +37,7 @@ const TagHomePage = async ({ params }: { params: { tag: string } }) => {
 
 export default TagHomePage
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): StaticParams<'tag'> {
   const tags = new Set(
     getAllPosts()
       .flatMap((post) => post.frontmatter.key_words)
@@ -53,9 +45,7 @@ export async function generateStaticParams() {
   )
 
   const paths = new Array(...tags).map((tag) => ({
-    params: {
-      tag,
-    },
+    tag,
   }))
 
   return paths

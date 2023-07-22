@@ -4,6 +4,7 @@ import Bio from '../_components/bio'
 import { getDataFile } from '../helpers/data-fetchers'
 import { getAllPosts } from '../helpers/page-fetcher'
 import { Metadata, PostInfo } from '../models/interfaces'
+import { StaticParams } from 'blog_constants'
 
 const POSTS_PER_PAGE = 5
 
@@ -46,16 +47,14 @@ const HomePage = async ({ params }: { params: { page: string } }) => {
 
 export default HomePage
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): StaticParams<'page'> {
   const postsCount = getAllPosts().length
   const total = getTotalPages(postsCount)
 
   const paths = Array(total)
     .fill(0)
     .map((el, index) => ({
-      params: {
-        page: (index + 2).toString(),
-      },
+      page: (index + 2).toString(),
     }))
 
   return paths

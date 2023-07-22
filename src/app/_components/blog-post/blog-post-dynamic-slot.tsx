@@ -6,14 +6,14 @@ import m from 'app/imports'
 import { PostInfo } from 'app/models/interfaces'
 
 export default function DynamicSlot({
-  post,
+  postPath,
   onLoad,
 }: {
-  post: PostInfo
+  postPath: string
   onLoad?: () => void
 }) {
   const DynamicBlogPost: LoadableComponent = dynamic(
-    () => m(post.postPath?.replace('/index.mdx', '')?.replace('src/app/', '')),
+    () => m(postPath?.replace('/index.mdx', '')?.replace('src/app/', '')),
     {
       ssr: true,
       loading: (loadingProps) => {

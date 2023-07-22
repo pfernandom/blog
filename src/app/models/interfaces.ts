@@ -8,6 +8,7 @@ export interface RGBColor {
 }
 
 export interface Post {
+  slug?: string
   title: string
   date: string
   description: Array<string>
@@ -28,7 +29,7 @@ export interface Post {
 
 export interface PostInfo {
   slug: string
-  postPath: string,
+  postPath: string
   frontmatter: Post
   content?: string
 }

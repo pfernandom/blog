@@ -17,10 +17,14 @@ export default function PageComments({
   slug,
   firebaseConfig,
 }: {
-  slug: string
+  slug: string | undefined
   firebaseConfig: FirebaseOptions
 }) {
   const [firebase] = useState(getFirebase(firebaseConfig))
+
+  if (!slug) {
+    return <></>
+  }
 
   return (
     <ErrorBoundary fallbackComponent={<></>}>

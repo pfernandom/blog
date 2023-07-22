@@ -33,4 +33,10 @@ export default class UrlManager {
     }
     return slug.replace(CONTENT_ROOT, 'blog')
   }
+
+  getSlugFromPostInfo(post: Post) {
+    const date = new Date(post.date)
+
+    return `blog/${date.getFullYear()}/${date.getMonth() + 1}/${post.slug}`
+  }
 }

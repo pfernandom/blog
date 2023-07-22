@@ -40,6 +40,7 @@ const sentryWebpackPluginOptions = {
 export default withSentryConfig(
   bundle(
     withMDX({
+      output: 'export',
       experimental: {
         newNextLinkBehavior: true,
         mdxRs: true,

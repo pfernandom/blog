@@ -1,16 +1,15 @@
-import { PostInfo } from 'app/models/interfaces'
+import { Post, PostInfo } from 'app/models/interfaces'
 import { Metadata } from 'next'
 
 export async function getBlogPostSEO(
-  post: PostInfo,
+  post: Post,
   seoImages: string[],
   pageLinks: { next: string | null; prev: string | null }
 ): Promise<Metadata> {
   const BLOG_POST_IMG_WIDTH = 440
   const BLOG_POST_IMG_HEIGHT = 220
 
-  const { title, description, date, hero_image_alt, key_words } =
-    post.frontmatter
+  const { title, description, date, hero_image_alt, key_words } = post
   const url = 'https://pfernandom.github.io'
 
   const imageList = seoImages.map((image) => ({

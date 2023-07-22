@@ -16,6 +16,7 @@ export interface FileInfo {
 }
 
 export interface Post {
+  slug?: string
   title: string
   date: string
   description: Array<string>
@@ -110,7 +111,7 @@ export class LocalContentManager implements ContentManager {
       }))
   }
 
-  fetch(slug: string): Promise<PostInfo | undefined> {
+  fetch(): Promise<PostInfo | undefined> {
     throw new Error('Method not implemented.')
   }
 

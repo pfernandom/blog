@@ -1,9 +1,5 @@
 {
   "ts-node": {
-    // "esm": true,
-    // "moduleTypes": {
-    //   "*.mjs": "mts"
-    // },
     "compilerOptions": {
       "target": "esnext",
       "module": "commonjs",
@@ -35,19 +31,20 @@
     ]
   },
   "paths": {
-    "app/*": ["./src/app/*"]
+    "app/*": ["./src/app/*"],
+    "blog-types": ["./types.ts"]
   },
   "include": [
     "next-env.d.ts",
     "src/app/**/*.tsx",
     "src/app/**/*.ts",
     "tests/**/*.ts",
+    "tests/**/*.mts",
     "scripts/gen-imports.mts",
     "scripts/*.ts",
     "scripts/resize.mts",
     "scripts/mdxToMd.mts",
-    ".next/types/**/*.ts"
-  ],
+    ".next/types/**/*.ts" ],
   "exclude": [
     "node_modules",
     "cypress",

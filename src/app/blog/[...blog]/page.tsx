@@ -1,27 +1,20 @@
-import BlogPostActions from 'app/_components/blog-post/blog-post-actions'
 import DynamicSlot from 'app/_components/blog-post/blog-post-dynamic-slot'
-import BlogPostFooter from 'app/_components/blog-post/blog-post-footer'
-import {
-  BlogPostSeries,
-  getNextAndPrevSeries,
-} from 'app/_components/blog-post/blog-post-series'
+import { getNextAndPrevSeries } from 'app/_components/blog-post/blog-post-series'
+import { BlogPageComponent } from 'app/blog/[...blog]/blog-page'
+import ContentMerger from 'app/content-manager/content-merger'
 import { LocalContentManager } from 'app/content-manager/manager'
-import mapSeriesSlutToTitle from 'app/helpers/blog-series-slug'
+import { StaticContentManager } from 'app/content-manager/static-content-manager'
 import urlGetterFactory from 'app/helpers/url-getter-factory'
-import { FirebaseOptions } from 'firebase/app'
+import { DynamicPageParams, StaticParams } from 'blog_constants'
 import { Metadata } from 'next'
-import Link from 'next/link'
-import { PostInfo } from '../../models/interfaces'
+import { Post } from '../../models/interfaces'
 import { getBlogPostSEO } from './metadata'
-import PageComments from './page-comments'
+import Oops from './oops'
 
-type Props = {
-  params: { blog: string[] }
-  searchParams: { [key: string]: string | string[] | undefined }
-}
+type Props = DynamicPageParams<['blog']>
 
-function getNextAndPrev(posts: Array<PostInfo>, currentPost: PostInfo) {
-  const filtered = posts.filter((p) => p.frontmatter.published)
+function getNextAndPrev(posts: Array<Post>, currentPost: Post) {
+  const filtered = posts.filter((p) => p.published)
 
   const postIndex = filtered.findIndex((p) => p.slug === currentPost?.slug)
   const prevIndex = postIndex - 1
@@ -40,44 +33,46 @@ function getPageData(slug: string) {
 
   const allPosts = contentManager.fetchAllSync()
 
-  const posts: Array<PostInfo> = allPosts.map((post) => {
-    post.content = ''
-    return post
+  const postsAndPaths: Array<[Post, string]> = allPosts.map((post) => {
+    if (!post.frontmatter.slug) {
+      post.frontmatter.slug = post.slug
+    }
+    return [post.frontmatter, post.postPath]
   })
 
   // TODO: Handle default case
-  const post =
-    posts.find((post: PostInfo) => {
-      return post.slug.endsWith(slug)
-    }) ?? posts[0]
+  const postAndPath = postsAndPaths.find((post) => {
+    return post[0].slug?.endsWith(slug)
+  })
 
-  const seriesPosts = posts.filter(
-    (post) =>
-      post.frontmatter.series &&
-      post.frontmatter.series === post?.frontmatter.series
-  )
+  if (!postAndPath) {
+    return null
+  }
+  const [post, postPath] = postAndPath
+  const posts = postsAndPaths.map(([post]) => post)
+
+  const seriesPosts = posts.filter((p) => p.series && p.series === post?.series)
 
   const getPageUrl = urlGetterFactory(host)
   const prevAndNext = getNextAndPrev(posts, post)
   const { prevInSeries, nextInSeries } = getNextAndPrevSeries(post, seriesPosts)
   const { prev, next } = prevAndNext
 
-  const { frontmatter } = post
-  const seoImages = [
-    frontmatter.hero_image_original ?? null,
-    frontmatter.hero_image,
-  ]
+  const seoImages = [post.hero_image_original ?? null, post.hero_image]
     .filter((img) => img != null)
     .map((img) => getPageUrl(img as string, true))
 
   const isPartOfSeries = seriesPosts.length > 1
-
+  const prevInSeriesSlug = prevInSeries[prevInSeries.length - 1]?.slug
+  const nextInSeriesSlug = nextInSeries[0]?.slug
   const prevS =
-    prevInSeries.length > 0
-      ? getPageUrl(prevInSeries[prevInSeries.length - 1].slug)
+    prevInSeries.length > 0 && prevInSeriesSlug
+      ? getPageUrl(prevInSeriesSlug)
       : null
   const nextS =
-    nextInSeries.length > 0 ? getPageUrl(nextInSeries[0].slug) : null
+    nextInSeries.length > 0 && nextInSeriesSlug
+      ? getPageUrl(nextInSeriesSlug)
+      : null
 
   return {
     post,
@@ -87,6 +82,7 @@ function getPageData(slug: string) {
     prev,
     next,
     seoImages,
+    postPath,
     pageLinks: { next: nextS, prev: prevS },
   }
 }
@@ -94,11 +90,13 @@ function getPageData(slug: string) {
 // or Dynamic metadata
 export async function generateMetadata({
   params,
-  searchParams,
 }: Props): // parent: ResolvingMetadata
 Promise<Metadata> {
-  console.log({ params, searchParams })
-  const { post, seoImages, pageLinks } = getPageData(params['blog'].join('/'))
+  const pageData = getPageData(params['blog'].join('/'))
+  if (!pageData) {
+    return {}
+  }
+  const { post, seoImages, pageLinks } = pageData
   return getBlogPostSEO(post, seoImages, pageLinks)
 }
 
@@ -107,84 +105,94 @@ export default async function BlogPage({
 }: {
   params: { blog: string[] }
 }) {
-  const { post, isPartOfSeries, host, seriesPosts, prev, next } = getPageData(
-    params['blog'].join('/')
-  )
-
-  // const content = await m(post?.postPath)
-  // const MDXContent = content
-  // console.log({ MDXContent })
-  // const content = '<div></div>'
-
-  const {
-    F_API_KEY,
-    F_AUTH_DOMAIN,
-    F_PROJECT_ID,
-    F_STORAGE_BUCKET,
-    F_MESSAGING_SENDER_ID,
-    F_APP_ID,
-    F_MEASUREMENT_ID,
-  } = process.env
-
-  const firebaseConfig: FirebaseOptions = {
-    apiKey: F_API_KEY,
-    authDomain: F_AUTH_DOMAIN,
-    projectId: F_PROJECT_ID,
-    storageBucket: F_STORAGE_BUCKET,
-    messagingSenderId: F_MESSAGING_SENDER_ID,
-    appId: F_APP_ID,
-    measurementId: F_MEASUREMENT_ID,
+  const host = process.env['SITE_URL'] ?? ''
+  const contentMerger = new ContentMerger()
+  const slug = params['blog'].join('/')
+  if (!contentMerger.isPost(slug)) {
+    return (
+      <Oops
+        message={'Blog post not in list'}
+        slug={slug}
+        allSlugs={contentMerger.allPosts.map((p) => p.slug)}
+      />
+    )
   }
 
-  return (
-    <>
-      <header>
-        <div style={{ marginBottom: '1em' }}>
-          <Link href="/"> &larr; Back to all posts</Link>
-        </div>
-        <h1>{post.frontmatter.title}</h1>
-      </header>
-      <div>
-        {isPartOfSeries && (
-          <h2 className="blog-series-subtitle">
-            From the series:{' '}
-            <Link
-              href={'/series/' + post.frontmatter.series}
-              style={{ textDecoration: 'underline' }}
-            >
-              {mapSeriesSlutToTitle(post.frontmatter.series as string)}
-            </Link>
-          </h2>
-        )}
+  if (contentMerger.isMDXPost(slug)) {
+    const maybePost = contentMerger.fetchMDXContent(slug)
+    if (!maybePost) {
+      return (
+        <Oops message={'Post identified as MDX, but it has no MDX content'} />
+      )
+    }
+    const { post, postPath, isPartOfSeries, seriesPosts, prev, next } =
+      maybePost
 
-        <BlogPostActions host={host} {...post} />
+    return (
+      <BlogPageComponent
+        title={post.title}
+        isPartOfSeries={isPartOfSeries}
+        seriesSlug={post.series as string}
+        post={post}
+        host={host}
+        seriesPosts={seriesPosts}
+        prev={prev}
+        next={next}
+      >
+        <DynamicSlot postPath={postPath} />
+      </BlogPageComponent>
+    )
+  }
 
-        <BlogPostSeries post={post} seriesPosts={seriesPosts} />
+  const maybeStaticPost = contentMerger.fetchStaticContent(slug)
 
-        <DynamicSlot post={post} />
+  if (maybeStaticPost) {
+    const { content, post, isPartOfSeries, seriesPosts, prev, next } =
+      maybeStaticPost
 
-        <PageComments slug={post.slug} firebaseConfig={firebaseConfig} />
+    return (
+      <BlogPageComponent
+        title={post.title}
+        isPartOfSeries={isPartOfSeries}
+        seriesSlug={post.series as string}
+        seriesPosts={seriesPosts}
+        post={post}
+        host={host}
+        prev={prev}
+        next={next}
+      >
+        {content}
+      </BlogPageComponent>
+    )
+  }
 
-        <BlogPostFooter prev={prev} next={next} />
-      </div>
-    </>
-  )
+  return <Oops message={'Not static nor MDX'} />
 }
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): StaticParams<['blog']> {
   const contentManager = new LocalContentManager()
 
   const posts = await contentManager.fetchAll()
+
+  const staticContentManager = new StaticContentManager()
+  const staticPosts = staticContentManager.getStaticPostsPaths()
+
+  const params = staticPosts
+    .filter((post) => post.content.slug)
+    .map((post) => post.content.slug as string)
+    .map((slug) => {
+      return {
+        blog: [...slug.split('/').slice(1)],
+      }
+    })
 
   const paths = posts
     .filter((post) => post.frontmatter.subblog_slug?.includes('software'))
     .map((post) => {
       return {
-        params: {
-          blog: [...post.slug.split('/').slice(1)],
-        },
+        blog: [...post.slug.split('/').slice(1)],
       }
     })
 
-  return paths
+  return [...paths, ...params]
 }

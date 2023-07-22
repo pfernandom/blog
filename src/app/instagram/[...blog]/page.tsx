@@ -1,11 +1,9 @@
-import React from 'react'
-import { NextPage } from 'next'
 import Link from 'next/link'
 
-import { InstagramPost } from 'app/models/InstagramPost'
-import { getAllPosts } from 'app/helpers/page-fetcher'
-import { InstagramLinkParams, PostInfo } from 'app/models/interfaces'
 import { InstagramDataService } from 'app/api/instagram-post'
+import { getAllPosts } from 'app/helpers/page-fetcher'
+import { InstagramPost } from 'app/models/InstagramPost'
+import { PostInfo } from 'app/models/interfaces'
 import dynamic from 'next/dynamic'
 
 export default function InstagramLink({
@@ -53,7 +51,7 @@ export default function InstagramLink({
   )
 }
 
-export async function generateStaticParams(): Promise<any[]> {
+export async function generateStaticParams(): Promise<unknown[]> {
   const posts = getAllPosts()
 
   const isProd = process.env.NODE_ENV === 'production'

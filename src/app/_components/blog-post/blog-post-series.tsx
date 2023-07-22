@@ -1,25 +1,27 @@
 import Link from 'next/link'
 import React from 'react'
-import { PostInfo } from 'app/models/interfaces'
+import { Post, PostInfo } from 'app/models/interfaces'
 
 export function BlogPostSeries({
   post,
   seriesPosts,
 }: {
-  post: PostInfo
-  seriesPosts: PostInfo[]
+  post: Post
+  seriesPosts: Post[]
 }) {
   if (seriesPosts.length <= 1) {
     return <></>
   }
   const { prevInSeries, nextInSeries } = getNextAndPrevSeries(post, seriesPosts)
 
-  const allSeries = [
-    ...prevInSeries.map((post) => [post, false]),
-    [post, true],
-    ...nextInSeries.map((post) => [post, false]),
-  ].map(([post, isSelected], index) =>
-    seriesLink(post as PostInfo, isSelected as boolean, index)
+  const seriesAndSelected: [Post, boolean][] = [
+    ...prevInSeries.map((post) => [post, false] as [Post, boolean]),
+    [post, true] as [Post, boolean],
+    ...nextInSeries.map((post) => [post, false] as [Post, boolean]),
+  ]
+
+  const allSeries = seriesAndSelected.map(([post, isSelected], index) =>
+    seriesLink(post, isSelected as boolean, index)
   )
 
   return (
@@ -31,11 +33,11 @@ export function BlogPostSeries({
   )
 }
 
-function seriesLink(post: PostInfo, selected = false, index: number) {
+function seriesLink(post: Post, selected = false, index: number) {
   const Text = () => (
     <div className="series-text">
       <span className="batch">{index + 1}</span>{' '}
-      <span className="text">{post.frontmatter.title}</span>
+      <span className="text">{post.title}</span>
     </div>
   )
 
@@ -44,7 +46,7 @@ function seriesLink(post: PostInfo, selected = false, index: number) {
       {selected ? (
         <Text />
       ) : (
-        <Link href={`/${post.slug}`} title={`Posted on ${post.frontmatter.date}`}>
+        <Link href={`/${post.slug}`} title={`Posted on ${post.date}`}>
           <Text />
         </Link>
       )}
@@ -52,12 +54,12 @@ function seriesLink(post: PostInfo, selected = false, index: number) {
   )
 }
 
-export function getNextAndPrevSeries(post: PostInfo, series: PostInfo[]) {
+export function getNextAndPrevSeries(post: Post, series: Post[]) {
   const prevInSeries = series.filter(
-    (p) => p.slug != post.slug && p.frontmatter.date < post.frontmatter.date
+    (p) => p.slug != post.slug && p.date < post.date
   )
   const nextInSeries = series.filter(
-    (p) => p.slug != post.slug && p.frontmatter.date >= post.frontmatter.date
+    (p) => p.slug != post.slug && p.date >= post.date
   )
 
   return { prevInSeries, nextInSeries }

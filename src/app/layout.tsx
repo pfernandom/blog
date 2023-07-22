@@ -7,6 +7,8 @@ import { Metadata as AppMetadata } from 'app/models/interfaces'
 import { Metadata } from 'next'
 import News from './_components/news'
 import SocialPane from './_components/social'
+import { WebVitals } from './_components/web-vitals'
+import Script from 'next/script'
 
 export async function generateMetadata(): Promise<Metadata> {
   const metadata: AppMetadata = await getDataFile('src/app/_data/metadata.json')
@@ -26,10 +28,31 @@ export default function RootLayout({
   //     registerSW(navigator, pageProps.isProd)
   //   }
   // })
+  const isProd = process.env.NODE_ENV === 'production'
 
   return (
     <html lang="en">
       <body>
+        {isProd && (
+          <>
+            <WebVitals />
+            <link
+              rel="stylesheet"
+              type="text/css"
+              href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css"
+            />
+            <Script
+              src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.1/cookieconsent.min.js"
+              data-cfasync="false"
+              strategy="afterInteractive"
+            ></Script>
+            <Script src="/rollbar.js" strategy="lazyOnload"></Script>
+            <Script
+              src="/cookieconsent.js"
+              strategy="afterInteractive"
+            ></Script>
+          </>
+        )}
         {/* <Head>
           <meta
             name="viewport"

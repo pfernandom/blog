@@ -1,16 +1,22 @@
 'use client'
 
-import React from "react";
-import urlGetterFactory from "app/helpers/url-getter-factory";
-import { PostInfo } from "app/models/interfaces";
-import ShareButtons from "../share-buttons";
+import React from 'react'
+import urlGetterFactory from 'app/helpers/url-getter-factory'
+import { Post, PostInfo } from 'app/models/interfaces'
+import ShareButtons from '../share-buttons'
 
 export default function BlogPostActions({
   slug,
-  frontmatter: { date, title, description },
+  date,
+  title,
+  description,
   host,
-}: PostInfo & { host: string }) {
-  const getPageUrl = urlGetterFactory(host);
+}: Post & { host: string }) {
+  const getPageUrl = urlGetterFactory(host)
+
+  if (!slug) {
+    return <></>
+  }
 
   return (
     <div className="blog-post-actions">
@@ -22,8 +28,8 @@ export default function BlogPostActions({
         title={title}
         url={getPageUrl(slug)}
         author="Pedro Marquez"
-        description={description.join(". ")}
+        description={description.join('. ')}
       ></ShareButtons>
     </div>
-  );
+  )
 }

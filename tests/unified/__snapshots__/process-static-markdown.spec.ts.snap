@@ -1,0 +1,387 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parse static markdown with unified it works correctly 1`] = `
+[
+  <hr />,
+  "
+",
+  <h2>
+    slug: mypost
+title: This is a test post
+date: '1988-06-19'
+description: ['line 1', 'line 2']
+hero_image: './hero.jpeg'
+hero_image_alt: 'A hero image for this post about state management'
+key_words: test, post
+published: true
+legacy: true
+test: true
+  </h2>,
+  "
+",
+  <h1>
+    Test post
+  </h1>,
+  "
+",
+  <p>
+    This is only a test
+  </p>,
+  "
+",
+  <p>
+    <img
+      alt="alt="Hero image",width=100,height=100"
+      data-nimg="1"
+      decoding="async"
+      height={100}
+      loading="lazy"
+      onError={[Function]}
+      onLoad={[Function]}
+      src="/static/content/0_test_post/hero.jpeg?w=256&q=75"
+      srcSet="/static/content/0_test_post/hero.jpeg?w=128&q=75 1x, /static/content/0_test_post/hero.jpeg?w=256&q=75 2x"
+      style={
+        {
+          "color": "transparent",
+        }
+      }
+      width={100}
+    />
+  </p>,
+  "
+",
+  <p>
+    Click here
+  </p>,
+  "
+",
+  <pre>
+    <code
+      className="language-js language-js"
+    >
+      <span
+        className="token function"
+      >
+        main
+      </span>
+      <span
+        className="token punctuation"
+      >
+        (
+      </span>
+      <span
+        className="token punctuation"
+      >
+        )
+      </span>
+      
+
+
+      <span
+        className="token keyword"
+      >
+        function
+      </span>
+       
+      <span
+        className="token function"
+      >
+        main
+      </span>
+      <span
+        className="token punctuation"
+      >
+        (
+      </span>
+      <span
+        className="token punctuation"
+      >
+        )
+      </span>
+       
+      <span
+        className="token punctuation"
+      >
+        {
+      </span>
+      
+  console
+      <span
+        className="token punctuation"
+      >
+        .
+      </span>
+      <span
+        className="token function"
+      >
+        log
+      </span>
+      <span
+        className="token punctuation"
+      >
+        (
+      </span>
+      <span
+        className="token string"
+      >
+        'Go main!'
+      </span>
+      <span
+        className="token punctuation"
+      >
+        )
+      </span>
+      
+
+      <span
+        className="token punctuation"
+      >
+        }
+      </span>
+      
+
+    </code>
+  </pre>,
+  "
+",
+  <p>
+    <code
+      className="language-js"
+    >
+       console
+      <span
+        className="token punctuation"
+      >
+        .
+      </span>
+      <span
+        className="token function"
+      >
+        log
+      </span>
+      <span
+        className="token punctuation"
+      >
+        (
+      </span>
+      <span
+        className="token string"
+      >
+        'go'
+      </span>
+      <span
+        className="token punctuation"
+      >
+        )
+      </span>
+       
+    </code>
+  </p>,
+  "
+",
+  <p>
+    xx
+  </p>,
+  "
+",
+  "
+",
+  <h1>
+    GFM
+  </h1>,
+  "
+",
+  <h2>
+    Autolink literals
+  </h2>,
+  "
+",
+  <p>
+    <a
+      href="http://www.example.com"
+    >
+      www.example.com
+    </a>
+    , 
+    <a
+      href="https://example.com"
+    >
+      https://example.com
+    </a>
+    , and 
+    <a
+      href="mailto:contact@example.com"
+    >
+      contact@example.com
+    </a>
+    .
+  </p>,
+  "
+",
+  <h2>
+    Footnote
+  </h2>,
+  "
+",
+  <p>
+    A note
+    <sup>
+      <a
+        aria-describedby="footnote-label"
+        data-footnote-ref={true}
+        href="#user-content-fn-1"
+        id="user-content-fnref-1"
+      >
+        1
+      </a>
+    </sup>
+  </p>,
+  "
+",
+  <h2>
+    Strikethrough
+  </h2>,
+  "
+",
+  <p>
+    <del>
+      one
+    </del>
+     or 
+    <del>
+      two
+    </del>
+     tildes.
+  </p>,
+  "
+",
+  <h2>
+    Table
+  </h2>,
+  "
+",
+  <table>
+    <thead>
+      <tr>
+        <th
+          style={
+            {
+              "textAlign": "null",
+            }
+          }
+        >
+          a
+        </th>
+        <th
+          style={
+            {
+              "textAlign": "left",
+            }
+          }
+        >
+          b
+        </th>
+        <th
+          style={
+            {
+              "textAlign": "right",
+            }
+          }
+        >
+          c
+        </th>
+        <th
+          style={
+            {
+              "textAlign": "center",
+            }
+          }
+        >
+          d
+        </th>
+      </tr>
+    </thead>
+  </table>,
+  "
+",
+  <h2>
+    Tasklist
+  </h2>,
+  "
+",
+  <ul
+    className="contains-task-list"
+  >
+    
+
+    <li
+      className="task-list-item"
+    >
+      <input
+        checked={false}
+        disabled={true}
+        type="checkbox"
+      />
+       
+      to do
+    </li>
+    
+
+    <li
+      className="task-list-item"
+    >
+      <input
+        checked={true}
+        disabled={true}
+        type="checkbox"
+      />
+       
+      done
+    </li>
+    
+
+  </ul>,
+  "
+",
+  <section
+    className="footnotes"
+    data-footnotes={true}
+  >
+    <h2
+      className="sr-only"
+      id="footnote-label"
+    >
+      Footnotes
+    </h2>
+    
+
+    <ol>
+      
+
+      <li
+        id="user-content-fn-1"
+      >
+        
+
+        <p>
+          Big note. 
+          <a
+            aria-label="Back to content"
+            className="data-footnote-backref"
+            data-footnote-backref={true}
+            href="#user-content-fnref-1"
+          >
+            ↩
+          </a>
+        </p>
+        
+
+      </li>
+      
+
+    </ol>
+    
+
+  </section>,
+]
+`;

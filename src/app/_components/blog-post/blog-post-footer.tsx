@@ -1,10 +1,9 @@
+import { Post } from 'app/models/interfaces'
 import Link from 'next/link'
-import React from 'react'
-import { PostInfo } from 'app/models/interfaces'
 
 type BlogPostFooter = {
-  prev?: PostInfo | null
-  next?: PostInfo | null
+  prev?: Post | null
+  next?: Post | null
 }
 
 export default function BlogPostFooter({ prev, next }: BlogPostFooter) {
@@ -13,7 +12,7 @@ export default function BlogPostFooter({ prev, next }: BlogPostFooter) {
       {prev && (
         <li className="home-pagination__btn btn home-pagination__btn--left">
           <Link href={`/${prev.slug}`}>
-            <span> ← {prev.frontmatter.title} </span>
+            <span> ← {prev.title} </span>
           </Link>
         </li>
       )}
@@ -21,7 +20,7 @@ export default function BlogPostFooter({ prev, next }: BlogPostFooter) {
       {next && (
         <li className="home-pagination__btn btn home-pagination__btn--right">
           <Link href={`/${next.slug}`}>
-            <span>{next.frontmatter.title} →</span>
+            <span>{next.title} →</span>
           </Link>
         </li>
       )}

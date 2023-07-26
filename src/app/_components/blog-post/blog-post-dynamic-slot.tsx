@@ -6,9 +6,11 @@ import m from 'app/imports'
 
 export default function DynamicSlot({
   postPath,
+  ssr,
   onLoad,
 }: {
   postPath: string
+  ssr: string
   onLoad?: () => void
 }) {
   const DynamicBlogPost: LoadableComponent = dynamic(

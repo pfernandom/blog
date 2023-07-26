@@ -3,6 +3,7 @@ import matter from 'gray-matter'
 import { Schema, Validator } from 'jsonschema'
 import { Post } from '../manager'
 import UrlManager from '../url-manager'
+import fs from 'node:fs'
 
 function unmarshall(instance: string, schema: Schema) {
   // if (schema.id === 'http://example.com/date') {
@@ -41,4 +42,9 @@ export function fromFrontMatter(content: string) {
       2
     )} \n ${validationResult.errors.map((e) => `- ${e}`).join('\n')}`
   )
+}
+
+export function contentFromFrontMatter(filePath: string) {
+  const fm = matter(fs.readFileSync(filePath, 'utf8'))
+  return fm.content
 }

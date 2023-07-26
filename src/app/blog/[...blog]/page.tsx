@@ -10,6 +10,7 @@ import { Metadata } from 'next'
 import { Post } from '../../models/interfaces'
 import { getBlogPostSEO } from './metadata'
 import Oops from './oops'
+import { contentFromFrontMatter } from 'app/content-manager/unified/frontmatter'
 
 type Props = DynamicPageParams<['blog']>
 
@@ -139,7 +140,10 @@ export default async function BlogPage({
         prev={prev}
         next={next}
       >
-        <DynamicSlot postPath={postPath} />
+        <DynamicSlot
+          postPath={postPath}
+          ssr={contentFromFrontMatter(postPath)}
+        />
       </BlogPageComponent>
     )
   }

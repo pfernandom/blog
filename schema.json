@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "date": {
+      "id": "http://example.com/date",
+      "type": "string"
+    },
+    "description": {
+      "oneOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        { "type": "string" }
+      ]
+    },
+    "hero_height": {
+      "type": "number"
+    },
+    "hero_image": {
+      "type": "string"
+    },
+    "hero_image_alt": {
+      "type": "string"
+    },
+    "hero_image_blur": {
+      "type": "string"
+    },
+    "hero_image_original": {
+      "type": "string"
+    },
+    "hero_width": {
+      "type": "number"
+    },
+    "key_words": {
+      "oneOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "legacy": {
+      "type": "boolean"
+    },
+    "published": {
+      "type": "boolean"
+    },
+    "series": {
+      "type": "string"
+    },
+    "slug": {
+      "id": "http://example.com/slug",
+      "type": "string"
+    },
+    "social_footer": {
+      "type": "string"
+    },
+    "social_subtitle": {
+      "type": "string"
+    },
+    "social_title": {
+      "type": "string"
+    },
+    "subblog_slug": {
+      "type": "string"
+    },
+    "test": {
+      "type": "boolean"
+    },
+    "title": {
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": ["title", "description", "date"]
+}

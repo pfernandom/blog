@@ -37,7 +37,9 @@ export async function getBlogPostSEO(
     // alternates:[],
     openGraph: {
       title,
-      description: description.join('. '),
+      description: Array.isArray(description)
+        ? description.join('. ')
+        : description,
       url,
       type: 'article',
       images: imageList,

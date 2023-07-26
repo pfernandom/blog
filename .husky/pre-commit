@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+npx ts-node scripts/jsonschema.ts
+npx jest
 npm run build

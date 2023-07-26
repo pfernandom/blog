@@ -9,7 +9,7 @@ import { DynamicPageParams, StaticParams } from 'blog_constants'
 
 const TagHomePage = async ({ params }: DynamicPageParams<'tag'>) => {
   const allPosts = getAllPosts().filter((post) =>
-    post.frontmatter.key_words.includes(params.tag)
+    post.frontmatter.key_words?.includes(params.tag)
   )
 
   const metadata: Metadata = await getDataFile('src/app/_data/metadata.json')
@@ -41,7 +41,9 @@ export async function generateStaticParams(): StaticParams<'tag'> {
   const tags = new Set(
     getAllPosts()
       .flatMap((post) => post.frontmatter.key_words)
-      .map((el) => el.trim())
+      .map((el) => el?.trim())
+      .filter((el) => el)
+      .map((el) => el as string)
   )
 
   const paths = new Array(...tags).map((tag) => ({

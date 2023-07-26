@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Smoke tests Snapshot: All posts have the expected information 1`] = `
+[
+  {
+    "date": "1988-06-19",
+    "description": [
+      "line 1",
+      "line 2",
+    ],
+    "hero_image": "./hero.jpeg",
+    "hero_image_alt": "A hero image for this post about state management",
+    "key_words": "test, post",
+    "legacy": true,
+    "published": true,
+    "slug": "blog/1988/6/mypost",
+    "test": true,
+    "title": "This is a test post",
+  },
+]
+`;

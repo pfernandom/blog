@@ -25,6 +25,12 @@ export default function PostsList({ posts }: { posts: Array<PostInfo> }) {
         .map((post) => {
           const image = post.frontmatter.hero_image
           const linkHref = `/${post.slug}`
+          const { description, key_words } = post.frontmatter
+          const keywordList = key_words
+            ? typeof key_words === 'string'
+              ? key_words.split(',')
+              : key_words
+            : []
 
           return (
             <NavigationPane slug={post.slug} key={post.slug}>
@@ -38,7 +44,7 @@ export default function PostsList({ posts }: { posts: Array<PostInfo> }) {
                     style={{ width: 100, height: 100 }}
                     className="circle-image-container"
                   >
-                    {post.frontmatter.hero_image ? (
+                    {post.frontmatter.hero_image && image ? (
                       <Image
                         src={image}
                         className="circle-image"
@@ -62,17 +68,21 @@ export default function PostsList({ posts }: { posts: Array<PostInfo> }) {
               >
                 <h3 className="link-post">{post.frontmatter.title}</h3>
                 <small>{post.frontmatter.date}</small>
-                {post.frontmatter.description.map((description) => (
-                  <p
-                    key={description}
-                    dangerouslySetInnerHTML={{
-                      __html: description,
-                    }}
-                  />
-                ))}
+                {typeof description === 'string' ? (
+                  <p dangerouslySetInnerHTML={{ __html: description }} />
+                ) : (
+                  description.map((description) => (
+                    <p
+                      key={description}
+                      dangerouslySetInnerHTML={{
+                        __html: description,
+                      }}
+                    />
+                  ))
+                )}
               </Link>
               <div className="link-post-tag-list">
-                {post.frontmatter.key_words.slice(0, 5).map((keyword) => (
+                {keywordList.slice(0, 5).map((keyword) => (
                   <Link
                     key={keyword}
                     href={`/tags/${keyword}`}

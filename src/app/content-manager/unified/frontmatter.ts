@@ -1,56 +1,44 @@
+import matter, { type GrayMatterFile } from 'gray-matter'
+import { Schema, Validator } from 'jsonschema'
 import { Post } from '../manager'
-import { format, parseISO } from 'date-fns'
+import { schema } from 'app/types/jsonschema'
 import UrlManager from '../url-manager'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function validatePostData(data: { [key: string]: any }): Post {
-  const {
-    slug,
-    title,
-    date,
-    description,
-    key_words,
-    hero_image,
-    hero_image_original,
-    hero_image_blur,
-    hero_image_alt,
-    hero_width,
-    hero_height,
-    published,
-    series,
-    social_title,
-    social_subtitle,
-    social_footer,
-    test,
-    legacy,
-    subblog_slug,
-  } = data
+function unmarshall(instance: string, schema: Schema) {
+  // if (schema.id === 'http://example.com/date') {
+  //   return new Date(instance)
+  // }
+  return instance
+}
 
-  const postData = {
-    slug,
-    title,
-    date: format(parseISO(date), 'MMMM dd, yyyy'),
-    description,
-    key_words,
-    hero_image,
-    hero_image_original,
-    hero_image_blur,
-    hero_image_alt,
-    hero_width,
-    hero_height,
-    published,
-    series,
-    social_title,
-    social_subtitle,
-    social_footer,
-    test,
-    legacy,
-    subblog_slug,
+export function isValid(data: unknown) {
+  const v = new Validator()
+  const vr = v.validate(data, schema)
+  if (vr.valid) {
+    return true
+  }
+  return [false, vr.errors]
+}
+
+export function fromFrontMatter(content: string) {
+  const fm = matter(content)
+  const v = new Validator()
+  const validationResult =
+    fm.data && v.validate(fm.data, schema, { rewrite: unmarshall })
+  if (fm.data && validationResult.valid) {
+    const urlManager = new UrlManager()
+    const post = validationResult.instance
+    if (!post.slug.includes('blog/')) {
+      post.slug = urlManager.getSlugFromPostInfo(post)
+    }
+    return post as Post
   }
 
-  const urlManager = new UrlManager()
-  const fullSlug = urlManager.getSlugFromPostInfo(postData)
-  postData.slug = fullSlug
-
-  return postData
+  throw new Error(
+    `Could not parse post. Not a valid result: ${JSON.stringify(
+      fm.data,
+      null,
+      2
+    )} \n ${validationResult.errors.map((e) => `- ${e}`).join('\n')}`
+  )
 }

@@ -28,7 +28,9 @@ export default function BlogPostActions({
         title={title}
         url={getPageUrl(slug)}
         author="Pedro Marquez"
-        description={description.join('. ')}
+        description={
+          typeof description === 'string' ? description : description.join('. ')
+        }
       ></ShareButtons>
     </div>
   )

@@ -179,7 +179,7 @@ const args = yargs(hideBin(process.argv))
   .parseSync()
 
 const { name, export: exprt, ext, scale, scaleX, scaleY }: Options = args
-console.log({ args })
+
 main(process.argv[2], {
   name,
   export: exprt,

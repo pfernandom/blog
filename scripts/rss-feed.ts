@@ -35,12 +35,15 @@ const generateRssFeed = async () => {
     .filter((post) => post.frontmatter.published)
     .forEach((post) => {
       const url = `${siteURL}/${post.slug}`
+      let description = post.frontmatter.description
+      description =
+        typeof description === 'string' ? description : description.join('. ')
       feed.addItem({
         title: post.frontmatter.title,
         id: url,
         link: url,
-        description: post.frontmatter.description.join('. '),
-        content: post.frontmatter.description.join('. '),
+        description,
+        content: description,
         author: [author],
         contributor: [author],
         date: new Date(post.frontmatter.date),

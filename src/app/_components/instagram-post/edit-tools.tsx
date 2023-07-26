@@ -213,7 +213,10 @@ export default function InstagramEditTools({
           containerSize={containerSize}
           withInstagramBackground={true}
         />
-        {post.frontmatter.description.map((desc, index) => (
+        {(Array.isArray(post.frontmatter.description)
+          ? post.frontmatter.description
+          : [post.frontmatter.description]
+        ).map((desc, index) => (
           <InstagramPostView
             key={`post-${index}`}
             pageNumber={2 + index}

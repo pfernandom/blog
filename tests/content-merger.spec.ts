@@ -23,6 +23,7 @@ describe('Content Merger', function () {
   test('Fetches test static post', async function () {
     const contentMerger = new ContentMerger()
     const testSlug = '1988/6/mypost'
+    expect(contentMerger.allPosts.find((p) => p.slug === testSlug)).toBeTruthy()
     expect(contentMerger.isMDXPost(testSlug)).toBeFalsy()
     expect(contentMerger.fetchMDXContent(testSlug)).toBeFalsy()
     expect(contentMerger.fetchStaticContent(testSlug)).toBeTruthy()

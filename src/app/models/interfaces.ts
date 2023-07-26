@@ -1,30 +1,12 @@
+import { Post } from 'app/types/jsonschema'
 import { InstagramPost } from './InstagramPost'
+export { type Post } from 'app/types/jsonschema'
 
 export interface RGBColor {
   a?: number | undefined
   b: number
   g: number
   r: number
-}
-
-export interface Post {
-  slug?: string
-  title: string
-  date: string
-  description: Array<string>
-  key_words: Array<string>
-  hero_image: string
-  hero_image_original?: string
-  hero_image_blur: string
-  hero_image_alt: string
-  hero_width: number
-  hero_height: number
-  published: boolean
-  series: string | null
-  social_title: string
-  social_subtitle: string
-  social_footer: string
-  test: boolean
 }
 
 export interface PostInfo {

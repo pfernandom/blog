@@ -3,6 +3,8 @@ import fs from 'fs'
 import path from 'path'
 import parseMDX from './helpers/parse_mdx'
 import UrlManager from './url-manager'
+import { Post } from 'app/models/interfaces'
+export type { Post } from 'app/models/interfaces'
 
 export type Slug = string
 
@@ -13,28 +15,6 @@ export interface FileInfo {
   filePath: string
   dirPath: string
   subblogPath?: string
-}
-
-export interface Post {
-  slug?: string
-  title: string
-  date: string
-  description: Array<string>
-  key_words: Array<string>
-  hero_image: string
-  hero_image_original?: string
-  hero_image_blur: string
-  hero_image_alt: string
-  hero_width: number
-  hero_height: number
-  published: boolean
-  series: string | null
-  social_title: string
-  social_subtitle: string
-  social_footer: string
-  test: boolean
-  legacy: boolean
-  subblog_slug?: string
 }
 
 export interface SubBlog {

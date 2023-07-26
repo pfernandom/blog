@@ -23,6 +23,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "experimentalDecorators": true,
     "baseUrl": "./src",
     "plugins": [
       {

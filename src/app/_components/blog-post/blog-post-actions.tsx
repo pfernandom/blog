@@ -1,8 +1,7 @@
 'use client'
 
-import React from 'react'
 import urlGetterFactory from 'app/helpers/url-getter-factory'
-import { Post, PostInfo } from 'app/models/interfaces'
+import { Post } from 'app/models/interfaces'
 import ShareButtons from '../share-buttons'
 
 export default function BlogPostActions({

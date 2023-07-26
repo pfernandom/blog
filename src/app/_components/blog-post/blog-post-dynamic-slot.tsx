@@ -3,7 +3,6 @@
 import dynamic, { LoadableComponent } from 'next/dynamic'
 import React from 'react'
 import m from 'app/imports'
-import { PostInfo } from 'app/models/interfaces'
 
 export default function DynamicSlot({
   postPath,

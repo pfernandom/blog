@@ -1,7 +1,7 @@
-import matter, { type GrayMatterFile } from 'gray-matter'
+import { schema } from 'app/types/jsonschema'
+import matter from 'gray-matter'
 import { Schema, Validator } from 'jsonschema'
 import { Post } from '../manager'
-import { schema } from 'app/types/jsonschema'
 import UrlManager from '../url-manager'
 
 function unmarshall(instance: string, schema: Schema) {

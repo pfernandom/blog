@@ -35,6 +35,18 @@ cache-control = '''
 Content-Type = "application/json"
 
 [[headers]]
+for = "/@blog"
+[headers.values]
+Access-Control-Allow-Origin = "*"
+cache-control = '''
+  max-age=0,
+  no-cache,
+  no-store,
+  must-revalidate'''
+Content-Type = "application/json"
+
+
+[[headers]]
 for = "/.well-known/*"
 [headers.values]
 Access-Control-Allow-Origin = "*"

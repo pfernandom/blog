@@ -1,4 +1,4 @@
-import Image from 'app/_components/image'
+import { ImageWithFallback } from 'app/_components/image'
 import { PostInfo } from 'app/models/interfaces'
 import Link from 'next/link'
 import { ReactElement } from 'react'
@@ -6,10 +6,23 @@ import { ReactElement } from 'react'
 function NavigationPane({
   slug,
   children,
+  isPublished,
 }: {
   slug: string
+  isPublished: boolean
   children: ReactElement | ReactElement[]
 }): ReactElement {
+  if (!isPublished) {
+    return (
+      <div className="link-post-container--unpublished">
+        <div className="link-post-container--unpublished-mark">Unpublished</div>
+        <div className="link-post-container link-post-a" data-key={slug}>
+          {children}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="link-post-container link-post-a" data-key={slug}>
       {children}
@@ -18,10 +31,12 @@ function NavigationPane({
 }
 
 export default function PostsList({ posts }: { posts: Array<PostInfo> }) {
+  const isDev = process.env.NODE_ENV === 'development'
+  console.log({ isDev, posts })
   return (
     <>
       {posts
-        .filter((post) => post.frontmatter?.published)
+        .filter((post) => isDev || post.frontmatter?.published)
         .map((post) => {
           const image = post.frontmatter.hero_image
           const linkHref = `/${post.slug}`
@@ -33,7 +48,11 @@ export default function PostsList({ posts }: { posts: Array<PostInfo> }) {
             : []
 
           return (
-            <NavigationPane slug={post.slug} key={post.slug}>
+            <NavigationPane
+              slug={post.slug}
+              key={post.slug}
+              isPublished={!!post.frontmatter.published}
+            >
               <Link
                 className="post-list-image-link"
                 href={linkHref}
@@ -45,8 +64,9 @@ export default function PostsList({ posts }: { posts: Array<PostInfo> }) {
                     className="circle-image-container"
                   >
                     {post.frontmatter.hero_image && image ? (
-                      <Image
+                      <ImageWithFallback
                         src={image}
+                        fallbackSrc="/post_fallback.jpg"
                         className="circle-image"
                         alt={post.frontmatter.hero_image_alt}
                         placeholder="blur"

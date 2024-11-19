@@ -1,16 +1,9 @@
 import { schema } from 'app/types/jsonschema'
 import matter from 'gray-matter'
-import { Schema, Validator } from 'jsonschema'
+import { Validator } from 'jsonschema'
+import fs from 'node:fs'
 import { Post } from '../manager'
 import UrlManager from '../url-manager'
-import fs from 'node:fs'
-
-function unmarshall(instance: string, schema: Schema) {
-  // if (schema.id === 'http://example.com/date') {
-  //   return new Date(instance)
-  // }
-  return instance
-}
 
 export function isValid(data: unknown) {
   const v = new Validator()
@@ -24,8 +17,7 @@ export function isValid(data: unknown) {
 export function fromFrontMatter(content: string) {
   const fm = matter(content)
   const v = new Validator()
-  const validationResult =
-    fm.data && v.validate(fm.data, schema, { rewrite: unmarshall })
+  const validationResult = fm.data && v.validate(fm.data, schema)
   if (fm.data && validationResult.valid) {
     const urlManager = new UrlManager()
     const post = validationResult.instance

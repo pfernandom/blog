@@ -1,4 +1,4 @@
-import { Post, PostInfo } from 'app/models/interfaces'
+import { Post } from 'app/models/interfaces'
 import { Metadata } from 'next'
 
 export async function getBlogPostSEO(

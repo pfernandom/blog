@@ -1,6 +1,11 @@
 'use client'
 
-import NextImage, { ImageProps, ImageLoader, StaticImageData } from "next/legacy/image"
+import NextImage, {
+  ImageProps,
+  ImageLoader,
+  StaticImageData,
+} from 'next/legacy/image'
+import { useState } from 'react'
 
 const customLoader: ImageLoader = ({ src, width, quality }) => {
   // console.log('custom loader', { src, width, quality })
@@ -12,6 +17,8 @@ const customLoader: ImageLoader = ({ src, width, quality }) => {
   return `${src}?w=${width}&q=${quality || 75}`
 }
 
+type BlogImageProps = ImageProps & { scale?: number; inline?: boolean }
+
 export default function Image({
   className,
   width,
@@ -20,13 +27,15 @@ export default function Image({
   scale = 1,
   inline = false,
   ...rest
-}: ImageProps & { scale?: number; inline?: boolean }) {
+}: BlogImageProps) {
   const { src } = rest
 
   const size =
     typeof src === 'string' ? { width, height } : (src as StaticImageData)
 
-  const scaleNum = (n: number | `${number}` | undefined): `${number}`| undefined => {
+  const scaleNum = (
+    n: number | `${number}` | undefined
+  ): `${number}` | undefined => {
     if (typeof n === 'number') return `${scale * n}`
     return n
   }
@@ -49,5 +58,23 @@ export default function Image({
         />
       </span>
     </div>
+  )
+}
+
+export function ImageWithFallback(
+  props: BlogImageProps & { fallbackSrc: string }
+) {
+  const { src, fallbackSrc, alt, ...rest } = props
+  const [imgSrc, setImgSrc] = useState(src)
+
+  return (
+    <Image
+      {...rest}
+      alt={alt}
+      src={imgSrc}
+      onError={() => {
+        setImgSrc(fallbackSrc)
+      }}
+    />
   )
 }

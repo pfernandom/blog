@@ -33,11 +33,6 @@ const HomePage = async ({ params }: { params: { page: string } }) => {
 
   return (
     <>
-      {/* <Head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-        <link rel="icon" href="/favicon.ico" />
-      </Head> */}
       <Bio metadata={metadata} />
       <PostsList posts={posts} />
       <HomePagination page={parseInt(page)} totalPages={totalPages} />

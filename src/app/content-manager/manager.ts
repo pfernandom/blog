@@ -105,7 +105,9 @@ export class LocalContentManager implements ContentManager {
       imagesPath,
     })
 
-    if (!post.published) {
+    const isDev = process.env.NODE_ENV === 'development'
+
+    if (!isDev && !post.published) {
       return null
     }
 

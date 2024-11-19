@@ -1,0 +1,34 @@
+---
+title: 'The cost of poor software development environments: TDD'
+date: '2024-02-09'
+description:
+  - A small demostration of Neovim's exensibility and customization powers.
+hero_image: ./hero.jpg
+hero_image_alt: Neovim logo
+key_words:
+  - neovim
+  - vim
+  - nvim
+  - obsidian
+published: false
+legacy: true
+series: dev_environments
+---
+
+In this first post in the series of "The cost of poor software development environments", we explore an effective approach to accelerate software development through an effective automated testing strategy and how methodologies like TDD fit in that plan.
+
+This series of posts are aimed to explain how software
+development environments greatly impacts developer productivity and define what
+makes development environments great.
+
+## To TDD or not to TDD
+
+Test-driven development (TDD) is a software development process that involves writing tests before developing code, and then repeatedly testing the software against those tests. The goal of TDD is to guarantee that your codebase is testing each part of the application in isolation by writting tests first and then write the code needed to make those tests pass. Each test asserts that individual parts of the business logic work as expected. 
+
+TDD is rooted in [Agile development](https://www.agilealliance.org/agile101/) and, just like Agile, problems arise when it is implemented more like a doctrine than a set of tools you can pick from to make your life easier.
+
+I find TDD cumbersome when it is applied rigidly:
+
+- You _MUST_ write a failing test first and _then_ write just enough code to make that test pass. TDD doctrinists would claim that if you are writting the implementation first, then you're doing TDD wrong.
+
+

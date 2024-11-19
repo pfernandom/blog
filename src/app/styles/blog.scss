@@ -135,6 +135,19 @@ a.social-icon:hover {
   align-items: stretch;
 }
 
+.link-post-container--unpublished {
+  position: relative;
+}
+
+.link-post-container--unpublished-mark {
+  position: absolute;
+  right: 3em;
+  top: 1em;
+  background-color: #fafa94;
+  color: #a06800;
+  padding: 5px;
+}
+
 .link-post-tag-list {
   grid-column-end: 3;
 }

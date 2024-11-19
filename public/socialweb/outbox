@@ -1,0 +1,8 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/outbox",
+  "type": "OrderedCollection",
+  "summary": "A blog about all things coding I like",
+  "totalItems": 24,
+  "orderedItems": []
+}

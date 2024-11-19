@@ -1,0 +1,18 @@
+{
+  "subject": "acct:blog@pedromarquez.dev/",
+  "aliases": [
+    "https://pedromarquez.dev/@blog"
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/activity+json",
+      "href": "https://pedromarquez.dev/@blog"
+    },
+    {
+      "rel": "https://pedromarquez.dev/about",
+      "type": "text/html",
+      "href": "https://pedromarquez.dev/"
+    }
+  ]
+}

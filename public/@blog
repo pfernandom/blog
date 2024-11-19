@@ -1,0 +1,49 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/@blog",
+  "type": "Person",
+  "following": "https://hachyderm.io/users/pfernandom/following",
+  "followers": "https://hachyderm.io/users/pfernandom/followers",
+  "inbox": "https://activitypubdotnet.azurewebsites.net/api/Inbox",
+  "outbox": "https://pedromarquez.dev/socialweb/outbox",
+  "preferredUsername": "blog",
+  "name": "Pedro Marquez Soto - Blog",
+  "summary": "A blog about all things coding I like",
+  "url": "https://pedromarquez.dev/",
+  "discoverable": true,
+  "memorial": false,
+  "icon": {
+    "type": "Image",
+    "mediaType": "image/jpeg",
+    "url": "https://pedromarquez.dev/profile-pic.jpg"
+  },
+  "image": {
+    "type": "Image",
+    "mediaType": "image/jpeg",
+    "url": "https://pedromarquez.dev/profile-pic.jpg"
+  },
+  "publicKey": {
+    "@context": "https://w3id.org/security/v1",
+    "@type": "Key",
+    "id": "https://pedromarquez.dev/@blog#main-key",
+    "owner": "https://pedromarquez.dev/@blog",
+    "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoZhGCr6/4UWVGFXPIw2X\nxTV9rFx8arGlIxtDQYdLzOtoVAJOn6tgmPsy4ogyY+KQurB159CrkKX/l+vqzrue\n8AKYBF31iyhwr5Ir/dWNrMSHRThRPTWKYaI5bATRydYi8bgVRkWhOxT+8BNEWChF\n9KXaYFB9UAIQMRLSirva7eVgYf9qW7/nTryCMPQ3occalpZxnSD3CxllQQnGeuG4\nVOt3BhuhJTPdwmV6XwI/MSjO9f68u4Lz9Lrt2PnxpeYG3i4psXwx1NKp+HOrsEQN\nEckzzwMMZx0VO3DbSJy1E6ro7BQmEnFnYNblr2L5iAVCE+X2iBFhRdHB9nfSog6b\nPwIDAQAB\n-----END PUBLIC KEY-----\n"
+  },
+  "attachment": [
+    {
+      "type": "PropertyValue",
+      "name": "Blog",
+      "value": "<a href=\"https://pedromarquez.dev\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\" translate=\"no\"><span class=\"invisible\">https://</span><span class=\"\">pedromarquez.dev</span><span class=\"invisible\"></span></a>"
+    },
+    {
+      "type": "PropertyValue",
+      "name": "LinkedIn",
+      "value": "<a href=\"https://www.linkedin.com/in/pedro-fernando-márquez-soto-1218a345\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\" translate=\"no\"><span class=\"invisible\">https://www.</span><span class=\"\">linkedin.com/in/pedro-fernando-márquez-soto-1218a345</span><span class=\"invisible\"></span></a>"
+    },
+    {
+      "type": "PropertyValue",
+      "name": "GitHub",
+      "value": "<a href=\"https://github.com/pfernandom\" target=\"_blank\" rel=\"nofollow noopener noreferrer me\" translate=\"no\"><span class=\"invisible\">https://</span><span class=\"\">github.com/pfernandom</span><span class=\"invisible\"></span></a>"
+    }
+  ]
+}

@@ -1,19 +1,34 @@
 [build]
-    publish = "out/"
-    command = "npm run deploy"
+publish = "out/"
+command = "npm run deploy"
 
 [context.production]
-  environment = { NODE_VERSION = "16.13.0" }
+environment = { NODE_VERSION = "16.13.0" }
 
 [context.branch-deploy]
-  environment = { NODE_VERSION = "16.13.0" }
+environment = { NODE_VERSION = "16.13.0" }
 
 [[headers]]
-    for = "/*"
-    [headers.values]
-        Access-Control-Allow-Origin= "pedromarquez.dev, pfernandom.github.io"
+for = "/*"
+[headers.values]
+Access-Control-Allow-Origin = "pedromarquez.dev, pfernandom.github.io"
 
 [[headers]]
-    for = "/rss/*"
-    [headers.values]
-        Access-Control-Allow-Origin= "*"
+for = "/rss/*"
+[headers.values]
+Access-Control-Allow-Origin = "*"
+cache-control = '''
+  max-age=0,
+  no-cache,
+  no-store,
+  must-revalidate'''
+
+[[headers]]
+for = "/socialweb/*"
+[headers.values]
+Access-Control-Allow-Origin = "*"
+cache-control = '''
+  max-age=0,
+  no-cache,
+  no-store,
+  must-revalidate'''

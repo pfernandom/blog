@@ -1,0 +1,11 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_10_pytorch-classification",
+  "type": "Note",
+  "attributedTo": "https://pedromarquez.dev/@blog",
+  "published": "2022-10-03T05:00:00.000Z",
+  "content": "<h1>Create a ML classification model with PyTorch<h1> <p>One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use PyTorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/10/pytorch-classification\">here</a>",
+  "to": [
+    "https://www.w3.org/ns/activitystreams#Public"
+  ]
+}

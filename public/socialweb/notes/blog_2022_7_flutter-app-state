@@ -1,0 +1,11 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_7_flutter-app-state",
+  "type": "Note",
+  "attributedTo": "https://pedromarquez.dev/@blog",
+  "published": "2022-07-18T05:00:00.000Z",
+  "content": "<h1>Managing state in Flutter apps with data streaming<h1> <p>Managing state in a Flutter app using data streams and a service locator</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/7/flutter-app-state\">here</a>",
+  "to": [
+    "https://www.w3.org/ns/activitystreams#Public"
+  ]
+}

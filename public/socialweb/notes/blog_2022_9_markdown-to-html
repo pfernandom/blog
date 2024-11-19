@@ -1,0 +1,11 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_9_markdown-to-html",
+  "type": "Note",
+  "attributedTo": "https://pedromarquez.dev/@blog",
+  "published": "2022-09-12T05:00:00.000Z",
+  "content": "<h1>Converting and customizing Markdown files to HTML with Unified, remark & rehype<h1> <p>Hosting your own blog is easier on Markdown!. Many tools exist for converting Markdown to HTML, and in this post we will learn how to use some of them.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/9/markdown-to-html\">here</a>",
+  "to": [
+    "https://www.w3.org/ns/activitystreams#Public"
+  ]
+}

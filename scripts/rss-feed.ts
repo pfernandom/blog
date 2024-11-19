@@ -5,7 +5,7 @@ import { getDataFile } from 'app/helpers/data-fetchers'
 import { getAllPosts } from 'app/helpers/page-fetcher'
 
 const generateRssFeed = async () => {
-  const posts = await getAllPosts()
+  const posts = getAllPosts()
   const metadata: Metadata = await getDataFile('src/app/_data/metadata.json')
   const siteURL = 'https://pedromarquez.dev'
   const date = new Date()
@@ -53,10 +53,56 @@ const generateRssFeed = async () => {
       })
     })
 
-  fs.mkdirSync('./public/rss', { recursive: true })
-  fs.writeFileSync('./public/rss/feed.xml', feed.rss2())
-  fs.writeFileSync('./public/rss/atom.xml', feed.atom1())
-  fs.writeFileSync('./public/rss/feed.json', feed.json1())
+  const activityPubNotes = posts
+    .filter((post) => post.frontmatter.published)
+    .map((post) => {
+      const url = `${siteURL}/${post.slug}`
+      let description = post.frontmatter.description
+      description =
+        typeof description === 'string' ? description : description.join('. ')
+
+      const content = `<h1>${post.frontmatter.title}<h1> <p>${description}</p> <p>Full content <a href="${url}">here</a>`
+
+      const noteId = post.slug.split('/').join('_')
+
+      return {
+        noteId,
+        note: {
+          '@context': 'https://www.w3.org/ns/activitystreams',
+          id: `https://pedromarquez.dev/socialweb/notes/${noteId}`,
+          type: 'Note',
+          attributedTo: 'https://pedromarquez.dev/@blog',
+          published: new Date(post.frontmatter.date).toISOString(),
+          content,
+          to: ['https://www.w3.org/ns/activitystreams#Public'],
+        },
+      }
+    })
+
+  activityPubNotes.forEach((note) => {
+    fs.mkdirSync(`./public/socialweb/notes/`, { recursive: true })
+
+    fs.writeFileSync(
+      `./public/socialweb/notes/${note.noteId}`,
+      JSON.stringify(note.note, null, 2)
+    )
+  })
+
+  fs.writeFileSync(
+    `./public/socialweb/outbox`,
+    JSON.stringify(
+      {
+        '@context': 'https://www.w3.org/ns/activitystreams',
+        id: 'https://pedromarquez.dev/socialweb/outbox',
+        type: 'OrderedCollection',
+        summary: 'A blog about all things coding I like',
+        totalItems: activityPubNotes.length,
+        orderedItems: activityPubNotes.map((note) => note.note),
+      },
+      null,
+      2
+    )
+  )
 }
 
 generateRssFeed()

@@ -1,0 +1,11 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/notes/blog_2023_2_node_golang_wasm",
+  "type": "Note",
+  "attributedTo": "https://pedromarquez.dev/@blog",
+  "published": "2023-02-13T06:00:00.000Z",
+  "content": "<h1>Running Go code inside a NodeJS app with WASM (Part 1/2, 2023)<h1> <p>In this first of two posts we explore how we can call Go functions from a NodeJS application using WebAssembly.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2023/2/node_golang_wasm\">here</a>",
+  "to": [
+    "https://www.w3.org/ns/activitystreams#Public"
+  ]
+}

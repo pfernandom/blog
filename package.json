@@ -10,6 +10,7 @@
     "lint": "next lint",
     "resize": "npx ts-node ./scripts/resize.ts",
     "static": "sh ./scripts/static.sh",
+    "rss": "ts-node ./scripts/rss-feed.ts",
     "resize-image": "npx ts-node ./scripts/resize-image.ts",
     "sitemap": "ts-node ./scripts/sitemap.ts",
     "sw-gen": "ts-node ./scripts/sw-gen.ts",
@@ -128,6 +129,7 @@
     "ts-jest": "^29.1.1",
     "ts-jest-resolver": "^2.0.1",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "4.7.4",
     "typescript-json-schema": "^0.59.0",
     "yargs": "^17.5.1"

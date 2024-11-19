@@ -1,0 +1,11 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_11_builder-design-pattern",
+  "type": "Note",
+  "attributedTo": "https://pedromarquez.dev/@blog",
+  "published": "2022-11-16T06:00:00.000Z",
+  "content": "<h1>Software Design Patterns: The builder pattern<h1> <p>The builder design pattern makes it easier to create objects with multiple parameters. In this post, we will explore how to leverage this extremely useful design pattern</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/11/builder-design-pattern\">here</a>",
+  "to": [
+    "https://www.w3.org/ns/activitystreams#Public"
+  ]
+}

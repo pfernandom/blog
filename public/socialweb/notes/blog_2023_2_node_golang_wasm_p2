@@ -1,0 +1,11 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/notes/blog_2023_2_node_golang_wasm_p2",
+  "type": "Note",
+  "attributedTo": "https://pedromarquez.dev/@blog",
+  "published": "2023-02-24T06:00:00.000Z",
+  "content": "<h1>Running Go code inside a NodeJS app with WASM (Part 2/2, 2023)<h1> <p>In the second part of two posts, we will explore how to import a compiled WASM module inside a NodeJS application.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2023/2/node_golang_wasm_p2\">here</a>",
+  "to": [
+    "https://www.w3.org/ns/activitystreams#Public"
+  ]
+}

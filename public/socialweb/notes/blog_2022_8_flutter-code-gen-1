@@ -1,0 +1,11 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_8_flutter-code-gen-1",
+  "type": "Note",
+  "attributedTo": "https://pedromarquez.dev/@blog",
+  "published": "2022-08-26T05:00:00.000Z",
+  "content": "<h1>Code-gen in Dart & Flutter: Reflection and code gen<h1> <p>Dart libraries like Mockito make heavy use of source-code generation.. In the first of this series of posts, we will explore why we need to generate Dart source code in a Flutter project and what alternatives we have.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/8/flutter-code-gen-1\">here</a>",
+  "to": [
+    "https://www.w3.org/ns/activitystreams#Public"
+  ]
+}

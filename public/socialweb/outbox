@@ -3,26 +3,193 @@
   "id": "https://pedromarquez.dev/socialweb/outbox",
   "type": "OrderedCollection",
   "summary": "A blog about all things coding I like",
-  "totalItems": 1,
+  "totalItems": 17,
   "orderedItems": [
     {
       "@context": "https://www.w3.org/ns/activitystreams",
-      "id": "https://pedromarquez.dev/socialweb/notes/1dff22b5faf3fbebc5aaf2bb5b5dbe2c",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2023_2_node_golang_wasm_p2",
       "type": "Note",
-      "content": "Running Go code inside a NodeJS app with WASM (Part 1/2, 2023)",
-      "url": "https://pedromarquez.dev/blog/2023/2/node_golang_wasm",
       "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2023-02-24T06:00:00.000Z",
+      "content": "<h1>Running Go code inside a NodeJS app with WASM (Part 2/2, 2023)<h1> <p>In the second part of two posts, we will explore how to import a compiled WASM module inside a NodeJS application.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2023/2/node_golang_wasm_p2\">here</a>",
       "to": [
         "https://www.w3.org/ns/activitystreams#Public"
-      ],
-      "cc": [],
-      "published": "2023-02-13T21:06:38-08:00",
-      "tag": [
-        {
-          "Type": "Mention",
-          "Href": "https://hachyderm.io/users/pfernandom",
-          "Name": "@pfernandom@hachyderm.io"
-        }
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2023_2_node_golang_wasm",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2023-02-13T06:00:00.000Z",
+      "content": "<h1>Running Go code inside a NodeJS app with WASM (Part 1/2, 2023)<h1> <p>In this first of two posts we explore how we can call Go functions from a NodeJS application using WebAssembly.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2023/2/node_golang_wasm\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_11_qb-dropout-in-cnn",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2022-11-19T06:00:00.000Z",
+      "content": "<h1>Quick Bits: Using Dropout layers in convolutional neural networks<h1> <p>Short advice on why and how to use Dropout layers in convolutional neural networks</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/11/qb-dropout-in-cnn\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_11_builder-design-pattern",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2022-11-16T06:00:00.000Z",
+      "content": "<h1>Software Design Patterns: The builder pattern<h1> <p>The builder design pattern makes it easier to create objects with multiple parameters. In this post, we will explore how to leverage this extremely useful design pattern</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/11/builder-design-pattern\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_11_building-a-heap",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2022-11-03T05:00:00.000Z",
+      "content": "<h1>Building a performant heap (priority queue): A deep dive<h1> <p>Priority queues are one of the data structures that any software engineer must learn how to use.. In this post, we will build a performant heap, and visualize each of its operations through animations.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/11/building-a-heap\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_10_pytorch-classification",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2022-10-03T05:00:00.000Z",
+      "content": "<h1>Create a ML classification model with PyTorch<h1> <p>One of the most common tasks in Machine Learning is classification: Creating a model that, after being trained with a dataset, it can label specific examples of data into one or more categories.. In this post, we will use PyTorch -one of the most popular ML tools- to create and train a simple classification model using neural networks.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/10/pytorch-classification\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_9_rust-problems",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2022-09-26T05:00:00.000Z",
+      "content": "<h1>Common Rust problems for beginners: Ownership & mutability<h1> <p>Learn how to solve some common problems when starting learning Rust</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/9/rust-problems\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_9_flutter-code-gen-2",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2022-09-21T05:00:00.000Z",
+      "content": "<h1>Code-gen in Dart & Flutter: How to create a builder to generate SQL code<h1> <p>In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/9/flutter-code-gen-2\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_9_markdown-to-html",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2022-09-12T05:00:00.000Z",
+      "content": "<h1>Converting and customizing Markdown files to HTML with Unified, remark & rehype<h1> <p>Hosting your own blog is easier on Markdown!. Many tools exist for converting Markdown to HTML, and in this post we will learn how to use some of them.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/9/markdown-to-html\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_8_flutter-code-gen-1",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2022-08-26T05:00:00.000Z",
+      "content": "<h1>Code-gen in Dart & Flutter: Reflection and code gen<h1> <p>Dart libraries like Mockito make heavy use of source-code generation.. In the first of this series of posts, we will explore why we need to generate Dart source code in a Flutter project and what alternatives we have.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/8/flutter-code-gen-1\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_8_book",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2022-08-16T05:00:00.000Z",
+      "content": "<h1>New book: \"Backend Developer in 30 Days\"<h1> <p>My first book is now for sale! You can find it in Amazon or in bpbonline.com (links in bio).. \"Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization\"</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/8/book\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_8_java-futures",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2022-08-06T05:00:00.000Z",
+      "content": "<h1>Easy parallelism and multi-threading with Java's CompletableFuture<h1> <p>In this post, we improve application performance by making multiple parallel requests to a REST API</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/8/java-futures\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_7_dark-mode-css",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2022-07-29T05:00:00.000Z",
+      "content": "<h1>Building a dark-mode theme with CSS variables<h1> <p>Native CSS variables make it really easy to build themes for a web app, including 'dark mode'. In this post we describe how to enable themes with just CSS and HTML, no dependencies needed.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/7/dark-mode-css\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_7_flutter-app-state",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2022-07-18T05:00:00.000Z",
+      "content": "<h1>Managing state in Flutter apps with data streaming<h1> <p>Managing state in a Flutter app using data streams and a service locator</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/7/flutter-app-state\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2019_7_array-fill",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2019-07-04T05:00:00.000Z",
+      "content": "<h1>Weird behavior for matrix created with Array.fill()<h1> <p>I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2019/7/array-fill\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_2019_6_html-chunking",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "2019-06-21T05:00:00.000Z",
+      "content": "<h1>Streaming HTML responses<h1> <p>How does HTML chunking work when streaming HTML files to the browser?</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2019/6/html-chunking\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
+      ]
+    },
+    {
+      "@context": "https://www.w3.org/ns/activitystreams",
+      "id": "https://pedromarquez.dev/socialweb/notes/blog_1988_6_test_post",
+      "type": "Note",
+      "attributedTo": "https://pedromarquez.dev/@blog",
+      "published": "1988-06-19T05:00:00.000Z",
+      "content": "<h1>This is a test post<h1> <p>line 1. line 2</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/1988/6/test_post\">here</a>",
+      "to": [
+        "https://www.w3.org/ns/activitystreams#Public"
       ]
     }
   ]

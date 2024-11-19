@@ -1,0 +1,11 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_8_book",
+  "type": "Note",
+  "attributedTo": "https://pedromarquez.dev/@blog",
+  "published": "2022-08-16T05:00:00.000Z",
+  "content": "<h1>New book: \"Backend Developer in 30 Days\"<h1> <p>My first book is now for sale! You can find it in Amazon or in bpbonline.com (links in bio).. \"Acquire Skills on API Designing, Data Management, Application Testing, Deployment, Security and Performance Optimization\"</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/8/book\">here</a>",
+  "to": [
+    "https://www.w3.org/ns/activitystreams#Public"
+  ]
+}

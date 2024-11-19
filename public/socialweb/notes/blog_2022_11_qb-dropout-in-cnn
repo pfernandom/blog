@@ -1,0 +1,11 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_11_qb-dropout-in-cnn",
+  "type": "Note",
+  "attributedTo": "https://pedromarquez.dev/@blog",
+  "published": "2022-11-19T06:00:00.000Z",
+  "content": "<h1>Quick Bits: Using Dropout layers in convolutional neural networks<h1> <p>Short advice on why and how to use Dropout layers in convolutional neural networks</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/11/qb-dropout-in-cnn\">here</a>",
+  "to": [
+    "https://www.w3.org/ns/activitystreams#Public"
+  ]
+}

@@ -6,7 +6,9 @@
       "moduleResolution": "node",
       "esModuleInterop": true
     },
-    "transpileOnly": true
+    "transpileOnly": true,
+    "require": ["tsconfig-paths/register"]
+
   },
   "compilerOptions": {
     "target": "es6",

@@ -1,0 +1,11 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_7_dark-mode-css",
+  "type": "Note",
+  "attributedTo": "https://pedromarquez.dev/@blog",
+  "published": "2022-07-29T05:00:00.000Z",
+  "content": "<h1>Building a dark-mode theme with CSS variables<h1> <p>Native CSS variables make it really easy to build themes for a web app, including 'dark mode'. In this post we describe how to enable themes with just CSS and HTML, no dependencies needed.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/7/dark-mode-css\">here</a>",
+  "to": [
+    "https://www.w3.org/ns/activitystreams#Public"
+  ]
+}

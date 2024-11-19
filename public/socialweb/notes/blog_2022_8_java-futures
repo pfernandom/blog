@@ -1,0 +1,11 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_8_java-futures",
+  "type": "Note",
+  "attributedTo": "https://pedromarquez.dev/@blog",
+  "published": "2022-08-06T05:00:00.000Z",
+  "content": "<h1>Easy parallelism and multi-threading with Java's CompletableFuture<h1> <p>In this post, we improve application performance by making multiple parallel requests to a REST API</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/8/java-futures\">here</a>",
+  "to": [
+    "https://www.w3.org/ns/activitystreams#Public"
+  ]
+}

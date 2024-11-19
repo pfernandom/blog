@@ -1,0 +1,11 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_11_building-a-heap",
+  "type": "Note",
+  "attributedTo": "https://pedromarquez.dev/@blog",
+  "published": "2022-11-03T05:00:00.000Z",
+  "content": "<h1>Building a performant heap (priority queue): A deep dive<h1> <p>Priority queues are one of the data structures that any software engineer must learn how to use.. In this post, we will build a performant heap, and visualize each of its operations through animations.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/11/building-a-heap\">here</a>",
+  "to": [
+    "https://www.w3.org/ns/activitystreams#Public"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/notes/blog_2019_7_array-fill",
+  "type": "Note",
+  "attributedTo": "https://pedromarquez.dev/@blog",
+  "published": "2019-07-04T05:00:00.000Z",
+  "content": "<h1>Weird behavior for matrix created with Array.fill()<h1> <p>I tried to initialize a two-dimension array with Array.fill() and now weird stuff is happening when I use it. Why??</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2019/7/array-fill\">here</a>",
+  "to": [
+    "https://www.w3.org/ns/activitystreams#Public"
+  ]
+}

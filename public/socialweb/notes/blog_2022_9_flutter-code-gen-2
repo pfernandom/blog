@@ -1,0 +1,11 @@
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "id": "https://pedromarquez.dev/socialweb/notes/blog_2022_9_flutter-code-gen-2",
+  "type": "Note",
+  "attributedTo": "https://pedromarquez.dev/@blog",
+  "published": "2022-09-21T05:00:00.000Z",
+  "content": "<h1>Code-gen in Dart & Flutter: How to create a builder to generate SQL code<h1> <p>In this second part of the series, we discuss how to create a custom builder to generate SQL code out of Dart classes.</p> <p>Full content <a href=\"https://pedromarquez.dev/blog/2022/9/flutter-code-gen-2\">here</a>",
+  "to": [
+    "https://www.w3.org/ns/activitystreams#Public"
+  ]
+}

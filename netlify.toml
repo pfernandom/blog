@@ -32,3 +32,4 @@ cache-control = '''
   no-cache,
   no-store,
   must-revalidate'''
+Content-Type = "application/json"

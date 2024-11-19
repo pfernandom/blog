@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ActivityPub Outbox with Items",
+  "type": "object",
+  "properties": {
+    "@context": {
+      "oneOf": [
+        { "type": "string", "const": "https://www.w3.org/ns/activitystreams" },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["https://www.w3.org/ns/activitystreams"]
+          }
+        }
+      ]
+    },
+    "id": { "type": "string", "format": "uri" },
+    "type": { "type": "string", "enum": ["OrderedCollection"] },
+    "totalItems": { "type": "integer", "minimum": 0 },
+    "orderedItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "@context": {
+            "oneOf": [
+              {
+                "type": "string",
+                "const": "https://www.w3.org/ns/activitystreams"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["https://www.w3.org/ns/activitystreams"]
+                }
+              }
+            ]
+          },
+          "id": { "type": "string", "format": "uri" },
+          "type": {
+            "type": "string",
+            "enum": [
+              "Create",
+              "Update",
+              "Delete",
+              "Follow",
+              "Accept",
+              "Reject",
+              "Add",
+              "Remove",
+              "Like",
+              "Announce",
+              "Undo",
+              "Block",
+              "Note",
+              "Article",
+              "Image",
+              "Video",
+              "Event",
+              "Place",
+              "Profile",
+              "Person",
+              "Service"
+            ]
+          },
+          "actor": { "type": "string", "format": "uri" },
+          "object": {
+            "oneOf": [
+              { "type": "string", "format": "uri" },
+              { "type": "object" }
+            ]
+          },
+          "published": { "type": "string", "format": "date-time" },
+          "to": {
+            "type": "array",
+            "items": { "type": "string", "format": "uri" }
+          },
+          "cc": {
+            "type": "array",
+            "items": { "type": "string", "format": "uri" }
+          }
+        },
+        "required": ["id", "type"],
+        "additionalProperties": true
+      }
+    }
+  },
+  "required": ["@context", "id", "type", "totalItems"],
+  "additionalProperties": true
+}

@@ -7,5 +7,13 @@
         "**/*.mdx"
     ],
     "editor.wordWrap": "on",
-    "editor.codeActionsOnSave": {}
+    "editor.codeActionsOnSave": {},
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "/outbox",
+            ],
+            "url": "./activitypub-outbox-schema.json"
+        },
+    ]
 }
